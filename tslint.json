@@ -1,0 +1,7 @@
+{
+    "extends": "tslint-config-standard",
+    "rules": {
+        "prefer-const": true,
+        "forin": true
+    }
+}

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stellium - Error</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            color: rgba(10, 20, 30, .86);
+            font-family: 'Helvetica Neue', Roboto, sans-serif;
+        }
+
+        .mt-error-wrapper {
+            padding: 3rem;
+        }
+
+        h1 {
+            font-weight: 300;
+            margin-bottom: 0;
+            font-size: 2.4rem;
+        }
+
+        .mt-error-code {
+            font-size: .86rem;
+            margin-top: .25rem;
+        }
+
+        .mt-error-info {
+            margin: 2rem 0;
+            max-width: 640px;
+            line-height: 1.4;
+            font-size: 0.96rem;
+        }
+
+        .mt-error-help {
+            color: white;
+            font-weight: 400;
+            text-transform: uppercase;
+            background-color: rgba(10, 20, 30, .86);
+            padding: 0.65rem 1rem;
+            border-radius: 2px;
+            text-decoration: none;
+            font-size: 0.76rem;
+            letter-spacing: 1.2px;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        pre {
+            width: 100%;
+            padding: 1rem;
+            line-height: 0;
+            max-width: 640px;
+            font-size: 1.2rem;
+            counter-reset: line;
+            background-color: rgba(10, 20, 30, 0.1);
+        }
+
+        pre span {
+            display: block;
+            line-height: 1.5rem;
+        }
+
+        pre span::before {
+            color: #888;
+            margin-right: .75em;
+            padding-right: 1rem;
+            display: inline-block;
+            content: counter(line);
+            counter-increment: line;
+            border-right: 1px solid white;
+        }
+
+        code {
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: .125rem .25rem;
+            background-color: rgba(10, 20, 30, .05);
+        }
+    </style>
+</head>
+<body>
+<div class="mt-error-wrapper">
+    <h1 class="mt-error-title">
+        No default page found
+    </h1>
+    <p class="mt-error-code">
+        Error Code: <strong style="color: #EF5350;">501</strong>
+    </p>
+    <p class="mt-error-info">
+        Error message
+    </p>
+    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+        <pre>
+            /some/file-path/file.js
+        </pre>
+        <a href="https://stellium.io/issues/501" target="_blank" class="mt-error-help">
+            View Docs
+        </a>
+    </div>
+</div>
+</body>
+</html>
