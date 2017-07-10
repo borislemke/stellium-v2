@@ -1,0 +1,86 @@
+{
+    "_id": "59392b4bb2f64b14e95cef1d",
+    "title": {
+        "id": "Beranda",
+        "en": "Home"
+    },
+    "meta": {
+        "id": "Beranda",
+        "en": "Home Page"
+    },
+    "url": {
+        "id": "beranda",
+        "en": "home"
+    },
+    "default": true,
+    "cache": true,
+    "status": true,
+    "template": "main",
+    "theme_variables": {
+        "dark_nav": true
+    },
+    "navigation_group_id": "59392b4bb2f64b14e95cef1c",
+    "user_id": "59392b4ab2f64b14e95cee79",
+    "deleted_at": null,
+    "updated_at": "2017-06-07T10:47:39.542Z",
+    "created_at": "2017-06-07T10:47:39.540Z",
+    "modules": [
+        {
+            "data": [
+                {
+                    "title": {
+                        "en": "Home Slider 1"
+                    },
+                    "background": {
+                        "alt": {
+                            "en": "Home Slider 1"
+                        },
+                        "url": "headers/home-slider-1.jpg",
+                        "source": "media"
+                    },
+                    "order": 1
+                }
+            ],
+            "config": null,
+            "status": true,
+            "global": false,
+            "template": "sliders/image",
+            "order": 1
+        },
+        {
+            "data": [
+                {
+                    "title": {
+                        "en": "Home Slider 2 - 1"
+                    },
+                    "background": {
+                        "alt": {
+                            "en": "Home Slider 2"
+                        },
+                        "url": "headers/home-slider-1.jpg",
+                        "source": "media"
+                    },
+                    "order": 1
+                },
+                {
+                    "title": {
+                        "en": "Home Slider 2 - 2"
+                    },
+                    "background": {
+                        "alt": {
+                            "en": "Home Slider 2"
+                        },
+                        "url": "headers/home-slider-1.jpg",
+                        "source": "media"
+                    },
+                    "order": 1
+                }
+            ],
+            "config": null,
+            "status": true,
+            "global": false,
+            "template": "sliders/image",
+            "order": 2
+        }
+    ]
+}

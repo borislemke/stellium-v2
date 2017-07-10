@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import { RequestKeys } from '../helpers/request_keys'
 
 const hasLanguageCode = (url: string): [boolean, string] => {
   const stripped = url.replace(/^\/+|\/+$/g, '')
@@ -13,7 +14,7 @@ const hasLanguageCode = (url: string): [boolean, string] => {
 
 export const currentLanguageMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
-  const languages = req.app.locals.db_languages
+  const languages = req.app.locals[RequestKeys.DBLanguages]
 
   let defaultLanguage = languages.find(_lang => _lang.default)
 
@@ -36,20 +37,20 @@ export const currentLanguageMiddleware = (req: Request, res: Response, next: Nex
 
     // The URL has a language code that matches the languages stored in the database
     if (inDb) {
-      req.app.locals.current_language = inDb.code
+      req.app.locals[RequestKeys.CurrentLanguage] = inDb.code
       return void next()
     } else {
       // No matching language code found, assign the default language to it
       req.url = ('/' + defaultLanguage.code + req.url).replace(/\/+$/g, '')
 
-      req.app.locals.current_language = defaultLanguage.code
+      req.app.locals[RequestKeys.CurrentLanguage] = defaultLanguage.code
 
       return void next()
     }
 
   } else {
 
-    req.app.locals.current_language = defaultLanguage.code
+    req.app.locals[RequestKeys.CurrentLanguage] = defaultLanguage.code
 
     req.url = ('/' + defaultLanguage.code + req.url).replace(/\/+$/g, '')
 

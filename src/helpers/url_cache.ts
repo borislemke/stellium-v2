@@ -1,16 +1,23 @@
-// /post/2017/blah -> ccUSpostccUS2017ccUSblah
-export const stringToCacheKey = (_url: string): string => {
+// /post/2017/blah -> 1023786407128297460123
+
+function hashMap (toHash: string): string {
   let hash = 0, i, chr
-  if (_url.length === 0) return ''+hash
-  for (i = 0; i < _url.length; i++) {
-    chr = _url.charCodeAt(i)
+  if (toHash.length === 0) return '' + hash
+  for (i = 0; i < toHash.length; i++) {
+    chr = toHash.charCodeAt(i)
     hash = ((hash << 5) - hash) + chr
     // Convert to 32bit integer
     hash |= 0
   }
-  return ''+hash
+  return '' + hash
 }
 
-// ccUSpostccUS2017ccUSblah -> /post/2017/blah
-export const cacheKeyToString = () => {
+export const stringToCacheKey = (..._url: string[]): string => {
+
+  /**
+   * TODO(opt): Optimise string manipulation
+   * @date - 7/10/17
+   * @time - 7:24 PM
+   */
+  return _url.map(_target => hashMap(_target)).join('-').replace(/\/+/g, '/').replace(/^-+|-+$/g, '')
 }

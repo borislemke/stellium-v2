@@ -3,6 +3,7 @@
  --> Pull data
  */
 
+import './globals'
 import * as express from 'express'
 import { Application } from 'express'
 import * as mongoose from 'mongoose'
@@ -30,14 +31,13 @@ if (!port) {
 }
 
 (mongoose as any).Promise = global.Promise
-mongoose.connect(
-  'mongodb://localhost/growbali-dev',
-  mongoError => {
-    if (mongoError) {
-      throw mongoError
-    }
-    app.listen(port, () => {
-      console.log('Server listening on port:', port)
-    })
+mongoose.connect('mongodb://localhost/growbali-dev', {useMongoClient: true} as any, err => {
+
+  if (err) {
+    throw err
   }
-)
+
+  app.listen(port, () => {
+    console.log('Server listening on port:', port)
+  })
+})

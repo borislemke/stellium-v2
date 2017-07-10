@@ -1,0 +1,11 @@
+{
+    "title": "Image Slider",
+    "module": {
+        "tag": "section", "//": "This is the default tag, override if necessary",
+        "class": "image-slider",
+        "id": "image-slider-module"
+    },
+    "seeder": {
+        "//": "This is the data that will be injected into the modules list when adding a new module to a page"
+    }
+}

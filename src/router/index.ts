@@ -7,8 +7,8 @@ import { systemSettingsMiddleware } from './system_settings_middleware'
 import { websitePagesFeedMiddleware } from './data_feed/website_pages'
 import { blogPostsFeedMiddleware } from './data_feed/blog_posts'
 import { currentLanguageMiddleware } from './current_language_middleware'
-import { renderFile } from 'ejs'
-import { resolve } from 'path'
+import { RendererRouter } from '../renderer/index'
+import { RequestKeys } from '../helpers/request_keys'
 
 export const webRouter: Router = express.Router()
 
@@ -20,11 +20,6 @@ webRouter.use(multiLanguageMiddleware)
 // Defines the language for the current request
 webRouter.use(currentLanguageMiddleware)
 
-webRouter.use((req, res, next) => {
-  console.log('req.app.locals.current_language\n', req.app.locals.current_language)
-  next()
-})
-
 // Determine the default page URL
 // /en => /home, /en/blah => /blah
 webRouter.use(defaultPageMiddleware)
@@ -32,6 +27,16 @@ webRouter.use(defaultPageMiddleware)
 // Attempt to retrieve a cached version of the requested page,
 // if it does not exists, continue request to render.
 webRouter.use(websiteCacheMiddleware)
+
+webRouter.use((req, res, next) => {
+  /**
+   * TODO(production): Dynamic template selection
+   * @date - 7/10/17
+   * @time - 7:36 PM
+   */
+  req.app.locals[RequestKeys.CurrentTemplate] = 'fortress'
+  next()
+})
 
 // DATA FEED MUST RESIDE BELOW THE CACHE MIDDLEWARE
 /**
@@ -56,12 +61,7 @@ webRouter.use(blogPostsFeedMiddleware)
  */
 webRouter.use(websitePagesFeedMiddleware)
 
-webRouter.use((req: Request, res: Response) => {
-  console.log('req.url\n', req.url)
-  renderFile(resolve(__dirname, '../../views/index.ejs'), req.app.locals, (err, rendered) => {
-    res.send(rendered)
-  })
-})
+webRouter.use(RendererRouter)
 
 webRouter.use((req: Request, res: Response) => {
   res.sendStatus(404)

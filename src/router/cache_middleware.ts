@@ -7,14 +7,18 @@ const redisPageCacheClient = createClient({db: RedisTable.PageCache})
 
 export const websiteCacheMiddleware = (req: Request, res: Response, next: NextFunction): void => {
 
-  const urlHash = stringToCacheKey(req.hostname + req.url)
+  const urlHash = stringToCacheKey(req.hostname, '-', req.url)
 
   redisPageCacheClient.get(urlHash, (err, cachedPage) => {
     if (err) {
-      throw new Error('Retrieving cache failed')
+      /**
+       * TODO(error): Error handling
+       * @date - 7/10/17
+       * @time - 7:15 PM
+       */
     }
     if (cachedPage) {
-      return void res.send(`From cache ${cachedPage}. From ${req.url}`)
+      return void res.send(cachedPage)
     }
     next()
   })

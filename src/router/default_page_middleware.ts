@@ -2,6 +2,7 @@ import { WebsitePageModel } from '../models/models/website_page'
 import { createClient } from 'redis'
 import { RedisTable } from '../helpers/redis_table'
 import { stringToCacheKey } from '../helpers/url_cache'
+import { RequestKeys } from '../helpers/request_keys'
 
 const redisDefaultPageClient = createClient({db: RedisTable.DefaultPage})
 
@@ -15,9 +16,9 @@ export const defaultPageMiddleware = (req, res, next): void => {
     next()
   } else {
 
-    const cacheKey = stringToCacheKey(req.hostname)
+    const currentLanguage = req.app.locals[RequestKeys.CurrentLanguage]
 
-    const currentLanguage = req.app.locals.current_language
+    const cacheKey = stringToCacheKey(req.hostname, currentLanguage)
 
     redisDefaultPageClient.get(cacheKey, (err, cachedDefaultPage) => {
       if (err) {

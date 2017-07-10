@@ -3,6 +3,7 @@ import { createClient } from 'redis'
 import { RedisTable } from '../helpers/redis_table'
 import { stringToCacheKey } from '../helpers/url_cache'
 import { SystemLanguageModel } from '../models/models/system_language'
+import { RequestKeys } from '../helpers/request_keys'
 
 const redisLanguageClient = createClient({db: RedisTable.SystemLanguage})
 
@@ -19,7 +20,7 @@ export const multiLanguageMiddleware = (req: Request, res: Response, next: NextF
        */
     }
     if (langs) {
-      req.app.locals.db_languages = JSON.parse(langs)
+      req.app.locals[RequestKeys.DBLanguages] = JSON.parse(langs)
       return void next()
     }
 
@@ -29,7 +30,7 @@ export const multiLanguageMiddleware = (req: Request, res: Response, next: NextF
       .lean()
       .exec((err, _langs) => {
         redisLanguageClient.set(cacheKey, JSON.stringify(_langs))
-        req.app.locals.db_languages = _langs
+        req.app.locals[RequestKeys.DBLanguages] = _langs
         next()
       })
   })

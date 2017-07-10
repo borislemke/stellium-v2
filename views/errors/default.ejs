@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Stellium - Error</title>
+    <link rel="icon" type="image/x-icon" href="http://growbali.com/admin/assets/favicon.png">
     <style>
         body {
             background-color: #f2f2f2;
@@ -17,7 +18,7 @@
             padding: 3rem;
         }
 
-        h1 {
+        .mt-error-title {
             font-weight: 300;
             margin-bottom: 0;
             font-size: 2.4rem;
@@ -85,10 +86,11 @@
 <body>
 <div class="mt-error-wrapper">
     <h1 class="mt-error-title">
-        No default page found
+        <%= locals.statusCode %> <%= locals.title %>
     </h1>
+    <% if (locals.trace) { %>
     <p class="mt-error-code">
-        Error Code: <strong style="color: #EF5350;">501</strong>
+        Error Code: <strong style="color: #EF5350;"><%= locals.statusCode %></strong>
     </p>
     <p class="mt-error-info">
         Error message
@@ -97,10 +99,11 @@
         <pre>
             /some/file-path/file.js
         </pre>
-        <a href="https://stellium.io/issues/501" target="_blank" class="mt-error-help">
+        <a href="https://stellium.io/issues/<%= locals.statusCode %>" target="_blank" class="mt-error-help">
             View Docs
         </a>
     </div>
+    <% } %>
 </div>
 </body>
 </html>

@@ -3,6 +3,7 @@ import { createClient } from 'redis'
 import { RedisTable } from '../helpers/redis_table'
 import { stringToCacheKey } from '../helpers/url_cache'
 import { SystemSettingsModel } from '../models/models/system_settings'
+import { RequestKeys } from '../helpers/request_keys'
 
 const redisSettingsClient = createClient({db: RedisTable.SystemSettings})
 
@@ -19,7 +20,7 @@ export const systemSettingsMiddleware = (req: Request, res: Response, next: Next
        */
     }
     if (settings) {
-      req.app.locals.db_settings = JSON.parse(settings)
+      req.app.locals[RequestKeys.DBSettings] = JSON.parse(settings)
       return next()
     }
     SystemSettingsModel
@@ -28,7 +29,7 @@ export const systemSettingsMiddleware = (req: Request, res: Response, next: Next
       .lean()
       .exec((err, _settings) => {
       redisSettingsClient.set(cacheKey, JSON.stringify(_settings))
-        req.app.locals.db_settings = _settings
+        req.app.locals[RequestKeys.DBSettings] = _settings
         next()
     })
   })
