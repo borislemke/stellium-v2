@@ -7,7 +7,8 @@ export enum RedisTable {
   SystemSettings = '2',
   SystemLanguage = '3',
   BlogPosts = '4',
-  DefaultPage = '5'
+  DefaultPage = '5',
+  ClientRegistry = '6'
 }
 
 export enum RedisKeys {

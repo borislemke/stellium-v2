@@ -11,12 +11,15 @@ import { webRouter } from './router/index'
 import { apiRouter } from './api/index'
 import { createClient } from 'redis'
 import { RedisTable } from './helpers/redis_table'
+import { RegistryMiddleware } from './registry/index'
 
 const redisClient = createClient({db: RedisTable.WebsitePages})
 redisClient.flushall()
 
 // Main express app
 const app: Application = express()
+
+app.use(RegistryMiddleware)
 
 // API Router
 app.use('/api', apiRouter)

@@ -4,6 +4,7 @@ import { RedisTable } from '../helpers/redis_table'
 import { stringToCacheKey } from '../helpers/url_cache'
 import { SystemLanguageModel } from '../models/models/system_language'
 import { RequestKeys } from '../helpers/request_keys'
+import { errorPageRenderer } from '../renderer/error_handler'
 
 const redisLanguageClient = createClient({db: RedisTable.SystemLanguage})
 
@@ -29,6 +30,12 @@ export const multiLanguageMiddleware = (req: Request, res: Response, next: NextF
       .select('title code status default')
       .lean()
       .exec((err, _langs) => {
+        if (err) {
+          return void errorPageRenderer(req, res)
+        }
+        if (!langs) {
+          return void errorPageRenderer(req, res)
+        }
         redisLanguageClient.set(cacheKey, JSON.stringify(_langs))
         req.app.locals[RequestKeys.DBLanguages] = _langs
         next()

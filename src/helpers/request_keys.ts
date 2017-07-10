@@ -6,5 +6,6 @@ export enum RequestKeys {
   DBPages = 'db_pages',
   DBSettings = 'db_settings',
   RenderedTemplate = 'rendered_template',
-  CurrentTemplate = 'current_template'
+  CurrentTemplate = 'current_template',
+  RegistryObject = 'registry_object'
 }

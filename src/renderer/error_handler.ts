@@ -3,7 +3,12 @@ import { renderFile } from 'ejs'
 import { resolve } from 'path'
 import { Globals } from '../globals'
 
-export const errorPageRenderer = (req: Request, res: Response, data: any): void => {
+const defaultError = {
+  statusCode: 500,
+  title: 'Internal Server Error'
+}
+
+export const errorPageRenderer = (req: Request, res: Response, data: any = defaultError): void => {
   renderFile(
     resolve(Globals.ViewsPath, 'errors', 'default.ejs'),
     data,
