@@ -4,6 +4,7 @@ import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
 import { BlogPostModel } from '../../models/models/blog_post'
 import { RequestKeys } from '../../helpers/request_keys'
+import { WriteStub } from '../../utils/write_stub'
 
 const redisBlogClient = createClient({db: RedisTable.BlogPosts})
 
@@ -46,6 +47,7 @@ export const blogPostsFeedMiddleware = (req: Request, res: Response, next: NextF
            */
           return void res.sendStatus(500)
         }
+        WriteStub(posts, 'blog_posts')
         req.app.locals[RequestKeys.DBPosts] = posts
         next()
       })

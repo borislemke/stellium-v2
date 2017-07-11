@@ -34,7 +34,7 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
 
         if (err) {
           console.log('async map error\n', err)
-          reject(err)
+          return void reject(err)
         }
 
         req.app.locals[RequestKeys.RenderedTemplate] = resolvedModules.map(_mod => _mod.template).join('\n')
@@ -69,7 +69,7 @@ export async function commonRenderer (req: Request, res: Response) {
   try {
     renderedTemplate = await fakeTemplateRenderer(req)
   } catch (e) {
-    console.log('e\n', e)
+    console.log('template renderer error\n', e)
     return void errorPageRenderer(req, res, {
       title: 'Internal Server Error',
       statusCode: 500
@@ -78,6 +78,7 @@ export async function commonRenderer (req: Request, res: Response) {
 
   const urlHash = stringToCacheKey(req.hostname, '-', req.url)
 
+  // Do not rely on the cache write to serve the rendered content
   redisPageCacheClient.set(urlHash, minifyTemplate(renderedTemplate, true), err => {
     if (err) {
       /**

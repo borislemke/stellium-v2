@@ -1,6 +1,14 @@
 import { resolve } from 'path'
 
-export enum Globals {
-  ViewsPath = resolve(__dirname, '../views') as any,
-  TemplatesPath = resolve(Globals.ViewsPath, 'templates') as any,
+const rootPath = resolve(__dirname, '..')
+const viewsPath = resolve(rootPath, 'views')
+const templatesPath = resolve(viewsPath, 'templates')
+const dev = true
+
+export const Globals = {
+  Development: dev,
+  Production: !dev,
+  RootPath: rootPath,
+  ViewsPath: viewsPath,
+  TemplatesPath: templatesPath
 }

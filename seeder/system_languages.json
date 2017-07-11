@@ -1,0 +1,16 @@
+[
+    {
+        "_id": "59392b4ab2f64b14e95cee7b",
+        "title": "English",
+        "code": "en",
+        "status": true,
+        "default": true
+    },
+    {
+        "_id": "59610fac1d75eb8dffb6e13c",
+        "title": "Indonesian",
+        "code": "id",
+        "status": true,
+        "default": false
+    }
+]

@@ -48,34 +48,7 @@
             "order": 1
         },
         {
-            "data": [
-                {
-                    "title": {
-                        "en": "Home Slider 2 - 1"
-                    },
-                    "background": {
-                        "alt": {
-                            "en": "Home Slider 2"
-                        },
-                        "url": "headers/home-slider-1.jpg",
-                        "source": "media"
-                    },
-                    "order": 1
-                },
-                {
-                    "title": {
-                        "en": "Home Slider 2 - 2"
-                    },
-                    "background": {
-                        "alt": {
-                            "en": "Home Slider 2"
-                        },
-                        "url": "headers/home-slider-1.jpg",
-                        "source": "media"
-                    },
-                    "order": 1
-                }
-            ],
+            "data": null,
             "config": null,
             "status": true,
             "global": false,

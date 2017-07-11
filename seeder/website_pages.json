@@ -1,0 +1,191 @@
+[
+    {
+        "_id": "59392b4bb2f64b14e95cef1f",
+        "title": {
+            "id": "Chef Ryan Clift",
+            "en": "Chef Ryan Clift"
+        },
+        "meta": {
+            "id": "Chef Ryan Clift",
+            "en": "Chef Ryan Clift"
+        },
+        "url": {
+            "id": "koki",
+            "en": "the-chef"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef1d",
+        "title": {
+            "id": "Beranda",
+            "en": "Home"
+        },
+        "meta": {
+            "id": "Beranda",
+            "en": "Home Page"
+        },
+        "url": {
+            "id": "beranda",
+            "en": "home"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef20",
+        "title": {
+            "id": "Masakan dan Minuman",
+            "en": "Food + Drink"
+        },
+        "meta": {
+            "id": "Masakan dan Minuman",
+            "en": "Food + Drink"
+        },
+        "url": {
+            "id": "makanan-minuman",
+            "en": "food-drink"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef21",
+        "title": {
+            "id": "Grow Up",
+            "en": "Grow Up"
+        },
+        "meta": {
+            "id": "Grow Up",
+            "en": "Grow Up"
+        },
+        "url": {
+            "id": "grow-up-id",
+            "en": "grow-up"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef1e",
+        "title": {
+            "id": "Tentang Kami",
+            "en": "About Us"
+        },
+        "meta": {
+            "id": "Tentang Kami",
+            "en": "About Us"
+        },
+        "url": {
+            "id": "tentang-kami",
+            "en": "about-us"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef24",
+        "title": {
+            "id": "Ruang Restoran",
+            "en": "The Space"
+        },
+        "meta": {
+            "id": "Ruang Restoran",
+            "en": "The Space"
+        },
+        "url": {
+            "id": "ruang-restoran",
+            "en": "the-space"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef25",
+        "title": {
+            "id": "Berita / Pers",
+            "en": "News / Press"
+        },
+        "meta": {
+            "id": "Berita / Pers",
+            "en": "News / Press"
+        },
+        "url": {
+            "id": "berita-pers",
+            "en": "news-press"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef22",
+        "title": {
+            "id": "Hidangan",
+            "en": "Menu"
+        },
+        "meta": {
+            "id": "Hidangan",
+            "en": "Menu"
+        },
+        "url": {
+            "id": "hidangan",
+            "en": "menu"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef23",
+        "title": {
+            "id": "Galeri",
+            "en": "Gallery"
+        },
+        "meta": {
+            "id": "Galeri",
+            "en": "Gallery"
+        },
+        "url": {
+            "id": "galeri",
+            "en": "gallery"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef26",
+        "title": {
+            "id": "Acara",
+            "en": "Event"
+        },
+        "meta": {
+            "id": "Acara",
+            "en": "Event"
+        },
+        "url": {
+            "id": "acara",
+            "en": "event"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef28",
+        "title": {
+            "en": "Page Not Found"
+        },
+        "meta": {
+            "en": "The page was not found"
+        },
+        "url": {
+            "en": "404"
+        },
+        "status": true
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef27",
+        "title": {
+            "id": "Hubungi Kami",
+            "en": "Contact Us"
+        },
+        "meta": {
+            "id": "Hubungi Kami",
+            "en": "Contact Us"
+        },
+        "url": {
+            "id": "hubungi-kami",
+            "en": "contact"
+        },
+        "status": true
+    }
+]

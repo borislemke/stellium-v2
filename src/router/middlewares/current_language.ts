@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { RequestKeys } from '../helpers/request_keys'
+import { RequestKeys } from '../../helpers/request_keys'
 
 const hasLanguageCode = (url: string): [boolean, string] => {
   const stripped = url.replace(/^\/+|\/+$/g, '')

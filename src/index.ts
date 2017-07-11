@@ -3,18 +3,15 @@
  --> Pull data
  */
 
+import 'source-map-support/register'
 import './globals'
+import './dev'
 import * as express from 'express'
 import { Application } from 'express'
 import * as mongoose from 'mongoose'
 import { webRouter } from './router/index'
 import { apiRouter } from './api/index'
-import { createClient } from 'redis'
-import { RedisTable } from './helpers/redis_table'
 import { RegistryMiddleware } from './registry/index'
-
-const redisClient = createClient({db: RedisTable.WebsitePages})
-redisClient.flushall()
 
 // Main express app
 const app: Application = express()

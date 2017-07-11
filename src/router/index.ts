@@ -1,13 +1,14 @@
 import * as express from 'express'
 import { Request, Response, Router } from 'express'
-import { websiteCacheMiddleware } from './cache_middleware'
-import { defaultPageMiddleware } from './default_page_middleware'
-import { multiLanguageMiddleware } from './multi_language_middleware'
-import { systemSettingsMiddleware } from './system_settings_middleware'
-import { websitePagesFeedMiddleware } from './data_feed/website_pages'
-import { blogPostsFeedMiddleware } from './data_feed/blog_posts'
-import { currentLanguageMiddleware } from './current_language_middleware'
-import { RendererRouter } from '../renderer/index'
+import {
+  currentLanguageMiddleware,
+  defaultPageMiddleware,
+  multiLanguageMiddleware,
+  systemSettingsMiddleware,
+  websiteCacheMiddleware
+} from './middlewares'
+import { blogPostsFeedMiddleware, websitePagesFeedMiddleware } from './data_feed'
+import { RendererRouter } from '../renderer'
 import { RequestKeys } from '../helpers/request_keys'
 
 export const webRouter: Router = express.Router()

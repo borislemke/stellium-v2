@@ -13,10 +13,11 @@ const fakeRegistry = [
       last_name: 'Lemke'
     },
     expiry: 1231234134,
-    // A fixed subdomain that was generated on client's registration
+    // A fixed sub-domain that was generated on client's registration
     stellium_path: 'stellium.stellium.dev',
     alias: [
       'stellium.dev',
+      'stellium2.dev',
       'www.stellium.dev'
     ]
   }

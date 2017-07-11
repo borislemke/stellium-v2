@@ -1,8 +1,8 @@
-import { WebsitePageModel } from '../models/models/website_page'
+import { WebsitePageModel } from '../../models/models/website_page'
 import { createClient } from 'redis'
-import { RedisTable } from '../helpers/redis_table'
-import { stringToCacheKey } from '../helpers/url_cache'
-import { RequestKeys } from '../helpers/request_keys'
+import { RedisTable } from '../../helpers/redis_table'
+import { stringToCacheKey } from '../../helpers/url_cache'
+import { RequestKeys } from '../../helpers/request_keys'
 
 const redisDefaultPageClient = createClient({db: RedisTable.DefaultPage})
 

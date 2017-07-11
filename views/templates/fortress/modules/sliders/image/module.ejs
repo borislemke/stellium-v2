@@ -1,4 +1,7 @@
 <% for (let i = 0; i < locals.module.data.length; i++) { %>
 <% const slideItem = locals.module.data[i] %>
-<h1><%= slideItem.title['en'] %></h1>
+<div class="slider-item" style="width: 100vw; height: 100vh; max-height: 480px;">
+    <h1><%= slideItem.title['en'] %></h1>
+    <p>I'm a simple man, I see boobs, I click.</p>
+</div>
 <% } %>
