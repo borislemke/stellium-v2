@@ -27,21 +27,29 @@ export const multiLanguageMiddleware = (req: Request, res: Response, next: NextF
     }
 
     SystemLanguageModel
-      .find({})
+      // Only query languages that are enabled
+      // this is determined by the status property[boolean]
+      .find({status: true})
       .select('title code status default')
       .lean()
-      .exec((err, _langs) => {
+      .exec((err, _languages) => {
         if (err) {
           console.log('err\n', err)
           return void errorPageRenderer(req, res)
         }
-        if (!_langs) {
-          console.log('No languages found', _langs)
-          return void errorPageRenderer(req, res)
+        if (!_languages || !(_languages as any[]).length) {
+          // TODO(error): Error handling, no system languages found
+          _languages = [
+            {
+              code: 'en',
+              'default': true,
+              title: 'English'
+            }
+          ]
         }
-        WriteStub(_langs, 'system_languages')
-        redisLanguageClient.set(cacheKey, JSON.stringify(_langs))
-        req.app.locals[RequestKeys.DBLanguages] = _langs
+        WriteStub(_languages, 'system_languages')
+        redisLanguageClient.set(cacheKey, JSON.stringify(_languages))
+        req.app.locals[RequestKeys.DBLanguages] = _languages
         next()
       })
   })

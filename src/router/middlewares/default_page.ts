@@ -3,6 +3,7 @@ import { createClient } from 'redis'
 import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
 import { RequestKeys } from '../../helpers/request_keys'
+import { Globals } from '../../globals'
 
 const redisDefaultPageClient = createClient({db: RedisTable.DefaultPage})
 
@@ -39,6 +40,16 @@ export const defaultPageMiddleware = (req, res, next): void => {
         })
         .lean()
         .exec((err, page: any) => {
+          if (err) {
+            // TODO(error): Error handling, no default page found
+          }
+          if (!page) {
+            if (Globals.Production) {
+              return void res.sendStatus(404)
+            } else {
+              page = require(Globals.ViewsPath + '/test.json')
+            }
+          }
           redisDefaultPageClient.set(cacheKey, JSON.stringify(page))
           req.url = page.url[currentLanguage]
           next()

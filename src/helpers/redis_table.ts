@@ -8,7 +8,12 @@ export enum RedisTable {
   SystemLanguage = '3',
   BlogPosts = '4',
   DefaultPage = '5',
-  ClientRegistry = '6'
+  ClientRegistry = '6',
+  StaticResources = '7'
+}
+
+export enum StaticResourceKeys {
+  AccountNotFound = 'account_not_found'
 }
 
 export enum RedisKeys {
