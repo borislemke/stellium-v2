@@ -1,14 +1,23 @@
-<div class="hero-content-wrapper">
-    <h2 class="hero-title">
+<div>
+    <h2>
         The swiftest Content Management System for the modern web
     </h2>
-    <p class="description">NAME is the best software platform for running digital hospitality and restaurant businesses.
+
+    <p>NAME is the best software platform for running digital hospitality and restaurant businesses.
         We handle quadrillions of dollars of transactions every year.</p>
 
-    <a href="register" class="es-button es-button-blue">
-        <span>Create Account</span>
-    </a>
-    <a href="contact-sales" class="es-button">
-        <span>Contact Sales</span>
-    </a>
+    <%- ComponentRenderer('button', {
+        'class': 'green',
+        data: {
+            text: 'Create Account'
+        }
+    }) %>
+
+    <%- ComponentRenderer('button', {
+        data: {
+            text: 'Contact Sales'
+        }
+    }) %>
+
+    <%- ComponentRenderer('button') %>
 </div>

@@ -1,11 +1,52 @@
 import { resolve } from 'path'
-import { renderFile } from 'ejs'
+import { render, renderFile } from 'ejs'
 import { load } from 'cheerio'
 import { EscapeHTML } from '../../utils/encode_html'
 import { RemoveSystemPath } from '../../utils/remove_system_path'
 import { Globals } from '../../globals'
 import { Request } from 'express'
 import { TemplateFunctions } from './template_functions'
+import { RequestKeys } from '../../helpers/request_keys'
+import { readFileSync } from 'fs'
+
+const componentMap = {}
+
+let _componentId = 0
+
+export const ComponentRenderer = (templatePath: string) => (componentName: string, componentData: any): string => {
+
+  const componentId = componentMap[componentName] ? componentMap[componentName] : 'data-mt-component-' + ++_componentId
+
+  const componentPath = resolve(Globals.TemplatesPath, templatePath, 'components', componentName) + '/component.ejs'
+
+  let renderedComponent = ''
+
+  try {
+
+    const componentString = readFileSync(componentPath, 'utf8')
+
+    renderedComponent = render(componentString, {Component: componentData})
+
+    const $ = load(renderedComponent, {xmlMode: true})
+
+    $('*').attr(componentId, componentName)
+
+    renderedComponent = $.html()
+
+  } catch (e) {
+
+    renderedComponent = `
+<div data-mt-component-error="Component renderer error"
+     data-mt-component="component-${componentName}">
+     <!-- ${e.message} -->
+</div>
+`
+  }
+
+  componentMap[componentName] = componentId
+
+  return renderedComponent
+}
 
 /**
  * Module renderer resolves template, data, styling and logic bindings
@@ -18,6 +59,7 @@ export const templateRenderer = (pageData: any, moduleData: any, req: Request) =
   const moduleBasePath = resolve(moduleData.template, 'module.')
 
   const renderData = {
+    ComponentRenderer: ComponentRenderer(req.app.locals[RequestKeys.CurrentTemplate]),
     TemplateFunctions: new TemplateFunctions(req),
     ...pageData,
     module: moduleData
