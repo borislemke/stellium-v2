@@ -9,7 +9,8 @@ export enum RedisTable {
   BlogPosts = '4',
   DefaultPage = '5',
   ClientRegistry = '6',
-  StaticResources = '7'
+  StaticResources = '7',
+  MediaFiles = '8'
 }
 
 export enum StaticResourceKeys {

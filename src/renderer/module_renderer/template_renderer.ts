@@ -4,17 +4,21 @@ import { load } from 'cheerio'
 import { EscapeHTML } from '../../utils/encode_html'
 import { RemoveSystemPath } from '../../utils/remove_system_path'
 import { Globals } from '../../globals'
+import { Request } from 'express'
+import { TemplateFunctions } from './template_functions'
 
 /**
  * Module renderer resolves template, data, styling and logic bindings
  * @param pageData
  * @param moduleData
+ * @param req
  */
-export const templateRenderer = (pageData: any, moduleData: any) => (cb: (err: any, module?: any) => void): void => {
+export const templateRenderer = (pageData: any, moduleData: any, req: Request) => (cb: (err: any, module?: any) => void): void => {
 
   const moduleBasePath = resolve(moduleData.template, 'module.')
 
   const renderData = {
+    TemplateFunctions: new TemplateFunctions(req),
     ...pageData,
     module: moduleData
   }
@@ -56,7 +60,7 @@ data-mt-error="Module data malformed" style="padding: 1.5rem;">
     </div>
 `
       const errorEnd = `</section>`
-      // Gracefully ignore malformed module but notify admin of issue
+      // Gracefully ignore malformed module but notify user of issue
       return void cb(null, errorStart + (Globals.Development ? errorTemplate : '') + errorEnd)
     }
 
@@ -67,7 +71,7 @@ data-mt-error="Module data malformed" style="padding: 1.5rem;">
     const wrappedModule = `
 <!-- template-start: ${moduleData.templateName} -->
 <section data-mt-template="${moduleData.templateName}"
-         data-host-${moduleData.moduleId}>
+         data-host-${moduleData.moduleId} data-content-${moduleData.moduleId}>
     ${$.html()}
 </section>
 <!-- template-end: ${moduleData.templateName} -->

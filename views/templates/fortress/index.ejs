@@ -16,33 +16,15 @@
             padding: 0;
             font-size: .86rem;
         }
+        <%- locals.ModuleStyles %>
     </style>
 </head>
 <body>
-<%- locals[RequestKeys.RenderedTemplate] %>
 
-<!--
-<div class="posts-wrapper" style="display: flex; flex-wrap: wrap;">
+<%- locals.TemplateContent %>
 
-    <% for (let i = 0; i < locals[RequestKeys.DBSettings].length; i++) { %>
-    <% const setting = locals[RequestKeys.DBSettings][i] %>
-    <div class="post-item" style="width: 25%; padding: 16px; box-sizing: border-box;">
-        <div class="post-item-content"
-             style="padding: 16px; background-color: rgba(10, 20, 30, .05); border: 1px solid rgba(10, 20, 30, .1);">
-            <p style="margin-bottom: .25rem;">
-                <strong>Key</strong>: <%= setting.key %>
-            </p>
-            <p style="margin-bottom: .25rem;">
-                <strong>Title</strong>: <%= setting.title %>
-            </p>
-            <p>
-                <strong>Value</strong>: <%= setting.value %>
-            </p>
-        </div>
-    </div>
-    <% } %>
-
-</div>
--->
+<script type="text/javascript">
+    <%- locals.ModuleScripts %>
+</script>
 </body>
 </html>

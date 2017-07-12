@@ -1,8 +1,11 @@
 import { resolve } from 'path'
+import * as async from 'async'
+import { Request } from 'express'
 import { templateRenderer } from './template_renderer'
 import { Globals } from '../../globals'
 import { stylesheetCompiler } from './stylesheet_compiler'
 import { RequestKeys } from '../../helpers/request_keys'
+import { scriptsCompiler } from './scripts_compiler'
 
 let _moduleId = 0
 
@@ -18,32 +21,28 @@ const getModuleId = (templateName: string): string => {
   }
 }
 
-export const ModuleRenderer = (pageData: any, requestObject: any) => (moduleData: any, cb: (err: any, resolvedModule?: any) => void): void => {
+export const ModuleRenderer = (pageData: any, req: Request) => (moduleData: any, cb: (err: any, resolvedModule?: any) => void): void => {
 
   moduleData.templateName = moduleData.template
 
-  moduleData.template = resolve(Globals.TemplatesPath, requestObject[RequestKeys.CurrentTemplate], 'modules', moduleData.template)
+  const currentTemplate = req.app.locals[RequestKeys.CurrentTemplate]
 
-  moduleData.moduleId = 'xyz-' + getModuleId(moduleData.templateName)
+  moduleData.template = resolve(Globals.TemplatesPath, currentTemplate, 'modules', moduleData.template)
 
-  stylesheetCompiler(moduleData, (err, css) => {
+  moduleData.moduleId = getModuleId(moduleData.templateName)
+
+  async.series({
+    styles: stylesheetCompiler(moduleData),
+    template: templateRenderer(pageData, moduleData, req),
+    scripts: scriptsCompiler(moduleData)
+  }, (err, resolvedModule) => {
+
+    resolvedModule.templateName = moduleData.templateName
 
     if (err) {
       return void cb(err)
     }
 
-    templateRenderer(pageData, moduleData)((err, html) => {
-
-      if (err) {
-        return void cb(err)
-      }
-
-      const resolvedModule = {
-        template: html,
-        styles: css
-      }
-
-      cb(err, resolvedModule)
-    })
+    cb(err, resolvedModule)
   })
 }

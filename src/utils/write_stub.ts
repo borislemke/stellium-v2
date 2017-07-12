@@ -3,11 +3,11 @@ import { resolve } from 'path'
 import { Globals } from '../globals'
 import * as colors from 'colors'
 
-const dev = false
+const doWrite = false
 
 export const WriteStub = (data: any, filename: string): void => {
 
-  if (!dev) {
+  if (!doWrite) {
     return
   }
 

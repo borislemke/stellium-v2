@@ -10,6 +10,7 @@ import { RedisTable } from '../helpers/redis_table'
 import { createClient } from 'redis'
 import { minifyTemplate } from './utils/minify_html'
 import { errorPageRenderer } from './error_handler'
+import { TemplateFunctions } from './module_renderer/template_functions'
 
 const redisPageCacheClient = createClient({db: RedisTable.PageCache})
 
@@ -26,23 +27,46 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
   delete require.cache[Globals.ViewsPath + '/test.json']
   const PageObject = require(Globals.ViewsPath + '/test.json')
 
+  PageObject.TemplateFunctions = new TemplateFunctions(req)
+
   return new Promise((resolve, reject) => {
 
     if (ok) {
 
-      async.map(PageObject.modules, ModuleRenderer(PageObject, req.app.locals), (err, resolvedModules) => {
+      async.map(PageObject.modules, ModuleRenderer(PageObject, req), (err, resolvedModules) => {
 
         if (err) {
           console.log('async map error\n', err)
           return void reject(err)
         }
 
-        req.app.locals[RequestKeys.RenderedTemplate] = resolvedModules.map(_mod => _mod.template).join('\n')
+        const TemplateContent = resolvedModules.map(_mod => _mod.template).join('\n')
+
+        let ModuleStyles = ''
+
+        let ModuleScripts = ''
+
+        const unifyModules = []
+
+        resolvedModules.forEach(_module => {
+
+          if (!unifyModules.includes(_module.templateName)) {
+
+            ModuleStyles += _module.styles
+
+            ModuleScripts += _module.scripts
+
+            unifyModules.push(_module.templateName)
+          }
+        })
 
         renderFile(
           pathResolve(Globals.TemplatesPath, req.app.locals[RequestKeys.CurrentTemplate], 'index.ejs'),
           {
             getSettingsByKey: getSettingsByKey(req.app.locals[RequestKeys.DBSettings]),
+            TemplateContent,
+            ModuleStyles,
+            ModuleScripts,
             RequestKeys,
             ...req.app.locals,
             PageObject

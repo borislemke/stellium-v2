@@ -7,7 +7,7 @@ import {
   systemSettingsMiddleware,
   websiteCacheMiddleware
 } from './middlewares'
-import { blogPostsFeedMiddleware, websitePagesFeedMiddleware } from './data_feed'
+import { blogPostsFeedMiddleware, mediaFilesFeedMiddleware, websitePagesFeedMiddleware } from './data_feed'
 import { RendererRouter } from '../renderer'
 import { RequestKeys } from '../helpers/request_keys'
 
@@ -61,6 +61,8 @@ webRouter.use(blogPostsFeedMiddleware)
  * - status
  */
 webRouter.use(websitePagesFeedMiddleware)
+
+webRouter.use(mediaFilesFeedMiddleware)
 
 webRouter.use(RendererRouter)
 

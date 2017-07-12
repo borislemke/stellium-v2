@@ -1,21 +1,27 @@
 import { stat } from 'fs'
 import { parse, stringify } from 'css'
-import * as nodeSass from 'node-sass'
+import { render } from 'node-sass'
 
-export const stylesheetCompiler = (moduleData: any, cb: (err: any, compiledCss?: any) => void): void => {
+const cachedStyles = {}
+
+export const stylesheetCompiler = (moduleData: any) => (cb: (err: any, compiledCss?: any) => void): void => {
+
+  if (cachedStyles[moduleData.templateName]) {
+    return void cb(null, cachedStyles[moduleData.templateName])
+  }
 
   const scssFilePath = moduleData.template + '/module.scss'
 
   stat(scssFilePath, err => {
     if (err) {
       if (err.code === 'ENOENT') {
-        console.log('err\n', err)
+        // Ignore Style sheet if it does not exist
         return void cb(null)
       }
       return void cb(err)
     }
 
-    nodeSass.render({file: scssFilePath}, (err, css) => {
+    render({file: scssFilePath}, (err, css) => {
 
       if (err) {
         console.log('err\n', err)
@@ -40,7 +46,11 @@ export const stylesheetCompiler = (moduleData: any, cb: (err: any, compiledCss?:
         })
       })
 
-      cb(err, stringify(astCss))
+      const stringifiedCss = stringify(astCss)
+
+      cachedStyles[moduleData.templateName] = stringifiedCss
+
+      cb(null, stringifiedCss)
     })
   })
 }

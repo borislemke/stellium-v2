@@ -26,14 +26,22 @@
     "created_at": "2017-06-07T10:47:39.540Z",
     "modules": [
         {
+            "data": null,
+            "config": null,
+            "status": true,
+            "global": false,
+            "template": "heroes/simple",
+            "order": 1
+        },
+        {
             "data": [
                 {
                     "title": {
-                        "en": "Home Slider 1"
+                        "en": "Home Slider 2"
                     },
                     "background": {
                         "alt": {
-                            "en": "Home Slider 1"
+                            "en": "Home Slider 2"
                         },
                         "url": "headers/home-slider-1.jpg",
                         "source": "media"
@@ -41,14 +49,6 @@
                     "order": 1
                 }
             ],
-            "config": null,
-            "status": true,
-            "global": false,
-            "template": "sliders/image",
-            "order": 1
-        },
-        {
-            "data": null,
             "config": null,
             "status": true,
             "global": false,
