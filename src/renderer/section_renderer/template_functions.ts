@@ -20,7 +20,7 @@ export class TemplateFunctions {
 
   constructor (private req: Request) {
 
-    this.mediaFiles = req.app.locals[RequestKeys.MediaFiles]
+    this.mediaFiles = req.app.locals[RequestKeys.DBMediaFiles]
   }
 
   private _findMediaUrlById (id: string): string {

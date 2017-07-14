@@ -1,3 +1,132 @@
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<base href="/">
 <title>
-    <%= getSettingsByKey('site_title') %> - <%= locals.PageObject.title[locals[RequestKeys.CurrentLanguage]] %>
+    <%= getSettingsByKey('site_title') %> - <%= PageObject.title[CurrentLanguage] %>
 </title>
+
+<% for (let i = 0; i < DbCollection.Languages.length; i++) { %>
+<% const lang = DbCollection.Languages[i] %>
+<% if (CurrentLanguage !== lang.code) { %>
+<link rel="alternate" href="<%= BaseDomain %><%= lang.code %>/<%= PageObject.url[lang] %>" hreflang="<%= lang.code %>" />
+<% } %>
+<% } %>
+
+<meta name="description" content="<%= PageObject.meta[CurrentLanguage] %>">
+<link rel="canonical" href="<%= CurrentURL %>" />
+
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+
+<!-- IF ARTICLE -->
+<!-- Facebook Open Graph -->
+<meta property="fb:app_id" content="123456789">
+<meta property="og:url" content="<%= CurrentURL %>">
+<meta property="og:type" content="website">
+<meta property="og:title" content="<%= PageObject.title[CurrentLanguage] %>">
+<meta property="og:image" content="https://example.com/image.jpg">
+<meta property="og:description" content="<%= PageObject.meta[CurrentLanguage] %>">
+<meta property="og:site_name" content="<%= getSettingsByKey('site_title') %>">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="<%= PageObject.user.first_name %> <%= PageObject.user.last_name %>">
+<!-- Facebook Open Graph -->
+
+<!-- Twitter Article -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@<%= getSettingsByKey('twitter_handler') %>">
+<meta name="twitter:creator" content="@<%= PageObject.user.social_accounts.twitter %>">
+<meta name="twitter:url" content="<%= CurrentURL %>">
+<meta name="twitter:title" content="<%= PageObject.title[CurrentLanguage] %>">
+<meta name="twitter:description" content="<%= PageObject.meta[CurrentLanguage] %>">
+<meta name="twitter:image" content="https://example.com/image.jpg">
+<!-- Twitter Article -->
+
+<!-- IF ARTICLE -->
+
+<style>
+    /* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup,
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section {
+        display: block;
+    }
+    body {
+        line-height: 1;
+    }
+    ol, ul {
+        list-style: none;
+    }
+    blockquote, q {
+        quotes: none;
+    }
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+        content: '';
+        content: none;
+    }
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        color: rgba(10, 20, 30, .86);
+        font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    p {
+        color: #6b7c93;
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 26px;
+    }
+
+    .row {
+        width: 100%;
+        margin: auto;
+        max-width: 1080px;
+    }
+
+    <%- CompiledStyles %>
+</style>
+
+<!-- Global Header Scripts -->
+<%- getSettingsByKey('header_scripts') %>
+<!-- Global Header Scripts -->
+
+<!-- Page Scoped Header Scripts -->
+<%- PageObject.header_script %>
+<!-- Page Scoped Header Scripts -->

@@ -1,27 +1,28 @@
-.es-button {
-    text-decoration: none;
-    margin: .25rem;
-    padding: .75rem 1rem;
-    box-sizing: border-box;
+:host {
+    height: 38px;
+    padding: 0 1.6rem;
+    font-size: .86rem;
+    line-height: 38px;
+    margin-right: .5rem;
+    border-radius: 19px;
+    letter-spacing: .5px;
     display: inline-block;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: #2196F3;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+    border: 1px solid white;
+    transition: all 330ms ease;
 
     &.blue {
-        color: white;
+        color: #2196F3;
         font-weight: 400;
-        background-color: #2196F3;
+        border-color: #2196F3;
     }
 
     &.green {
-        color: white;
+        color: #3ecf8e;
         font-weight: 400;
-        background-color: #3ecf8e;
+        border-color: #3ecf8e;
+    }
+
+    &:hover {
+        transform: translate3d(0, -1px, 0);
     }
 }

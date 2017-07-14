@@ -21,7 +21,7 @@ export const mediaFilesFeedMiddleware = (req: Request, res: Response, next: Next
        */
     }
     if (cachedMedia) {
-      req.app.locals[RequestKeys.MediaFiles] = JSON.parse(cachedMedia)
+      req.app.locals[RequestKeys.DBMediaFiles] = JSON.parse(cachedMedia)
       return void next()
     }
 
@@ -39,7 +39,7 @@ export const mediaFilesFeedMiddleware = (req: Request, res: Response, next: Next
           return void res.sendStatus(500)
         }
         WriteStub(media, 'media_files')
-        req.app.locals[RequestKeys.MediaFiles] = media
+        req.app.locals[RequestKeys.DBMediaFiles] = media
         next()
       })
   })

@@ -3,7 +3,7 @@ import { WebsiteNavigationGroupSchema } from './website_navigation_group'
 import { Translatable } from './_common'
 
 
-export interface WebsitePageModuleSchema {
+export interface WebsitePageSectionSchema {
     order: number;
     title: string;
     'protected': boolean;
@@ -31,7 +31,7 @@ export interface WebsitePageSchema {
     status?: boolean;
     template?: string;
     theme_variables?: { [key: string]: any };
-    modules?: WebsitePageModuleSchema[];
+    sections?: WebsitePageSectionSchema[];
     body_class?: string;
     user_id?: string;
     user?: SystemUserSchema;

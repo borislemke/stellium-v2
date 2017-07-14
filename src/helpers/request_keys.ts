@@ -7,6 +7,7 @@ export enum RequestKeys {
   DBSettings = 'db_settings',
   RenderedTemplate = 'rendered_template',
   CurrentTemplate = 'current_template',
+  CurrentTemplatePath = 'current_template_path',
   RegistryObject = 'registry_object',
-  MediaFiles = 'media_files'
+  DBMediaFiles = 'media_files'
 }

@@ -19,19 +19,27 @@
     "theme_variables": {
         "dark_nav": true
     },
+    "header_script": "<script>console.log('Header: You are in', window.location)</script>",
+    "footer_script": "<script>console.log('Footer: You are in', window.location)</script>",
     "navigation_group_id": "59392b4bb2f64b14e95cef1c",
     "user_id": "59392b4ab2f64b14e95cee79",
     "deleted_at": null,
     "updated_at": "2017-06-07T10:47:39.542Z",
     "created_at": "2017-06-07T10:47:39.540Z",
-    "modules": [
+    "sections": [
         {
             "data": null,
             "config": null,
             "status": true,
             "global": false,
-            "template": "heroes/simple",
-            "order": 1
+            "template": "navigation/main"
+        },
+        {
+            "data": null,
+            "config": null,
+            "status": true,
+            "global": false,
+            "template": "heroes/simple"
         },
         {
             "data": [
@@ -52,8 +60,38 @@
             "config": null,
             "status": true,
             "global": false,
-            "template": "sliders/image",
-            "order": 2
+            "template": "sliders/image"
+        },
+        {
+            "data": null,
+            "config": null,
+            "status": true,
+            "global": false,
+            "template": "information/developer"
+        },
+        {
+            "data": null,
+            "config": null,
+            "status": true,
+            "global": false,
+            "template": "footer/main"
         }
-    ]
+    ],
+    "user": {
+        "_id": "59392b4ab2f64b14e95cee79",
+        "first_name": "Boris",
+        "email": "boris@fleava.com",
+        "username": "borislemke",
+        "role_id": 1,
+        "deleted_at": null,
+        "updated_at": "2017-06-08T10:47:38.167Z",
+        "created_at": "2017-06-08T10:47:38.167Z",
+        "last_login": null,
+        "status": true,
+        "image": "avatar.jpg",
+        "last_name": "Lemke",
+        "social_accounts": {
+            "twitter": "borislemke"
+        }
+    }
 }

@@ -9,7 +9,7 @@ import {
 } from './middlewares'
 import { blogPostsFeedMiddleware, mediaFilesFeedMiddleware, websitePagesFeedMiddleware } from './data_feed'
 import { RendererRouter } from '../renderer'
-import { RequestKeys } from '../helpers/request_keys'
+import { currentTemplateMiddleware } from './middlewares/current_template'
 
 export const webRouter: Router = express.Router()
 
@@ -29,15 +29,7 @@ webRouter.use(defaultPageMiddleware)
 // if it does not exists, continue request to render.
 webRouter.use(websiteCacheMiddleware)
 
-webRouter.use((req, res, next) => {
-  /**
-   * TODO(production): Dynamic template selection
-   * @date - 7/10/17
-   * @time - 7:36 PM
-   */
-  req.app.locals[RequestKeys.CurrentTemplate] = 'fortress'
-  next()
-})
+webRouter.use(currentTemplateMiddleware)
 
 // DATA FEED MUST RESIDE BELOW THE CACHE MIDDLEWARE
 /**

@@ -23,7 +23,7 @@ export { SystemUserGroupSchema } from './system_user_group'
 export { WebsiteNavigationSchema } from './website_navigation'
 export { WebsiteNavigationGroupSchema } from './website_navigation_group'
 export {
-    WebsitePageModuleSchema,
+    WebsitePageSectionSchema,
     WebsitePageSchema
 } from './website_page'
 

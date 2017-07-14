@@ -33,9 +33,11 @@ export const pageLoaderMiddleware = (req: Request, res: Response, next: NextFunc
     }
     WebsitePageModel
       .findOne({[`url.${req.app.locals[RequestKeys.CurrentLanguage]}`]: pageUrl})
+      .populate('user')
       .lean()
       .exec((err, pageObject) => {
         if (err) {
+          console.log('error fetching page object\n', err)
           /**
            * TODO(error): Error handling
            * @date - 7/9/17
@@ -44,6 +46,11 @@ export const pageLoaderMiddleware = (req: Request, res: Response, next: NextFunc
           return res.sendStatus(500)
         }
         if (!pageObject) {
+          /**
+           * TODO(error): Custom 404 page
+           * @date - 7/14/17
+           * @time - 4:42 PM
+           */
           return void res.sendStatus(404)
         }
         // save pageObject into request

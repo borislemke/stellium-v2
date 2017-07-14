@@ -1,0 +1,61 @@
+$fpurple: rgba(219,83,232,1);
+$forange: rgba(255,154,61,1);
+
+:host {
+    height: 100vh;
+    display: flex;
+    max-height: 640px;
+    min-height: 320px;
+    align-items: center;
+    position: relative;
+    color: #f2f2f2;
+
+    .skewed-background {
+        top: -30vh;
+        left: 0;
+        right: 0;
+        bottom: 10vh;
+        position: absolute;
+        transform: skewY(-8deg);
+        transform-origin: 0 100%;
+        background-color: #262b3a;
+        //background: linear-gradient(45deg, #262b3a 0%, lighten(#262b3a, 5%) 100%);
+
+        .skewed-block {
+            opacity: .28;
+            position: absolute;
+
+            &.bottom-left {
+                bottom: 0;
+                left: 0;
+                height: 12rem;
+                width: 28rem;
+                background-color: $forange;
+            }
+
+            &.top-right {
+                top: 0;
+                right: 0;
+                height: 14rem;
+                width: 32rem;
+                background-color: $fpurple;
+            }
+        }
+    }
+
+    .header-wrapper {
+        max-width: 480px;
+        margin-left: 20vw;
+        position: relative;
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 400;
+        }
+
+        p {
+            font-size: 1rem;
+            margin: 1.4rem 0;
+        }
+    }
+}

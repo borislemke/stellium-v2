@@ -1,0 +1,33 @@
+:host {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 4rem;
+    position: fixed;
+    z-index: 100;
+
+    .menu-wrapper {
+        height: 4rem;
+        line-height: 4rem;
+        display: flex;
+        justify-content: space-between;
+
+        .logo-wrapper {
+            color: white;
+            font-size: 1.4rem;
+        }
+
+        .search-wrapper {
+            input {
+                color: white;
+                width: 240px;
+                border: none;
+                outline: none;
+                padding: .5rem;
+                background: none;
+                font-size: 0.86rem;
+                border-bottom: 1px solid white;
+            }
+        }
+    }
+}
