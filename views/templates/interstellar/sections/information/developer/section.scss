@@ -1,0 +1,33 @@
+:host {
+
+    h2 {
+        font-size: 1.6rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        color: rgba(10, 20, 30, .86);
+    }
+
+    .features-wrapper {
+        display: flex;
+
+        .feature-item-wrapper {
+            width: 33.33%;
+            padding: 1rem;
+
+            .feature-item {
+                padding: 2rem;
+                background-color: white;
+                border: 1px solid rgba(10, 20, 30, .05);
+                box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
+
+                .feature-title {
+                    font-size: 1.2rem;
+                    margin-bottom: 1.5rem;
+                }
+
+                .feature-info {
+                }
+            }
+        }
+    }
+}

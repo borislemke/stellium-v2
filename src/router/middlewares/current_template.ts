@@ -9,7 +9,7 @@ export const currentTemplateMiddleware = (req: Request, res: Response, next: Nex
    * @date - 7/10/17
    * @time - 7:36 PM
    */
-  req.app.locals[RequestKeys.CurrentTemplate] = 'fortress'
-  req.app.locals[RequestKeys.CurrentTemplatePath] = resolve(Globals.TemplatesPath, 'fortress')
+  req.app.locals[RequestKeys.CurrentTemplate] = 'interstellar'
+  req.app.locals[RequestKeys.CurrentTemplatePath] = resolve(Globals.TemplatesPath, 'interstellar')
   next()
 }

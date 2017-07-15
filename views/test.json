@@ -70,6 +70,12 @@
             "template": "information/developer"
         },
         {
+            "template": "information/features"
+        },
+        {
+            "template": "information/get-started"
+        },
+        {
             "data": null,
             "config": null,
             "status": true,

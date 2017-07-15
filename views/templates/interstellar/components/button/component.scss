@@ -1,6 +1,6 @@
 :host {
     height: 38px;
-    padding: 0 1.6rem;
+    padding: 0 2rem;
     font-size: .86rem;
     line-height: 38px;
     margin-right: .5rem;
@@ -11,9 +11,10 @@
     transition: all 330ms ease;
 
     &.blue {
-        color: #2196F3;
+        color: white;
         font-weight: 400;
         border-color: #2196F3;
+        background-color: #2196F3;
     }
 
     &.green {

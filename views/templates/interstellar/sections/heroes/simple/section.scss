@@ -2,16 +2,18 @@ $fpurple: rgba(219,83,232,1);
 $forange: rgba(255,154,61,1);
 
 :host {
+    margin: 1rem;
     height: 100vh;
     display: flex;
+    color: #f2f2f2;
+    overflow: hidden;
     max-height: 640px;
     min-height: 320px;
-    align-items: center;
     position: relative;
-    color: #f2f2f2;
+    align-items: center;
 
     .skewed-background {
-        top: -30vh;
+        top: -10vh;
         left: 0;
         right: 0;
         bottom: 10vh;
@@ -56,6 +58,18 @@ $forange: rgba(255,154,61,1);
         p {
             font-size: 1rem;
             margin: 1.4rem 0;
+
+            &.hint {
+                margin: 0;
+                opacity: .64;
+                font-size: .86rem;
+                margin-left: 1rem;
+            }
+        }
+
+        .action {
+            display: flex;
+            align-items: center;
         }
     }
 }

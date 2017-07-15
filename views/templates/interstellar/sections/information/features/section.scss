@@ -1,0 +1,27 @@
+:host {
+
+    .features-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+
+        .feature-item {
+            width: 50%;
+            padding: 1rem;
+            box-sizing: border-box;
+
+            .feature-subtitle {
+                font-size: .72rem;
+                text-transform: uppercase;
+            }
+
+            .feature-title {
+                font-size: 1.2rem;
+                margin-bottom: 1rem;
+            }
+
+            .feature-description {
+                font-size: .86rem;
+            }
+        }
+    }
+}
