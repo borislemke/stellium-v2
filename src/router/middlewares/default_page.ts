@@ -4,6 +4,7 @@ import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
 import { RequestKeys } from '../../helpers/request_keys'
 import { Globals } from '../../globals'
+import { RaygunClient } from '../../utils/raygun'
 
 const redisDefaultPageClient = createClient({db: RedisTable.DefaultPage})
 
@@ -23,11 +24,7 @@ export const defaultPageMiddleware = (req, res, next): void => {
 
     redisDefaultPageClient.get(cacheKey, (err, cachedDefaultPage) => {
       if (err) {
-        /**
-         * TODO(error): Error handling
-         * @date - 7/7/17
-         * @time - 8:00 PM
-         */
+        RaygunClient.send(err)
       }
       if (cachedDefaultPage) {
         req.url = (JSON.parse(cachedDefaultPage)).url[currentLanguage]
@@ -42,6 +39,8 @@ export const defaultPageMiddleware = (req, res, next): void => {
         .exec((err, page: any) => {
           if (err) {
             // TODO(error): Error handling, no default page found
+            RaygunClient.send(err)
+            return void res.sendStatus(404)
           }
           if (!page) {
             if (Globals.Production) {

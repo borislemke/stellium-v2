@@ -1,0 +1,7 @@
+<label for="<%= Component.id %>"
+       class="<%= Component.class %>">
+    <%= Component.data.label %>
+    <input type="<%= Component.data.type ? Component.data.type : 'text' %>"
+           id="<%= Component.id %>" name="<%= Component.data.name %>"
+           placeholder="<%= Component.data.placeholder %>">
+</label>

@@ -4,45 +4,45 @@ import { Translatable } from './_common'
 import { EcommerceProductVariantSchema } from './ecommerce_product_variant'
 
 export interface VariantOptions {
-    key: string
-    label: Translatable
-    values: string[]
+  key: string
+  label: Translatable
+  values: string[]
 }
 
 export interface InclusionObject {
-    include: string
-    exclude: string
+  include: string
+  exclude: string
 }
 
 export interface Visibility {
-    countries: InclusionObject
-    languages: InclusionObject
-    sales_channel_ids: string[]
+  countries: InclusionObject
+  languages: InclusionObject
+  sales_channel_ids: string[]
 }
 
 export interface EcommerceProductSchema {
-    _id?: string
+  _id?: string
 
-    title: Translatable
-    url: Translatable
-    meta: Translatable
-    description: Translatable
+  title: Translatable
+  url: Translatable
+  meta: Translatable
+  description: Translatable
 
-    tags: string[]
-    gallery_ids: string[]
-    gallery: MediaFileSchema[]
-    variant_options: VariantOptions
+  tags: string[]
+  gallery_ids: string[]
+  gallery: MediaFileSchema[]
+  variant_options: VariantOptions
 
-    variants?: EcommerceProductVariantSchema[]
+  variants?: EcommerceProductVariantSchema[]
 
-    collection_id: string
-    type_id: string
-    visibility: Visibility
-    user_id: string
+  collection_id: string
+  type_id: string
+  visibility: Visibility
+  user_id: string
 
-    user?: SystemUserSchema
+  user?: SystemUserSchema
 
-    created_at?: Date
-    updated_at?: Date
-    deleted_at?: Date
+  created_at?: Date
+  updated_at?: Date
+  deleted_at?: Date
 }

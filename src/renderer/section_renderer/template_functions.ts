@@ -1,6 +1,7 @@
 import { Request } from 'express'
 import { MediaFileSchema } from '../../models/schemas/media_file'
 import { RequestKeys } from '../../helpers/request_keys'
+import { Translatable } from '../../models/schemas/_common'
 
 export interface MediaObject {
   source: string
@@ -8,26 +9,25 @@ export interface MediaObject {
 }
 
 export class DomCompiler {
-
-  constructor () {}
 }
 
 export class TemplateFunctions {
 
   domCompiler: DomCompiler = new DomCompiler()
 
-  mediaFiles: MediaFileSchema[]
+  MediaFiles: MediaFileSchema[]
+
+  private CurrentLanguages: string
 
   constructor (private req: Request) {
 
-    this.mediaFiles = req.app.locals[RequestKeys.DBMediaFiles]
+    this.CurrentLanguages = req.app.locals[RequestKeys.CurrentLanguage]
+
+    this.MediaFiles = req.app.locals[RequestKeys.DBMediaFiles]
   }
 
-  private _findMediaUrlById (id: string): string {
-
-    const match = this.mediaFiles.find(_media => _media._id === id)
-
-    return match && match.url
+  translate (translatabe: Translatable) {
+    return translatabe[this.CurrentLanguages]
   }
 
   mediaPath (media: MediaObject) {
@@ -38,5 +38,12 @@ export class TemplateFunctions {
       case 'internal':
         url = 'media/' + this._findMediaUrlById(media.url)
     }
+  }
+
+  private _findMediaUrlById (id: string): string {
+
+    const match = this.MediaFiles.find(_media => _media._id === id)
+
+    return match && match.url
   }
 }

@@ -1,21 +1,5 @@
 [
     {
-        "_id": "59392b4bb2f64b14e95cef1f",
-        "title": {
-            "id": "Chef Ryan Clift",
-            "en": "Chef Ryan Clift"
-        },
-        "meta": {
-            "id": "Chef Ryan Clift",
-            "en": "Chef Ryan Clift"
-        },
-        "url": {
-            "id": "koki",
-            "en": "the-chef"
-        },
-        "status": true
-    },
-    {
         "_id": "59392b4bb2f64b14e95cef1d",
         "title": {
             "id": "Beranda",
@@ -29,163 +13,230 @@
             "id": "beranda",
             "en": "home"
         },
-        "status": true
+        "default": true,
+        "cache": true,
+        "status": true,
+        "template": "main",
+        "theme_variables": {
+            "dark_nav": true
+        },
+        "header_script": "<script>console.log('Header: You are in', window.location)</script>",
+        "footer_script": "<script>console.log('Footer: You are in', window.location)</script>",
+        "navigation_group_id": "59392b4bb2f64b14e95cef1c",
+        "user_id": "59392b4ab2f64b14e95cee79",
+        "deleted_at": null,
+        "updated_at": "2017-06-07T10:47:39.542Z",
+        "created_at": "2017-06-07T10:47:39.540Z",
+        "sections": [
+            {
+                "data": null,
+                "config": null,
+                "status": true,
+                "global": false,
+                "template": "navigation/main"
+            },
+            {
+                "data": null,
+                "config": null,
+                "status": true,
+                "global": false,
+                "template": "heroes/simple"
+            },
+            {
+                "data": [
+                    {
+                        "title": {
+                            "en": "Home Slider 2"
+                        },
+                        "background": {
+                            "alt": {
+                                "en": "Home Slider 2"
+                            },
+                            "url": "headers/home-slider-1.jpg",
+                            "source": "media"
+                        },
+                        "order": 1
+                    }
+                ],
+                "config": null,
+                "status": true,
+                "global": false,
+                "template": "sliders/image"
+            },
+            {
+                "data": null,
+                "config": null,
+                "status": true,
+                "global": false,
+                "template": "information/developer"
+            },
+            {
+                "template": "information/features",
+                "data": [
+                    {
+                        "title": "Security",
+                        "subtitle": "SSL Certificate Included",
+                        "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                    },
+                    {
+                        "title": "Bookings",
+                        "subtitle": "Feature-Rich Booking System",
+                        "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                    },
+                    {
+                        "title": "Social Media",
+                        "subtitle": "All-in-One Social Media Integration",
+                        "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                    },
+                    {
+                        "title": "Security",
+                        "subtitle": "SSL Certificate Included",
+                        "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                    }
+                ]
+            },
+            {
+                "template": "information/get-started"
+            },
+            {
+                "data": null,
+                "config": null,
+                "status": true,
+                "global": false,
+                "template": "footer/main"
+            }
+        ],
+        "user": {
+            "_id": "59392b4ab2f64b14e95cee79",
+            "first_name": "Boris",
+            "email": "boris@fleava.com",
+            "username": "borislemke",
+            "role_id": 1,
+            "deleted_at": null,
+            "updated_at": "2017-06-08T10:47:38.167Z",
+            "created_at": "2017-06-08T10:47:38.167Z",
+            "last_login": null,
+            "status": true,
+            "image": "avatar.jpg",
+            "last_name": "Lemke",
+            "social_accounts": {
+                "twitter": "borislemke"
+            }
+        }
     },
     {
-        "_id": "59392b4bb2f64b14e95cef20",
+        "_id": "59392b4bb2f64b14e95cef1d",
         "title": {
-            "id": "Masakan dan Minuman",
-            "en": "Food + Drink"
+            "id": "Midtrans",
+            "en": "Midtrans"
         },
         "meta": {
-            "id": "Masakan dan Minuman",
-            "en": "Food + Drink"
+            "id": "Halaman Midtrans",
+            "en": "Midtrans Page"
         },
         "url": {
-            "id": "makanan-minuman",
-            "en": "food-drink"
+            "id": "midtrans",
+            "en": "midtrans"
         },
-        "status": true
+        "default": true,
+        "cache": true,
+        "status": true,
+        "template": "main",
+        "theme_variables": {
+            "dark_nav": true
+        },
+        "header_script": "<script>console.log('Header: You are in', window.location)</script>",
+        "footer_script": "<script>console.log('Footer: You are in', window.location)</script>",
+        "navigation_group_id": "59392b4bb2f64b14e95cef1c",
+        "user_id": "59392b4ab2f64b14e95cee79",
+        "deleted_at": null,
+        "updated_at": "2017-06-07T10:47:39.542Z",
+        "created_at": "2017-06-07T10:47:39.540Z",
+        "sections": [
+            {
+                "data": null,
+                "config": {
+                    "subtitle": {
+                        "en": "Engish subtitle",
+                        "id": "Judul Bahasa Indonesia"
+                    }
+                },
+                "status": true,
+                "global": false,
+                "template": "midtrans/checkout"
+            }
+        ],
+        "user": {
+            "_id": "59392b4ab2f64b14e95cee79",
+            "first_name": "Boris",
+            "email": "boris@fleava.com",
+            "username": "borislemke",
+            "role_id": 1,
+            "deleted_at": null,
+            "updated_at": "2017-06-08T10:47:38.167Z",
+            "created_at": "2017-06-08T10:47:38.167Z",
+            "last_login": null,
+            "status": true,
+            "image": "avatar.jpg",
+            "last_name": "Lemke",
+            "social_accounts": {
+                "twitter": "borislemke"
+            }
+        }
     },
     {
-        "_id": "59392b4bb2f64b14e95cef21",
+        "_id": "59392b4bb2f64b14e95cef1d",
         "title": {
-            "id": "Grow Up",
-            "en": "Grow Up"
+            "id": "Daftar Akun Stellium",
+            "en": "Register with Stellium"
         },
         "meta": {
-            "id": "Grow Up",
-            "en": "Grow Up"
+            "id": "Daftar Akun Stellium",
+            "en": "Register with Stellium"
         },
         "url": {
-            "id": "grow-up-id",
-            "en": "grow-up"
+            "id": "get-started",
+            "en": "get-started"
         },
-        "status": true
-    },
-    {
-        "_id": "59392b4bb2f64b14e95cef1e",
-        "title": {
-            "id": "Tentang Kami",
-            "en": "About Us"
+        "default": true,
+        "cache": true,
+        "status": true,
+        "template": "main",
+        "theme_variables": {
+            "dark_nav": true
         },
-        "meta": {
-            "id": "Tentang Kami",
-            "en": "About Us"
-        },
-        "url": {
-            "id": "tentang-kami",
-            "en": "about-us"
-        },
-        "status": true
-    },
-    {
-        "_id": "59392b4bb2f64b14e95cef24",
-        "title": {
-            "id": "Ruang Restoran",
-            "en": "The Space"
-        },
-        "meta": {
-            "id": "Ruang Restoran",
-            "en": "The Space"
-        },
-        "url": {
-            "id": "ruang-restoran",
-            "en": "the-space"
-        },
-        "status": true
-    },
-    {
-        "_id": "59392b4bb2f64b14e95cef25",
-        "title": {
-            "id": "Berita / Pers",
-            "en": "News / Press"
-        },
-        "meta": {
-            "id": "Berita / Pers",
-            "en": "News / Press"
-        },
-        "url": {
-            "id": "berita-pers",
-            "en": "news-press"
-        },
-        "status": true
-    },
-    {
-        "_id": "59392b4bb2f64b14e95cef22",
-        "title": {
-            "id": "Hidangan",
-            "en": "Menu"
-        },
-        "meta": {
-            "id": "Hidangan",
-            "en": "Menu"
-        },
-        "url": {
-            "id": "hidangan",
-            "en": "menu"
-        },
-        "status": true
-    },
-    {
-        "_id": "59392b4bb2f64b14e95cef23",
-        "title": {
-            "id": "Galeri",
-            "en": "Gallery"
-        },
-        "meta": {
-            "id": "Galeri",
-            "en": "Gallery"
-        },
-        "url": {
-            "id": "galeri",
-            "en": "gallery"
-        },
-        "status": true
-    },
-    {
-        "_id": "59392b4bb2f64b14e95cef26",
-        "title": {
-            "id": "Acara",
-            "en": "Event"
-        },
-        "meta": {
-            "id": "Acara",
-            "en": "Event"
-        },
-        "url": {
-            "id": "acara",
-            "en": "event"
-        },
-        "status": true
-    },
-    {
-        "_id": "59392b4bb2f64b14e95cef28",
-        "title": {
-            "en": "Page Not Found"
-        },
-        "meta": {
-            "en": "The page was not found"
-        },
-        "url": {
-            "en": "404"
-        },
-        "status": true
-    },
-    {
-        "_id": "59392b4bb2f64b14e95cef27",
-        "title": {
-            "id": "Hubungi Kami",
-            "en": "Contact Us"
-        },
-        "meta": {
-            "id": "Hubungi Kami",
-            "en": "Contact Us"
-        },
-        "url": {
-            "id": "hubungi-kami",
-            "en": "contact"
-        },
-        "status": true
+        "header_script": "<script type=\"text/javascript\" src=\"theme-static/interstellar/axios.js\"></script>",
+        "footer_script": "<script>console.log('Footer: You are in', window.location)</script>",
+        "navigation_group_id": "59392b4bb2f64b14e95cef1c",
+        "user_id": "59392b4ab2f64b14e95cee79",
+        "deleted_at": null,
+        "updated_at": "2017-06-07T10:47:39.542Z",
+        "created_at": "2017-06-07T10:47:39.540Z",
+        "sections": [
+            {
+                "data": null,
+                "config": null,
+                "status": true,
+                "global": false,
+                "template": "forms/register"
+            }
+        ],
+        "user": {
+            "_id": "59392b4ab2f64b14e95cee79",
+            "first_name": "Boris",
+            "email": "boris@fleava.com",
+            "username": "borislemke",
+            "role_id": 1,
+            "deleted_at": null,
+            "updated_at": "2017-06-08T10:47:38.167Z",
+            "created_at": "2017-06-08T10:47:38.167Z",
+            "last_login": null,
+            "status": true,
+            "image": "avatar.jpg",
+            "last_name": "Lemke",
+            "social_accounts": {
+                "twitter": "borislemke"
+            }
+        }
     }
 ]

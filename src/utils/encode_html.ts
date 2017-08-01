@@ -9,8 +9,8 @@ const entityMap = {
   '=': '&#x3D;'
 }
 
-export function EscapeHTML (string) {
-  return String(string).replace(/[&<>"'`=\/]/g, s => {
+export function EscapeHTML (str: string) {
+  return String(str).replace(/[&<>"'`=\/]/g, s => {
     return entityMap[s]
   })
 }

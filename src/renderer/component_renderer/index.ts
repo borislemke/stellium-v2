@@ -3,13 +3,9 @@ import { resolve } from 'path'
 import { load } from 'cheerio'
 import { render } from 'ejs'
 
-const componentMap = {}
-
-let _componentId = 0
+const componentTemplateCache = {}
 
 export const ComponentRenderer = (templatePath: string, renderData: any) => (componentName: string, componentData: any): string => {
-
-  // const componentId = componentMap[componentName] ? componentMap[componentName] : 'data-mt-component-' + ++_componentId
 
   const componentPath = resolve(templatePath, 'components', componentName, 'component.ejs')
 
@@ -17,7 +13,12 @@ export const ComponentRenderer = (templatePath: string, renderData: any) => (com
 
   try {
 
-    const componentString = readFileSync(componentPath, 'utf8')
+    const componentString = componentTemplateCache[componentName] || readFileSync(componentPath, 'utf8')
+
+    // Cache string read from template file
+    if (!componentTemplateCache[componentName]) {
+      componentTemplateCache[componentName] = componentString
+    }
 
     renderedComponent = render(componentString, {
       ...renderData,
@@ -26,9 +27,9 @@ export const ComponentRenderer = (templatePath: string, renderData: any) => (com
 
     const $ = load(renderedComponent, {xmlMode: true})
 
-    $('*').first().attr('data-component-host-' + componentName, '')
+    $('*').first().attr('data-mtchost-' + componentName, '')
 
-    $('*').attr('data-component-content-' + componentName, '')
+    $('*').attr('data-mtccont-' + componentName, '')
 
     renderedComponent = $.html()
 

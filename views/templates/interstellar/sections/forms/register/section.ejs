@@ -1,0 +1,41 @@
+<form id="register">
+
+    <%- ComponentRenderer('input', {
+        data: {
+            label: 'Full Name',
+            placeholder: 'Boris Lemke',
+            name: 'full_name'
+        }
+    }) %>
+
+    <%- ComponentRenderer('input', {
+        data: {
+            label: 'Email',
+            type: 'email',
+            name: 'email',
+            placeholder: 'dimaslemke@gmail.com'
+        }
+    }) %>
+
+    <%- ComponentRenderer('input', {
+        data: {
+            label: 'Password',
+            placeholder: 'dimaslemke@gmail.com',
+            type: 'password',
+            name: 'password'
+        }
+    }) %>
+
+    <label for="eula" style="font-size: .64rem;">
+        <input type="checkbox" id="eula" name="eula"/>
+        I agree to the <a href="">Terms of Service</a> & <a href="">Privacy Policy</a>
+    </label>
+
+    <%- ComponentRenderer('button', {
+        button: true,
+        'class': 'blue',
+        data: {
+            text: 'Continue'
+        }
+    }) %>
+</form>

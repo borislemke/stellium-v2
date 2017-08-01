@@ -11,7 +11,17 @@
 
             .feature-subtitle {
                 font-size: .72rem;
+                margin-bottom: 1rem;
                 text-transform: uppercase;
+
+              &:after {
+                height: 1px;
+                content: "";
+                width: 2.5rem;
+                display: block;
+                margin-top: .5rem;
+                background-color: #6b7c93;
+              }
             }
 
             .feature-title {

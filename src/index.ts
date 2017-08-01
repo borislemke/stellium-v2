@@ -1,53 +1,75 @@
-/*
- Request
- --> Pull data
- */
-
 import 'source-map-support/register'
 import './dev'
 import * as express from 'express'
 import { Application } from 'express'
 import * as mongoose from 'mongoose'
-import { resolve } from 'path'
-import { Globals } from './globals'
-import { webRouter } from './router/index'
-import { apiRouter } from './api/index'
+import { ConnectionOptions } from 'mongoose'
+import { ApiRouter } from './api/index'
+import { WebRouter } from './router/index'
 import { RegistryMiddleware } from './registry/index'
+import { StaticFilesHandler } from './helpers/static_files'
+import { RaygunClient } from './utils/raygun'
 
 // Main express app
 const app: Application = express()
 
+// Raygun middleware to log request errors
+app.use(RaygunClient.expressHandler)
+
+/**
+ * Registry Middleware for checking whether the domain is a registered domain
+ * with Stellium.
+ */
 app.use(RegistryMiddleware)
 
 // API Router
-app.use('/api', apiRouter)
+app.use(
+  '/api',
+  ApiRouter
+)
 
-app.get('/theme-static/:themeName/*', (req, res) => {
+app.get(
+  '/theme-static/:themeName/*',
+  StaticFilesHandler
+)
 
-  res.sendFile(resolve(Globals.TemplatesPath, req.params.themeName, 'public', req.params[0]), err => {
-    if (err) {
-      res.sendStatus(err.status)
-    }
-  })
+/**
+ * TODO(prod): Serve stellium icon
+ * @date - 31-07-2017
+ * @time - 23:59
+ */
+// Some browsers will attempt to fetch a favicon for error pages
+app.get('/favicon.ico', (req, res) => {
+  res.sendStatus(404)
 })
 
 // WEB Router
-app.use(webRouter)
+app.use(WebRouter)
 
-const port = process.env.SERVICE_PORT
+let port: string = process.env.SERVICE_PORT
 
-if (!port) {
-  console.warn(`No port set, server will listen on port 3000`)
-}
+  /**
+   * The default mongoose.Promise is deprecated. For whatever reason it has not been
+   * replaced by the developers until now so we have to plug in the native Promise
+   * library as it's replacement.
+   * @type {Function}
+   */
+;(mongoose as any).Promise = global.Promise
 
-(mongoose as any).Promise = global.Promise
-mongoose.connect('mongodb://localhost/growbali-dev', {useMongoClient: true} as any, err => {
+const connectionHandler = (err: any) => {
 
+  port || (port = '3000')
   if (err) {
     throw err
   }
 
-  app.listen(port, () => {
-    console.log('Server listening on port:', port)
-  })
-})
+  app.listen(port, () => console.log('Server listening on port:', port))
+}
+
+const databaseName = process.env.DATABASE_NAME || 'growbali-dev'
+
+mongoose.connect(
+  'mongodb://localhost/' + databaseName,
+  {useMongoClient: true} as ConnectionOptions,
+  err => connectionHandler(err)
+)

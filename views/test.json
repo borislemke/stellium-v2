@@ -70,7 +70,29 @@
             "template": "information/developer"
         },
         {
-            "template": "information/features"
+            "template": "information/features",
+            "data": [
+                {
+                    "title": "Security",
+                    "subtitle": "SSL Certificate Included",
+                    "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                },
+                {
+                    "title": "Bookings",
+                    "subtitle": "Feature-Rich Booking System",
+                    "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                },
+                {
+                    "title": "Social Media",
+                    "subtitle": "All-in-One Social Media Integration",
+                    "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                },
+                {
+                    "title": "Security",
+                    "subtitle": "SSL Certificate Included",
+                    "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                }
+            ]
         },
         {
             "template": "information/get-started"

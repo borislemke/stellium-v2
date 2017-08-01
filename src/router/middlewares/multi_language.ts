@@ -6,6 +6,8 @@ import { SystemLanguageModel } from '../../models/models/system_language'
 import { RequestKeys } from '../../helpers/request_keys'
 import { errorPageRenderer } from '../../renderer/error_handler'
 import { WriteStub } from '../../utils/write_stub'
+import { Globals } from '../../globals'
+import { RaygunClient } from '../../utils/raygun'
 
 const redisLanguageClient = createClient({db: RedisTable.SystemLanguage})
 
@@ -15,38 +17,38 @@ export const multiLanguageMiddleware = (req: Request, res: Response, next: NextF
 
   redisLanguageClient.get(cacheKey, (err, langs) => {
     if (err) {
-      /**
-       * TODO(error): Error handling
-       * @date - 7/7/17
-       * @time - 3:26 PM
-       */
+      RaygunClient.send(err)
     }
+
     if (langs) {
       req.app.locals[RequestKeys.DBLanguages] = JSON.parse(langs)
       return void next()
     }
 
     SystemLanguageModel
-      // Only query languages that are enabled
-      // this is determined by the status property[boolean]
+    // Only query languages that are enabled
+    // this is determined by the status property[boolean]
       .find({status: true})
       .select('title code status default')
       .lean()
       .exec((err, _languages) => {
         if (err) {
           console.log('err\n', err)
+          RaygunClient.send(err)
           return void errorPageRenderer(req, res)
         }
+
         if (!_languages || !(_languages as any[]).length) {
-          // TODO(error): Error handling, no system languages found
-          _languages = [
-            {
-              code: 'en',
-              'default': true,
-              title: 'English'
-            }
-          ]
+
+          if (Globals.Production) {
+            RaygunClient.send(new Error('No system languages found'))
+            return void res.sendStatus(500)
+          }
+
+          delete require.cache[Globals.SeederPath + '/system_languages.json']
+          _languages = require(Globals.SeederPath + '/system_languages.json')
         }
+
         WriteStub(_languages, 'system_languages')
         redisLanguageClient.set(cacheKey, JSON.stringify(_languages))
         req.app.locals[RequestKeys.DBLanguages] = _languages

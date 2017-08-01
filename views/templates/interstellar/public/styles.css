@@ -57,7 +57,7 @@ html, body {
     font-size: 16px;
     color: rgba(10, 20, 30, .86);
     font-family: 'Open Sans', sans-serif;
-    background-color: #f6f9fc;
+    /*background-color: #f6f9fc;*/
 }
 
 p {

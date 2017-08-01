@@ -20,15 +20,15 @@ import { HasUser, SoftDelete, Translatable } from './_common'
  * ]
  */
 export interface CustomCollectionSchema extends HasUser, SoftDelete {
-    _id?: string
-    collection_id?: string
-    meta?: {
-        title: Translatable,
-        url: Translatable,
-        meta: Translatable
-    }
-    content?: {
-        field: string,
-        value: any
-    }[]
+  _id?: string
+  collection_id?: string
+  meta?: {
+    title: Translatable,
+    url: Translatable,
+    meta: Translatable
+  }
+  content?: {
+    field: string,
+    value: any
+  }[]
 }

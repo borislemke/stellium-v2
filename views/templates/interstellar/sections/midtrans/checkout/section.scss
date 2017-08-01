@@ -1,0 +1,60 @@
+.flexbox {
+  display: flex;
+}
+
+.flex {
+  flex: 1 1 auto;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+button {
+  color: #2196F3;
+  cursor: pointer;
+  font-size: .86rem;
+  border-radius: 2px;
+  padding: .75rem 1.5rem;
+  border: 1px solid #2196F3;
+  background-color: transparent;
+}
+
+:host {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(10, 20, 30, .24);
+
+  form {
+    width: 280px;
+    padding: 1rem;
+    padding-right: .5rem;
+    background-color: white;
+    border: 1px solid rgba(10, 20, 30, .24);
+    box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+
+    h1 {
+      font-size: 1.2rem;
+      color: rgba(10, 20, 30, .86);
+    }
+
+    .subtitle {
+      font-weight: 300;
+      font-size: .86rem;
+    }
+
+    .expiry-wrapper {
+      width: 280px;
+    }
+
+    button {
+      margin-top: 1rem;
+    }
+  }
+}

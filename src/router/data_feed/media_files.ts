@@ -5,6 +5,7 @@ import { stringToCacheKey } from '../../helpers/url_cache'
 import { RequestKeys } from '../../helpers/request_keys'
 import { WriteStub } from '../../utils/write_stub'
 import { MediaFileModel } from '../../models/models/media_file'
+import { RaygunClient } from '../../utils/raygun'
 
 const redisBlogClient = createClient({db: RedisTable.MediaFiles})
 
@@ -13,13 +14,11 @@ export const mediaFilesFeedMiddleware = (req: Request, res: Response, next: Next
   const cacheKey = stringToCacheKey(req.hostname)
 
   redisBlogClient.get(cacheKey, (err, cachedMedia) => {
+
     if (err) {
-      /**
-       * TODO(error): Error handling
-       * @date - 7/7/17
-       * @time - 3:52 PM
-       */
+      RaygunClient.send(err)
     }
+
     if (cachedMedia) {
       req.app.locals[RequestKeys.DBMediaFiles] = JSON.parse(cachedMedia)
       return void next()
@@ -31,11 +30,7 @@ export const mediaFilesFeedMiddleware = (req: Request, res: Response, next: Next
       .lean()
       .exec((err, media) => {
         if (err) {
-          /**
-           * TODO(error): Error handling
-           * @date - 7/7/17
-           * @time - 3:50 PM
-           */
+          RaygunClient.send(err)
           return void res.sendStatus(500)
         }
         WriteStub(media, 'media_files')

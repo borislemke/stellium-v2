@@ -3,6 +3,7 @@ import { parse, stringify } from 'css'
 import { resolve } from 'path'
 import { map } from 'async'
 import { render } from 'node-sass'
+import { RaygunClient } from '../../utils/raygun'
 
 const compileStyleFile = (filePath: string, cb: (err: any, compileStyles: string) => void): void => {
 
@@ -25,11 +26,25 @@ const compileStyleFile = (filePath: string, cb: (err: any, compileStyles: string
 
       _cssRule['selectors'] = _cssRule['selectors'].map(_rule => {
 
-        const componentContent = `[data-component-content-${componentName}]`
+        const componentContent = `[data-mtccont-${componentName}]`
 
-        const componentHost = `[data-component-host-${componentName}]`
+        const componentHost = `[data-mtchost-${componentName}]`
 
         _rule = _rule.replace(':host', componentHost)
+
+        /**
+         * TODO(opt): Optimise : and :: compilation
+         * @date - 28-07-2017
+         * @time - 21:09
+         */
+        if (_rule.includes('::')) {
+
+          // :host div:first-child -> [':host div', 'first-child']
+          const pseudoDelimited = _rule.split('::')
+
+          // [':host div', 'first-child'] -> ':host div[data-section-content-XYZ-1]:first-child'
+          return pseudoDelimited.join(componentContent + '::')
+        }
 
         if (_rule.includes(':')) {
 
@@ -37,6 +52,7 @@ const compileStyleFile = (filePath: string, cb: (err: any, compileStyles: string
 
           return pseudoDelimited.join(componentContent + ':')
         }
+
         return _rule + componentContent
       })
     })
@@ -54,11 +70,7 @@ export const ComponentsStylesCompiler = (templatePath: string, cb: (err: any, co
   glob(componentStylesPath, (err, styleFiles) => {
 
     if (err) {
-      /**
-       * TODO(error): Error handling, glob failed o scan style files
-       * @date - 7/14/17
-       * @time - 3:15 PM
-       */
+      RaygunClient.send(err)
       return void cb(err)
     }
 

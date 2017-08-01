@@ -1,53 +1,54 @@
 import { SystemUserSchema } from './system_user'
+
 export interface Translatable {
-    [code: string]: any
+  [code: string]: any
 }
 
 export type DDate = Date | number
 
 export interface Timestamps {
-    created_at?: DDate
-    updated_at?: DDate
+  created_at?: DDate
+  updated_at?: DDate
 }
 
 export interface SoftDelete extends Timestamps {
-    deleted_at?: DDate
+  deleted_at?: DDate
 }
 
 export interface Identification {
-    id?: number | string
-    _id?: number | string
+  id?: number | string
+  _id?: number | string
 }
 
 export interface SEOFields {
-    title?: string
-    meta?: string
-    url?: string
+  title?: string
+  meta?: string
+  url?: string
 }
 
 export interface TranslatableSEOFields {
-    title?: Translatable
-    meta?: Translatable
-    url?: Translatable
+  title?: Translatable
+  meta?: Translatable
+  url?: Translatable
 }
 
 export interface HasUser {
-    user_id?: string
-    user?: SystemUserSchema
+  user_id?: string
+  user?: SystemUserSchema
 }
 
 // Internal
 export interface Credentials {
-    hash: string
-    salt: string
+  hash: string
+  salt: string
 }
 
 export interface UserActionSchema {
-    user_id?: string // ObjectID reference to the user that made the action
-    action?: string // 'created', 'updated', 'deleted', 'resurrected'
-    timestamp?: Date
+  user_id?: string // ObjectID reference to the user that made the action
+  action?: string // 'created', 'updated', 'deleted', 'resurrected'
+  timestamp?: Date
 }
 
 export interface HasActionsLog {
-    actions: UserActionSchema
+  actions: UserActionSchema
 }

@@ -1,10 +1,13 @@
 import { readFile } from 'fs'
+import { assignHoistId, HoistType } from '../utils/hoist_id'
+import { Globals } from '../../globals'
+import { RaygunClient } from '../../utils/raygun'
 
 const cachedScripts = {}
 
 export const scriptsCompiler = (sectionData: any) => (cb: (err: any, compiledScript: any) => void): void => {
 
-  if (cachedScripts[sectionData.templateName]) {
+  if (cachedScripts[sectionData.templateName] && Globals.Production) {
     return void cb(null, cachedScripts[sectionData.templateName])
   }
 
@@ -16,11 +19,15 @@ export const scriptsCompiler = (sectionData: any) => (cb: (err: any, compiledScr
       if (err.code === 'ENOENT') {
         return void cb(null, '')
       }
+      RaygunClient.send(err)
       return void cb(err, '')
     }
 
     // TODO(revisit)
-    script = script.replace(':host', `data-section-content-${sectionData.sectionId}`)
+    script = script.replace(
+      ':host',
+      assignHoistId(HoistType.Content, sectionData.sectionId, false)
+    )
 
     cachedScripts[sectionData.templateName] = script
 

@@ -1,6 +1,6 @@
 import * as minifier from 'html-minifier'
-const minify = minifier.minify
 
+const minify = minifier.minify
 
 /**
  * Global template minifier
@@ -22,6 +22,6 @@ export const minifyTemplate = (html: string, aggressive: boolean = false): strin
     // Minify inline JavaScript
     minifyJS: aggressive,
     // Minify inline css
-    minifyCSS: aggressive,
+    minifyCSS: aggressive
   })
 }

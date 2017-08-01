@@ -11,25 +11,25 @@ import { blogPostsFeedMiddleware, mediaFilesFeedMiddleware, websitePagesFeedMidd
 import { RendererRouter } from '../renderer'
 import { currentTemplateMiddleware } from './middlewares/current_template'
 
-export const webRouter: Router = express.Router()
+export const WebRouter: Router = express.Router()
 
-webRouter.use(systemSettingsMiddleware)
+WebRouter.use(systemSettingsMiddleware)
 
 // Determine current language flag / => /en
-webRouter.use(multiLanguageMiddleware)
+WebRouter.use(multiLanguageMiddleware)
 
 // Defines the language for the current request
-webRouter.use(currentLanguageMiddleware)
+WebRouter.use(currentLanguageMiddleware)
 
 // Determine the default page URL
 // /en => /home, /en/blah => /blah
-webRouter.use(defaultPageMiddleware)
+WebRouter.use(defaultPageMiddleware)
 
 // Attempt to retrieve a cached version of the requested page,
 // if it does not exists, continue request to render.
-webRouter.use(websiteCacheMiddleware)
+WebRouter.use(websiteCacheMiddleware)
 
-webRouter.use(currentTemplateMiddleware)
+WebRouter.use(currentTemplateMiddleware)
 
 // DATA FEED MUST RESIDE BELOW THE CACHE MIDDLEWARE
 /**
@@ -43,7 +43,7 @@ webRouter.use(currentTemplateMiddleware)
  * - meta
  * - metrics
  */
-webRouter.use(blogPostsFeedMiddleware)
+WebRouter.use(blogPostsFeedMiddleware)
 
 /**
  * Accessible properties of WebsitePage
@@ -52,12 +52,15 @@ webRouter.use(blogPostsFeedMiddleware)
  * - url
  * - status
  */
-webRouter.use(websitePagesFeedMiddleware)
+WebRouter.use(websitePagesFeedMiddleware)
 
-webRouter.use(mediaFilesFeedMiddleware)
+WebRouter.use(mediaFilesFeedMiddleware)
 
-webRouter.use(RendererRouter)
+WebRouter.use(RendererRouter)
 
-webRouter.use((req: Request, res: Response) => {
+WebRouter.use((req: Request, res: Response) => {
+
+  console.log('Last resort')
+
   res.sendStatus(404)
 })

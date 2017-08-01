@@ -1,0 +1,52 @@
+<div class="form-wrapper">
+
+    <form id="payment-form">
+
+        <h1>Checkout - Snap</h1>
+
+        <p class="subtitle"><%= TemplateFunctions.translate(section.config.subtitle) %></p>
+
+        <%- ComponentRenderer('input', {
+            id: 'input-name',
+            data: {
+                label: 'Card Holder',
+                placeholder: 'Dimas'
+            }
+        }) %>
+
+        <%- ComponentRenderer('input', {
+            id: 'input-cc',
+            data: {
+                label: 'Card Number',
+                placeholder: '4811 1111 1111 1114'
+            }
+        }) %>
+
+        <div class="flexbox expiry-wrapper">
+            <%- ComponentRenderer('input', {
+                id: 'input-month',
+                class: 'w-50',
+                data: {
+                    label: 'Month',
+                    placeholder: '01',
+                    type: 'number'
+                }
+            }) %>
+            <%- ComponentRenderer('input', {
+                id: 'input-year',
+                class: 'w-50',
+                data: {
+                    label: 'Year',
+                    placeholder: '20',
+                    type: 'number'
+                }
+            }) %>
+        </div>
+
+        <div class="flexbox justify-end" style="padding-right: .5rem;">
+            <button>
+                <span>Pay Now</span>
+            </button>
+        </div>
+    </form>
+</div>

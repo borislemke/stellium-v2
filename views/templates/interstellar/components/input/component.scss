@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  font-weight: 600;
+  font-size: 0.64rem;
+  margin-top: .86rem;
+  padding-right: .5rem;
+  box-sizing: border-box;
+  flex-direction: column;
+  text-transform: uppercase;
+  color: rgba(10, 20, 30, 0.4);
+
+  input {
+    outline: none;
+    padding: .5rem;
+    font-size: 1rem;
+    margin-top: .25rem;
+    border-radius: 2px;
+    box-sizing: border-box;
+    border: 1px solid rgba(10, 20, 30, .1);
+    transition: border-color 110ms ease;
+
+    $placeholder_color: rgba(10, 20, 30, .24);
+    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: $placeholder_color;
+    }
+    &::-moz-placeholder { /* Firefox 19+ */
+      color: $placeholder_color;
+    }
+    &:-ms-input-placeholder { /* IE 10+ */
+      color: $placeholder_color;
+    }
+    &:-moz-placeholder { /* Firefox 18- */
+      color: $placeholder_color;
+    }
+
+    &:focus {
+      border-color: #2196F3;
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { stringToCacheKey } from '../../helpers/url_cache'
 import { BlogPostModel } from '../../models/models/blog_post'
 import { RequestKeys } from '../../helpers/request_keys'
 import { WriteStub } from '../../utils/write_stub'
+import { RaygunClient } from '../../utils/raygun'
 
 const redisBlogClient = createClient({db: RedisTable.BlogPosts})
 
@@ -20,11 +21,7 @@ export const blogPostsFeedMiddleware = (req: Request, res: Response, next: NextF
 
   redisBlogClient.get(cacheKey, (err, posts) => {
     if (err) {
-      /**
-       * TODO(error): Error handling
-       * @date - 7/7/17
-       * @time - 3:52 PM
-       */
+      RaygunClient.send(err)
     }
     if (posts) {
       req.app.locals[RequestKeys.DBPosts] = JSON.parse(posts)
@@ -40,11 +37,7 @@ export const blogPostsFeedMiddleware = (req: Request, res: Response, next: NextF
       .lean()
       .exec((err, posts) => {
         if (err) {
-          /**
-           * TODO(error): Error handling
-           * @date - 7/7/17
-           * @time - 3:50 PM
-           */
+          RaygunClient.send(err)
           return void res.sendStatus(500)
         }
         WriteStub(posts, 'blog_posts')

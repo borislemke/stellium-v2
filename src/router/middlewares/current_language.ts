@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { RequestKeys } from '../../helpers/request_keys'
+import { RaygunClient } from '../../utils/raygun'
 
 const hasLanguageCode = (url: string): [boolean, string] => {
   const stripped = url.replace(/^\/+|\/+$/g, '')
@@ -19,13 +20,7 @@ export const currentLanguageMiddleware = (req: Request, res: Response, next: Nex
   let defaultLanguage = languages.find(_lang => _lang.default)
 
   if (!defaultLanguage) {
-    console.log('No defaultLanguage')
-    /**
-     * TODO(error): Error handling, no default language set
-     * TODO(error): Add to health check!
-     * @date - 7/7/17
-     * @time - 7:02 PM
-     */
+    RaygunClient.send(new Error('No default language found'))
     defaultLanguage = languages[0]
   }
 

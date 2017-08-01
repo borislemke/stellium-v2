@@ -5,6 +5,7 @@ import { stringToCacheKey } from '../../helpers/url_cache'
 import { SystemSettingsModel } from '../../models/models/system_settings'
 import { RequestKeys } from '../../helpers/request_keys'
 import { WriteStub } from '../../utils/write_stub'
+import { RaygunClient } from '../../utils/raygun'
 
 const redisSettingsClient = createClient({db: RedisTable.SystemSettings})
 
@@ -14,11 +15,7 @@ export const systemSettingsMiddleware = (req: Request, res: Response, next: Next
 
   redisSettingsClient.get(cacheKey, (err, settings: string) => {
     if (err) {
-      /**
-       * TODO(error): Error handling
-       * @date - 7/7/17
-       * @time - 3:22 PM
-       */
+      RaygunClient.send(err)
     }
     if (settings) {
       req.app.locals[RequestKeys.DBSettings] = JSON.parse(settings)
@@ -29,6 +26,10 @@ export const systemSettingsMiddleware = (req: Request, res: Response, next: Next
       .select('title key value type')
       .lean()
       .exec((err, _settings) => {
+        if (err) {
+          RaygunClient.send(err)
+          return void res.sendStatus(500)
+        }
         WriteStub(_settings, 'system_settings')
         redisSettingsClient.set(cacheKey, JSON.stringify(_settings))
         req.app.locals[RequestKeys.DBSettings] = _settings

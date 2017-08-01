@@ -8,6 +8,7 @@ import { Request } from 'express'
 import { TemplateFunctions } from './template_functions'
 import { RequestKeys } from '../../helpers/request_keys'
 import { ComponentRenderer } from '../component_renderer/index'
+import { assignHoistId, HoistType } from '../utils/hoist_id'
 
 /**
  * Section renderer resolves template, data, styling and logic bindings
@@ -36,11 +37,7 @@ export const templateRenderer = (renderData: any, sectionData: any, req: Request
       if (err['code'] === 'ENOENT') {
         console.log('Template file for this section does not exists')
       }
-      /**
-       * TODO(error): Error handling
-       * @date - 7/11/17
-       * @time - 4:43 PM
-       */
+
       const malformed = {
         order: sectionData.order,
         templateName: sectionData.templateName,
@@ -52,14 +49,31 @@ export const templateRenderer = (renderData: any, sectionData: any, req: Request
 data-mt-error="Section data malformed" style="padding: 1.5rem;">
       `
 
+      const replaceErrorArrow = (text: string) => {
+
+        return text.split('\n').map((_text, index, _split) => {
+          let modified = _text
+
+          if (_text.includes('&gt;&gt; ')) {
+            modified = `<span style="color: #EF5350;">${_text.replace('&gt;&gt;', '  ')}</span>`
+          }
+
+          if (index + 1 === _split.length) {
+            const [target, ...whatever] = modified.split(' ')
+
+            modified = `<span style="color: #EF5350; font-weight: 700;">${target}</span> ${whatever.join(' ')}`
+          }
+
+          return modified
+        }).join('\n')
+      }
+
       const errorTemplate = `
     <div style="width: 80vw; margin: auto; max-width: 720px; padding: 1.5rem; border: 1px solid rgba(10, 20, 30, .1)">
-        <h1 style="color: #EF5350; margin: 0; margin-bottom: .5rem; font-weight: 400; font-size: 1.2rem;">
+        <h1 style="color: #EF5350; margin: 0; margin-bottom: 1rem; font-weight: 400; font-size: 1.2rem;">
             Section Data Malformed: ${sectionData.templateName}
         </h1>
-        <pre style="overflow: scroll; margin: 0; background-color: rgba(10, 20, 30, 0.1); padding: 1rem; color: rgba(10, 20, 30, 0.64);">
-        ${EscapeHTML(RemoveSystemPath(malformed.error.message))}
-        </pre>
+        <pre style="font-family: 'Fira Code', monospace; line-height:1.4;overflow: scroll; margin: 0; background-color: rgba(10, 20, 30, 0.1); padding: 1rem; color: rgba(10, 20, 30, 0.64);">${replaceErrorArrow(EscapeHTML(RemoveSystemPath(malformed.error.message)))}</pre>
     </div>
 `
       const errorEnd = `</section>`
@@ -69,12 +83,13 @@ data-mt-error="Section data malformed" style="padding: 1.5rem;">
 
     const $ = load(html, {xmlMode: true} as any)
 
-    $('*').attr('data-section-content-' + sectionData.sectionId, '')
+    $('*').attr(assignHoistId(HoistType.Content, sectionData.sectionId, false), '')
 
     const wrappedSection = `
 <!-- template-start: ${sectionData.templateName} -->
 <section data-mt-template="${sectionData.templateName}"
-         data-section-host-${sectionData.sectionId} data-section-content-${sectionData.sectionId}>
+         ${assignHoistId(HoistType.Host, sectionData.sectionId, false)}
+         ${assignHoistId(HoistType.Content, sectionData.sectionId, false)}>
     ${$.html()}
 </section>
 <!-- template-end: ${sectionData.templateName} -->
