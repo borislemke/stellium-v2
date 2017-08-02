@@ -24,7 +24,7 @@ export const pageLoaderMiddleware = (req: Request, res: Response, next: NextFunc
   const pageUrl = req.url
 
   // stellium.io-home -> 103460287648712398723412345123
-  const cacheKey = stringToCacheKey(req.hostname, '_', pageUrl)
+  const cacheKey = stringToCacheKey(req.hostname, pageUrl)
 
   redisPagesClient.get(cacheKey, (err, cachedPage) => {
 

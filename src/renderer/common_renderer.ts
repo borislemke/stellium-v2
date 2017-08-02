@@ -18,7 +18,6 @@ import { RaygunClient } from '../utils/raygun'
 const redisPageCacheClient = createClient({db: RedisTable.PageCache})
 
 const getSettingsByKey = (collection: any[]) => (key: string): any => {
-
   const matching = collection.find(_collection => _collection.key === key)
 
   return matching && matching.value || null
@@ -154,7 +153,7 @@ export async function commonRenderer (req: Request, res: Response) {
     })
   }
 
-  const urlHash = stringToCacheKey(req.hostname, '-', req.url)
+  const urlHash = stringToCacheKey(req.hostname, req.url)
 
   res.send(renderedTemplate)
 

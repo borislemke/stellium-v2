@@ -1,139 +1,119 @@
 [
     {
-        "_id": "59392b4ab2f64b14e95cee7c",
         "title": "Site Type",
         "key": "site_type",
         "value": "business",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee7d",
         "title": "Site Title",
         "key": "site_title",
-        "value": "Grow Bali",
+        "value": "Midtrans",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee80",
         "title": "Global Footer Scripts",
         "key": "global_footer_script",
         "value": "",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee7e",
         "title": "Site Description",
         "key": "site_description",
-        "value": "Grow Bali - some short description to be shown on the website",
+        "value": "Midtrans - some short description to be shown on the website",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee7f",
         "title": "Global Header Scripts",
         "key": "global_header_script",
         "value": "",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee83",
         "title": "Facebook Handler",
         "key": "social_media_handler_facebook",
         "value": "https://www.facebook.com/growbali/",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee82",
         "title": "Analytics View ID",
         "key": "analytics_view_id",
         "value": "136881657",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee85",
         "title": "Instagram Handler",
         "key": "social_media_handler_instagram",
-        "value": "http://instagram.com/grow.bali",
+        "value": "http://instagram.com/midtrans",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee81",
         "title": "Analytics Tracking ID",
         "key": "analytics_tracking_id",
-        "value": "UA-36869144-18",
+        "value": "UA-midtrans-69",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee88",
         "title": "LinkedIn Handler",
         "key": "social_media_handler_linkedin",
-        "value": "http://linkedin.com/growbali",
+        "value": "http://linkedin.com/midtrans",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee84",
         "title": "Twitter Handler",
         "key": "social_media_handler_twitter",
-        "value": "http://twitter.com/growbali",
+        "value": "http://twitter.com/midtrans",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee87",
         "title": "Google + Handler",
         "key": "social_media_handler_google",
-        "value": "http://googleplus.com/growbali",
+        "value": "http://googleplus.com/midtrans",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee8a",
         "title": "Social Media Promotion Text",
         "key": "social_media_promotion_text",
         "value": "",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee86",
         "title": "Pinterest Handler",
         "key": "social_media_handler_pinterest",
         "value": "",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee8d",
         "title": "Business Address, City",
         "key": "business_city",
         "value": "Seminyak, Bali, 80361",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee89",
         "title": "YouTube Handler",
         "key": "social_media_handler_youtube",
         "value": "",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee8c",
         "title": "Business Address",
         "key": "business_address",
         "value": "Jl. Beraban No. 46 - Beraban Square #1",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee8f",
         "title": "Business Tax",
         "key": "business_tax",
         "value": null,
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee8b",
         "title": "Business Name",
         "key": "business_name",
         "value": "Your Business",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee92",
         "title": "Business Hours",
         "key": "business_hours",
         "value": [
@@ -148,21 +128,18 @@
         "type": "array"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee8e",
         "title": "Business Country",
         "key": "business_country",
         "value": "id",
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee91",
         "title": "Business Email",
         "key": "business_email",
         "value": null,
         "type": "string"
     },
     {
-        "_id": "59392b4ab2f64b14e95cee90",
         "title": "Business Country",
         "key": "business_phone",
         "value": null,

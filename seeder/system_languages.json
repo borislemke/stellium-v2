@@ -4,13 +4,13 @@
         "title": "English",
         "code": "en",
         "status": true,
-        "default": false
+        "default": true
     },
     {
         "_id": "59610fac1d75eb8dffb6e13c",
         "title": "Indonesian",
         "code": "id",
         "status": true,
-        "default": true
+        "default": false
     }
 ]

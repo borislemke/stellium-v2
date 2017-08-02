@@ -13,7 +13,7 @@ export const websiteCacheMiddleware = (req: Request, res: Response, next: NextFu
     return void next()
   }
 
-  const urlHash = stringToCacheKey(req.hostname, '-', req.url)
+  const urlHash = stringToCacheKey(req.hostname, req.url)
 
   redisPageCacheClient.get(urlHash, (err, cachedPage) => {
     if (err) {

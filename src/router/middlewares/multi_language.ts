@@ -33,13 +33,11 @@ export const multiLanguageMiddleware = (req: Request, res: Response, next: NextF
       .lean()
       .exec((err, _languages) => {
         if (err) {
-          console.log('err\n', err)
           RaygunClient.send(err)
           return void errorPageRenderer(req, res)
         }
 
         if (!_languages || !(_languages as any[]).length) {
-
           if (Globals.Production) {
             RaygunClient.send(new Error('No system languages found'))
             return void res.sendStatus(500)
