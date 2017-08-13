@@ -1,7 +1,7 @@
 import { readFile } from 'fs'
 import { assignHoistId, HoistType } from '../utils/hoist_id'
 import { Globals } from '../../globals'
-import { RaygunClient } from '../../utils/raygun'
+import { ArgusClient } from '../../utils/argus'
 
 const cachedScripts = {}
 
@@ -19,7 +19,7 @@ export const scriptsCompiler = (sectionData: any) => (cb: (err: any, compiledScr
       if (err.code === 'ENOENT') {
         return void cb(null, '')
       }
-      RaygunClient.send(err)
+      ArgusClient.send(err)
       return void cb(err, '')
     }
 

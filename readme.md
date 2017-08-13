@@ -1,13 +1,28 @@
-# Stellium
-
-
-## Request Flow
+# Servant
 
 ```typescript
-import * as express from 'express'
-import * as express, { Router, Application } from 'express'
-// Define a router to group request handlers in
-const router: Router = Router()
+import { Server } from 'servant'
 
-const app: Application = express()
+Server.bootStrap(AppModule)
+
+
+@Module({
+  routes: [
+    {
+      path: '',
+      default: true,
+      page: HomePage
+    }
+  ]
+})
+export class AppModule {}
+
+
+@Page({
+  data: './home-page.json'
+})
+export class HomePage {
+  svOnInit (): void {
+  }
+}
 ```

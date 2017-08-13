@@ -81,4 +81,4 @@ Schema.plugin(passportLocalMongoose, {
   usernameLowerCase: true
 })
 
-export const SystemUserModel = <MongooseSystemUserSchema>(mongoose.model as any)('SystemUser', Schema, 'system_users')
+export const SystemUserModel = (mongoose.model as any)('SystemUser', Schema, 'system_users') as MongooseSystemUserSchema

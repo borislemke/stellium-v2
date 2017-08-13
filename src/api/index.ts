@@ -1,17 +1,14 @@
-import * as express from 'express'
 import { Router } from 'express'
 import * as bodyParser from 'body-parser'
 import { V1Router } from './v1/index'
+import { LanguageMiddleware } from './middlewares/language'
 
-export const ApiRouter: Router = express.Router()
+export const ApiRouter: Router = Router()
+
+ApiRouter.use(bodyParser.urlencoded({extended: false}))
 
 ApiRouter.use(bodyParser.json())
 
-ApiRouter.use(
-  '/v1',
-  V1Router
-)
+ApiRouter.use(LanguageMiddleware)
 
-ApiRouter.get('/', (req, res) => {
-  res.send('Hello API')
-})
+ApiRouter.use('/v1', V1Router)

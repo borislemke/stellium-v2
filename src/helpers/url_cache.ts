@@ -1,10 +1,15 @@
 // /post/2017/blah -> 1023786407128297460123
 
+import { RedisTable } from './redis_table'
+import { StelliumHostname } from '../utils/extract_stellium_domain'
+
 function hashMap (toHash: string): string {
   let hash = 0
   let i
   let chr
-  if (toHash.length === 0) return '' + hash
+  if (toHash.length === 0) {
+    return '' + hash
+  }
   for (i = 0; i < toHash.length; i++) {
     chr = toHash.charCodeAt(i)
     hash = ((hash << 5) - hash) + chr
@@ -14,15 +19,18 @@ function hashMap (toHash: string): string {
   return '' + hash
 }
 
-export const stringToCacheKey = (..._url: string[]): string => {
+export const stringToCacheKey = (table: RedisTable, hostname: StelliumHostname, ..._url: string[]): string => {
 
   /**
    * TODO(opt): Optimise string manipulation
    * @date - 7/10/17
    * @time - 7:24 PM
    */
-  return _url.map(_target => hashMap(_target))
+  return (`${table}:${hostname}:`
+    // + _url.map(_target => hashMap(_target))
+    + _url
     .join('-')
     .replace(/\/+/g, '/')
-    .replace(/^-+|-+$/g, '')
+    .replace(/^-+|-+$/g, ''))
+    .replace(/^:+|:+$/g, '')
 }

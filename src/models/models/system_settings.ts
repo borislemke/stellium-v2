@@ -1,9 +1,8 @@
 import * as mongoose from 'mongoose'
 import { Document } from 'mongoose'
-import { SystemSettingsSchema } from '../schemas'
+import { ISystemSettingsSchema } from '../schemas'
 
-export interface MongooseSystemSettingsSchema extends Document, SystemSettingsSchema {
-  _id: any
+export interface ISystemSettingsModel extends Document, ISystemSettingsSchema {
 }
 
 const Schema = new mongoose.Schema({
@@ -57,4 +56,4 @@ const Schema = new mongoose.Schema({
   }
 })
 
-export const SystemSettingsModel = mongoose.model<MongooseSystemSettingsSchema>('SystemSettings', Schema, 'system_settings')
+export const SystemSettingsModel = mongoose.model<ISystemSettingsModel>('SystemSettings', Schema, 'system_settings')

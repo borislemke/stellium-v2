@@ -14,8 +14,7 @@
         "inlineSources": true,
         "skipLibCheck": true,
         "lib": [
-            "es7",
-            "dom"
+            "es7"
         ],
         "typeRoots": [
             "node_modules/@types"

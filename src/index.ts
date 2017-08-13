@@ -1,37 +1,38 @@
 import 'source-map-support/register'
+import 'reflect-metadata'
 import './dev'
+import * as Raven from 'raven'
 import * as express from 'express'
 import { Application } from 'express'
-import * as mongoose from 'mongoose'
-import { ConnectionOptions } from 'mongoose'
 import { ApiRouter } from './api/index'
 import { WebRouter } from './router/index'
 import { RegistryMiddleware } from './registry/index'
 import { StaticFilesHandler } from './helpers/static_files'
-import { RaygunClient } from './utils/raygun'
+import { errorHandler } from './error_handler'
+import { Bootstrap } from './bootstrap'
 
-// Main express app
-const app: Application = express()
+Raven.config(process.env.SENTRY_DNS).install()
 
-// Raygun middleware to log request errors
-app.use(RaygunClient.expressHandler)
+// Main express RootApp
+export const RootApp: Application = express()
+
+RootApp.use(Raven.requestHandler())
 
 /**
  * Registry Middleware for checking whether the domain is a registered domain
  * with Stellium.
  */
-app.use(RegistryMiddleware)
+/**
+ * TODO(production): Move to Kong / Go
+ * @date - 13-08-2017
+ * @time - 14:33
+ */
+RootApp.use(RegistryMiddleware)
 
 // API Router
-app.use(
-  '/api',
-  ApiRouter
-)
+RootApp.use('/api', ApiRouter)
 
-app.get(
-  '/theme-static/:themeName/*',
-  StaticFilesHandler
-)
+RootApp.get('/theme-static/:themeName/*', StaticFilesHandler)
 
 /**
  * TODO(prod): Serve stellium icon
@@ -39,37 +40,13 @@ app.get(
  * @time - 23:59
  */
 // Some browsers will attempt to fetch a favicon for error pages
-app.get('/favicon.ico', (req, res) => {
+RootApp.get('/favicon.ico', (req, res) => {
   res.sendStatus(404)
 })
 
 // WEB Router
-app.use(WebRouter)
+RootApp.use(WebRouter)
 
-let port: string = process.env.SERVICE_PORT
+errorHandler(RootApp)
 
-  /**
-   * The default mongoose.Promise is deprecated. For whatever reason it has not been
-   * replaced by the developers until now so we have to plug in the native Promise
-   * library as it's replacement.
-   * @type {Function}
-   */
-;(mongoose as any).Promise = global.Promise
-
-const connectionHandler = (err: any) => {
-
-  port || (port = '3000')
-  if (err) {
-    throw err
-  }
-
-  app.listen(port, () => console.log('Server listening on port:', port))
-}
-
-const databaseName = process.env.DATABASE_NAME || 'growbali-dev'
-
-mongoose.connect(
-  'mongodb://localhost/' + databaseName,
-  {useMongoClient: true} as ConnectionOptions,
-  err => connectionHandler(err)
-)
+Bootstrap(RootApp)

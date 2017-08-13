@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { renderFile } from 'ejs'
 import { resolve } from 'path'
 import { Globals } from '../globals'
-import { RaygunClient } from '../utils/raygun'
+import { ArgusClient } from '../utils/argus'
 
 export interface ErrorObject {
   statusCode: number
@@ -21,7 +21,7 @@ export const errorPageRenderer = (req: Request, res: Response, data: ErrorObject
     (err, html) => {
       if (err) {
         console.log('err\n', err)
-        RaygunClient.send(err)
+        ArgusClient.send(err)
         return void res.sendStatus(500)
       }
       res.status(data.statusCode).send(html)

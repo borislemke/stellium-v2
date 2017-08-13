@@ -5,7 +5,7 @@ import { templateRenderer } from './template_renderer'
 import { stylesheetCompiler } from './stylesheet_compiler'
 import { RequestKeys } from '../../helpers/request_keys'
 import { scriptsCompiler } from './scripts_compiler'
-import { RaygunClient } from '../../utils/raygun'
+import { ArgusClient } from '../../utils/argus'
 
 let _sectionId = 0
 
@@ -38,7 +38,7 @@ export const SectionRenderer = (renderData: any, req: Request) => (sectionData: 
     resolvedSection.templateName = sectionData.templateName
 
     if (err) {
-      RaygunClient.send(err)
+      ArgusClient.send(err)
       return void cb(err)
     }
 

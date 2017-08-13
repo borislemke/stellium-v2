@@ -13,9 +13,11 @@ import { errorPageRenderer } from './error_handler'
 import { TemplateFunctions } from './section_renderer/template_functions'
 import { ComponentsStylesCompiler } from './component_renderer/styles_compiler'
 import { autoPrefixCss } from './utils/autoprefix'
-import { RaygunClient } from '../utils/raygun'
+import { SettingsKeys } from '../helpers/settings_keys'
+import * as Raven from 'raven'
+import { extractStelliumDomain } from '../utils/extract_stellium_domain'
 
-const redisPageCacheClient = createClient({db: RedisTable.PageCache})
+const redisClient = createClient()
 
 const getSettingsByKey = (collection: any[]) => (key: string): any => {
   const matching = collection.find(_collection => _collection.key === key)
@@ -24,24 +26,14 @@ const getSettingsByKey = (collection: any[]) => (key: string): any => {
 }
 
 function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string> {
-
   const appLocals = req.app.locals
 
   const PageObject = appLocals[RequestKeys.CurrentPageObject]
 
   const renderData = {
-    /**
-     * TODO(prod): Production value
-     * @date - 25-07-2017
-     * @time - 21:11
-     */
-    CurrentURL: 'http://stellium2.dev/',
-    /**
-     * TODO(prod): Production value
-     * @date - 25-07-2017
-     * @time - 21:11
-     */
-    BaseDomain: 'http://stellium2.dev/',
+    CurrentURL: `${req.protocol}://${req.headers['host']}${req.originalUrl}`,
+    BaseDomain: `${req.protocol}://${req.headers['host']}/`,
+    SettingsKeys,
     getSettingsByKey: getSettingsByKey(appLocals[RequestKeys.DBSettings]),
     RequestKeys,
     CurrentLanguage: appLocals[RequestKeys.CurrentLanguage],
@@ -57,14 +49,10 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
   }
 
   return new Promise((resolve, reject) => {
-
     if (ok) {
-
       async.map(PageObject.sections, SectionRenderer(renderData, req), (err, resolvedSections) => {
-
         if (err) {
-
-          console.log('async map error\n', err)
+          Raven.captureException(err)
 
           return void reject(err)
         }
@@ -78,9 +66,7 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
         const unifySections = []
 
         resolvedSections.forEach(_section => {
-
           if (!unifySections.includes(_section.templateName)) {
-
             // Concatenate section styles
             SectionStyles += _section.styles + '\n'
 
@@ -92,20 +78,13 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
         })
 
         ComponentsStylesCompiler(req.app.locals[RequestKeys.CurrentTemplatePath], (err, ComponentsStyle) => {
-
           if (err) {
-            /**
-             * TODO(error): Error handling
-             * @date - 7/14/17
-             * @time - 3:14 PM
-             */
-            RaygunClient.send(err)
+            Raven.captureException(err)
             // Gracefully ignore scss compilation error but notify user about the issue
             ComponentsStyle = ''
           }
 
-          autoPrefixCss(ComponentsStyle + '\n' + SectionStyles, (err, CompiledStyles) => {
-
+          autoPrefixCss(ComponentsStyle + '\n' + SectionStyles, (ignorableError, CompiledStyles) => {
             renderFile(
               pathResolve(req.app.locals[RequestKeys.CurrentTemplatePath], 'index.ejs'),
               {
@@ -116,7 +95,7 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
               },
               (err, html) => {
                 if (err) {
-                  RaygunClient.send(err)
+                  Raven.captureException(err)
                   return reject(err)
                 }
                 resolve(html)
@@ -134,18 +113,13 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
 }
 
 export async function commonRenderer (req: Request, res: Response) {
-
   let renderedTemplate
 
   try {
-
     renderedTemplate = await fakeTemplateRenderer(req)
 
-  } catch (e) {
-
-    RaygunClient.send(e)
-
-    console.log('template renderer error\n', e)
+  } catch (err) {
+    Raven.captureException(err)
 
     return void errorPageRenderer(req, res, {
       title: 'Internal Server Error',
@@ -153,24 +127,19 @@ export async function commonRenderer (req: Request, res: Response) {
     })
   }
 
-  const urlHash = stringToCacheKey(req.hostname, req.url)
+  const hostname = extractStelliumDomain(req)
+
+  const urlHash = stringToCacheKey(RedisTable.PageCache, hostname, req.url)
 
   res.send(renderedTemplate)
 
-  if (Globals.Production) {
-
+  if (!Globals.SkipCache) {
     const minified = minifyTemplate(renderedTemplate, true)
 
     // Do not rely on the cache write to serve the rendered content
-    redisPageCacheClient.set(urlHash, minified, err => {
-
+    redisClient.set(urlHash, minified, err => {
       if (err) {
-        /**
-         * TODO(error): Error handling
-         * @date - 7/10/17
-         * @time - 7:09 PM
-         */
-        RaygunClient.send(err)
+        Raven.captureException(err)
       }
     })
   }

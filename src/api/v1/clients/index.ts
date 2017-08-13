@@ -1,10 +1,11 @@
 import { Router } from 'express'
 import { registerClient } from './register_client'
 
-export const APIClientRouter: Router = Router()
+// api/v1/clients
+export const V1ClientsRouter: Router = Router()
 
-APIClientRouter.post('/', registerClient) // Register client
+V1ClientsRouter.post('/', registerClient) // Register client
 
-APIClientRouter.get('/') // Index client
+V1ClientsRouter.get('/') // Index client
 
-APIClientRouter.get('/:clientId') // Get client by ID
+V1ClientsRouter.get('/:clientId') // Get client by ID

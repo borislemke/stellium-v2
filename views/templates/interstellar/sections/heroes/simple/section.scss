@@ -64,4 +64,16 @@ $forange: rgba(255,154,61,1);
             align-items: center;
         }
     }
+
+    .macbook-wrapper {
+        width: 640px;
+        bottom: 64px;
+        right: -32px;
+        position: absolute;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
 }

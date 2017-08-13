@@ -3,24 +3,25 @@ import { createClient } from 'redis'
 import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
 import { RequestKeys } from '../../helpers/request_keys'
-import { WriteStub } from '../../utils/write_stub'
 import { MediaFileModel } from '../../models/models/media_file'
-import { RaygunClient } from '../../utils/raygun'
+import * as raven from 'raven'
+import { extractStelliumDomain } from '../../utils/extract_stellium_domain'
 
-const redisBlogClient = createClient({db: RedisTable.MediaFiles})
+const redisClient = createClient()
 
 export const mediaFilesFeedMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+  const hostname = extractStelliumDomain(req)
 
-  const cacheKey = stringToCacheKey(req.hostname)
+  const cacheKey = stringToCacheKey(RedisTable.MediaFiles, hostname)
 
-  redisBlogClient.get(cacheKey, (err, cachedMedia) => {
-
+  redisClient.get(cacheKey, (err, cachedMedia) => {
     if (err) {
-      RaygunClient.send(err)
+      raven.captureException(err)
     }
 
     if (cachedMedia) {
       req.app.locals[RequestKeys.DBMediaFiles] = JSON.parse(cachedMedia)
+
       return void next()
     }
 
@@ -30,11 +31,11 @@ export const mediaFilesFeedMiddleware = (req: Request, res: Response, next: Next
       .lean()
       .exec((err, media) => {
         if (err) {
-          RaygunClient.send(err)
-          return void res.sendStatus(500)
+          return next(err)
         }
-        WriteStub(media, 'media_files')
+
         req.app.locals[RequestKeys.DBMediaFiles] = media
+
         next()
       })
   })

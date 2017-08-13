@@ -4,12 +4,13 @@ import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
 import { BlogPostModel } from '../../models/models/blog_post'
 import { RequestKeys } from '../../helpers/request_keys'
-import { WriteStub } from '../../utils/write_stub'
-import { RaygunClient } from '../../utils/raygun'
+import * as raven from 'raven'
+import { extractStelliumDomain } from '../../utils/extract_stellium_domain'
 
-const redisBlogClient = createClient({db: RedisTable.BlogPosts})
+const redisBlogClient = createClient()
 
 export const blogPostsFeedMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+  const hostname = extractStelliumDomain(req)
 
   const queryStart = req.query['start'] || 1
 
@@ -17,14 +18,16 @@ export const blogPostsFeedMiddleware = (req: Request, res: Response, next: NextF
 
   const sortBy = req.query['sort'] || 'created_at'
 
-  const cacheKey = stringToCacheKey(req.hostname, queryStart, queryLimit, sortBy)
+  const cacheKey = stringToCacheKey(RedisTable.BlogPosts, hostname, queryStart, queryLimit, sortBy)
 
   redisBlogClient.get(cacheKey, (err, posts) => {
     if (err) {
-      RaygunClient.send(err)
+      raven.captureException(err)
     }
+
     if (posts) {
       req.app.locals[RequestKeys.DBPosts] = JSON.parse(posts)
+
       return void next()
     }
 
@@ -37,11 +40,11 @@ export const blogPostsFeedMiddleware = (req: Request, res: Response, next: NextF
       .lean()
       .exec((err, posts) => {
         if (err) {
-          RaygunClient.send(err)
-          return void res.sendStatus(500)
+          return next(err)
         }
-        WriteStub(posts, 'blog_posts')
+
         req.app.locals[RequestKeys.DBPosts] = posts
+
         next()
       })
   })

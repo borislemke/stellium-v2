@@ -7,7 +7,7 @@ export { EcommerceProductModel, MongooseEcommerceProductSchema } from './ecommer
 export * from './ecommerce_product_variant'
 export { MediaFileModel, MongooseMediaFileSchema } from './media_file'
 export { SystemLanguageModel, MongooseLanguageSchema } from './system_language'
-export { SystemSettingsModel } from './system_settings'
+export { ISystemSettingsModel } from './system_settings'
 export { SystemUserModel, MongooseSystemUserSchema, MongooseSystemUserDocument } from './system_user'
 export * from './system_user_group'
 export { WebsiteNavigationModel, MongooseWebsiteNavigationSchema } from './website_navigation'

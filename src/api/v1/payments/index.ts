@@ -1,11 +1,13 @@
+/*
 import { Router } from 'express'
-import { Midtrans, MidtransEnv } from './midtrans'
-import { APIPaymentsCharge } from './charge'
+import { Client, Env } from 'midtrans'
+import { APIPaymentToken } from './create_token'
 
 export const APIPaymentsRouter: Router = Router()
 
-Midtrans.ServerKey = 'VT-server-qfS1CLXjSfKHAoJhzaTaR_uu'
+Client.ServerKey = 'VT-server-qfS1CLXjSfKHAoJhzaTaR_uu'
 
-Midtrans.Environment = MidtransEnv.Sandbox // Defaults to sandbox
+Client.Environment = Env.Sandbox // Defaults to sandbox
 
-APIPaymentsRouter.post('/', APIPaymentsCharge)
+APIPaymentsRouter.post('/token', APIPaymentToken)
+*/

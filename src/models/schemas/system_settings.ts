@@ -1,6 +1,8 @@
-export interface SystemSettingsSchema {
-  _id?: string
-  key: string
+import { SettingsKeys } from '../../helpers/settings_keys'
+
+export interface ISystemSettingsSchema {
+  // _id?: string
+  key: SettingsKeys
   value: string
   title: string
   description: string

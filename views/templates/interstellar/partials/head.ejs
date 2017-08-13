@@ -3,13 +3,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <base href="/">
 <title>
-    <%= getSettingsByKey('site_title') %> - <%= PageObject.title[CurrentLanguage] %>
+    <%= getSettingsByKey(SettingsKeys.SiteTitle) %> - <%= PageObject.title[CurrentLanguage] %>
 </title>
 
 <% for (let i = 0; i < DbCollection.Languages.length; i++) { %>
 <% const lang = DbCollection.Languages[i] %>
 <% if (CurrentLanguage !== lang.code) { %>
-<link rel="alternate" href="<%= BaseDomain %><%= lang.code %>/<%= PageObject.url[lang] %>" hreflang="<%= lang.code %>" />
+<link rel="alternate"
+      href="<%= BaseDomain %><%= lang.code %>/<%= PageObject.url[lang.code] %>"
+      hreflang="<%= lang.code %>" />
 <% } %>
 <% } %>
 
@@ -28,14 +30,14 @@
 <meta property="og:title" content="<%= PageObject.title[CurrentLanguage] %>">
 <meta property="og:image" content="https://example.com/image.jpg">
 <meta property="og:description" content="<%= PageObject.meta[CurrentLanguage] %>">
-<meta property="og:site_name" content="<%= getSettingsByKey('site_title') %>">
+<meta property="og:site_name" content="<%= getSettingsByKey(SettingsKeys.SiteTitle) %>">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="<%= PageObject.user.first_name %> <%= PageObject.user.last_name %>">
 <!-- Facebook Open Graph -->
 
 <!-- Twitter Article -->
 <meta name="twitter:card" content="summary">
-<meta name="twitter:site" content="@<%= getSettingsByKey('twitter_handler') %>">
+<meta name="twitter:site" content="@<%= getSettingsByKey(SettingsKeys.TwitterHandler) %>">
 <meta name="twitter:creator" content="@<%= PageObject.user.social_accounts.twitter %>">
 <meta name="twitter:url" content="<%= CurrentURL %>">
 <meta name="twitter:title" content="<%= PageObject.title[CurrentLanguage] %>">
@@ -51,7 +53,7 @@
 </style>
 
 <!-- Global Header Scripts -->
-<%- getSettingsByKey('header_scripts') %>
+<%- getSettingsByKey(SettingsKeys.HeaderScripts) %>
 <!-- Global Header Scripts -->
 
 <!-- Page Scoped Header Scripts -->

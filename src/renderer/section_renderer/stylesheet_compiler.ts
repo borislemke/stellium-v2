@@ -3,7 +3,7 @@ import { render } from 'node-sass'
 import { parse, stringify } from 'css'
 import { Globals } from '../../globals'
 import { assignHoistId, HoistType } from '../utils/hoist_id'
-import { RaygunClient } from '../../utils/raygun'
+import { ArgusClient } from '../../utils/argus'
 
 const cachedStyles = {}
 
@@ -23,7 +23,7 @@ export const stylesheetCompiler = (sectionData: any) => (cb: (err: any, compiled
         // Ignore error if the stylesheet file does not exist
         return void cb(null, '')
       }
-      RaygunClient.send(err)
+      ArgusClient.send(err)
       return void cb(err, '')
     }
 
@@ -41,7 +41,7 @@ export const stylesheetCompiler = (sectionData: any) => (cb: (err: any, compiled
         astCss = parse(css.css.toString('UTF-8'))
 
       } catch (error) {
-        RaygunClient.send(err)
+        ArgusClient.send(err)
 
         return void cb(null, '')
       }
@@ -89,7 +89,7 @@ export const stylesheetCompiler = (sectionData: any) => (cb: (err: any, compiled
 
         } else {
 
-          console.log('_cssRule\n', _cssRule)
+          // console.log('_cssRule\n', _cssRule)
         }
       })
 

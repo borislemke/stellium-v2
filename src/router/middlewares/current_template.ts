@@ -4,14 +4,11 @@ import { Globals } from '../../globals'
 import { RequestKeys } from '../../helpers/request_keys'
 
 export const currentTemplateMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  /**
-   * TODO(production): Dynamic template selection
-   * @date - 7/10/17
-   * @time - 7:36 PM
-   */
-  req.app.locals[RequestKeys.CurrentTemplate] = 'interstellar'
+  const {active_template} = req.app.locals[RequestKeys.RegistryObject]
 
-  req.app.locals[RequestKeys.CurrentTemplatePath] = resolve(Globals.TemplatesPath, 'interstellar')
+  req.app.locals[RequestKeys.CurrentTemplate] = active_template
+
+  req.app.locals[RequestKeys.CurrentTemplatePath] = resolve(Globals.TemplatesPath, active_template)
 
   next()
 }

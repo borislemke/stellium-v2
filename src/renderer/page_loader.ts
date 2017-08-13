@@ -5,11 +5,14 @@ import { stringToCacheKey } from '../helpers/url_cache'
 import { WebsitePageModel } from '../models/models/website_page'
 import { RequestKeys } from '../helpers/request_keys'
 import { Globals } from '../globals'
-import { RaygunClient } from '../utils/raygun'
+import * as Raven from 'raven'
+import { HTTPStatusCode } from '../utils/response_code'
+import { extractStelliumDomain } from '../utils/extract_stellium_domain'
 
-const redisPagesClient = createClient({db: RedisTable.WebsitePages})
+const redisClient = createClient()
 
 export const pageLoaderMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+  const hostname = extractStelliumDomain(req)
 
   /**
    * TODO(prod): Static file requests should not enter here
@@ -24,23 +27,22 @@ export const pageLoaderMiddleware = (req: Request, res: Response, next: NextFunc
   const pageUrl = req.url
 
   // stellium.io-home -> 103460287648712398723412345123
-  const cacheKey = stringToCacheKey(req.hostname, pageUrl)
+  const cacheKey = stringToCacheKey(RedisTable.WebsitePages, hostname, pageUrl)
 
-  redisPagesClient.get(cacheKey, (err, cachedPage) => {
+  redisClient.get(cacheKey, (err, cachedPage) => {
 
     if (err) {
-      RaygunClient.send(err)
+      Raven.captureException(err)
     }
 
     if (cachedPage) {
       try {
         req.app.locals[RequestKeys.CurrentPageObject] = JSON.parse(cachedPage)
 
-        return void next()
-
-      } catch (e) {
+        return next()
+      } catch (err) {
         // Unable to parse cached page
-        RaygunClient.send(new Error('Attempted to parse a cached page but failed'))
+        Raven.captureException(err)
       }
     }
 
@@ -51,8 +53,8 @@ export const pageLoaderMiddleware = (req: Request, res: Response, next: NextFunc
       .exec((err, pageObject) => {
 
         if (err) {
-          RaygunClient.send('Error fetching page object', err)
-          return res.sendStatus(500)
+          res.status(HTTPStatusCode.INTERNAL_SERVER_ERROR)
+          return next(err)
         }
 
         if (!pageObject) {
@@ -73,17 +75,17 @@ export const pageLoaderMiddleware = (req: Request, res: Response, next: NextFunc
         }
 
         if (!pageObject || typeof pageObject === 'undefined') {
-          return void res.sendStatus(404)
+          return next()
         }
 
         // save pageObject into request
         req.app.locals[RequestKeys.CurrentPageObject] = pageObject
 
-        redisPagesClient.set(cacheKey, JSON.stringify(pageObject), err => {
+        redisClient.set(cacheKey, JSON.stringify(pageObject), err => {
           if (err) {
-            RaygunClient.send(err)
+            Raven.captureException(err)
           }
-          return void next()
+          next()
         })
       })
   })

@@ -13,7 +13,7 @@ function getByEmail (key) {
 document.querySelector('[:host]#register').addEventListener('submit', function (e) {
   e.preventDefault()
 
-  axios.post('/api/v1/clients', {
+  axios.post('/api/v1/customers/register', {
     email: getByEmail('email'),
     password: getByEmail('password'),
     full_name: getByEmail('full_name'),
@@ -23,7 +23,7 @@ document.querySelector('[:host]#register').addEventListener('submit', function (
     .then(response => {
       console.log('response\n', response)
     })
-    .catch(e => {
-      console.log('e\n', e)
+    .catch(error => {
+      console.log('error\n', error)
     })
 })

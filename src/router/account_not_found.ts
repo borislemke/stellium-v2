@@ -4,16 +4,19 @@ import { readFile } from 'fs'
 import { resolve } from 'path'
 import { Globals } from '../globals'
 import { RedisTable, StaticResourceKeys } from '../helpers/redis_table'
-import { RaygunClient } from '../utils/raygun'
+import { ArgusClient } from '../utils/argus'
+import { stringToCacheKey } from '../helpers/url_cache'
 
-const staticRedisClient = createClient({db: RedisTable.StaticResources})
+const staticClient = createClient()
 
 export const AccountNotFoundHandler = (res: Response) => {
 
-  staticRedisClient.get(StaticResourceKeys.AccountNotFound, (err, html) => {
+  const staticHash = stringToCacheKey(RedisTable.StaticResources, StaticResourceKeys.AccountNotFound)
+
+  staticClient.get(staticHash, (err, html) => {
 
     if (err) {
-      RaygunClient.send(err)
+      ArgusClient.send(err)
       return void res.sendStatus(500)
     }
 
@@ -23,7 +26,7 @@ export const AccountNotFoundHandler = (res: Response) => {
 
     readFile(resolve(Globals.ViewsPath, 'static', 'not-found.html'), 'utf8', (err, _html) => {
       if (err) {
-        RaygunClient.send(err)
+        ArgusClient.send(err)
         return void res.sendStatus(404)
       }
 

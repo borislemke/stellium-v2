@@ -8,16 +8,15 @@
     "execMap": {
         "js": "node --harmony"
     },
-    "events": {
-        "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
-    },
     "watch": [
         "dist/",
-        "views/test.json"
+        "views/test.json",
+        "node_modules/midtrans/dist"
     ],
     "env": {
         "NODE_ENV": "development",
-        "SERVICE_PORT": "4545"
+        "SERVICE_PORT": "4545",
+        "SENTRY_DNS": "https://77b9163cd3c84bfe840274e7e97c90c4:92ffee9b5c3646d4988640c2e17b6f67@sentry.io/202892"
     },
     "ext": "js json"
 }

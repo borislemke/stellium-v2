@@ -3,7 +3,7 @@ import { parse, stringify } from 'css'
 import { resolve } from 'path'
 import { map } from 'async'
 import { render } from 'node-sass'
-import { RaygunClient } from '../../utils/raygun'
+import { ArgusClient } from '../../utils/argus'
 
 const compileStyleFile = (filePath: string, cb: (err: any, compileStyles: string) => void): void => {
 
@@ -70,7 +70,7 @@ export const ComponentsStylesCompiler = (templatePath: string, cb: (err: any, co
   glob(componentStylesPath, (err, styleFiles) => {
 
     if (err) {
-      RaygunClient.send(err)
+      ArgusClient.send(err)
       return void cb(err)
     }
 

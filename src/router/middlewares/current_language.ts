@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import { RequestKeys } from '../../helpers/request_keys'
-import { RaygunClient } from '../../utils/raygun'
+import * as raven from 'raven'
 
 const hasLanguageCode = (url: string): [boolean, string] => {
   const stripped = url.replace(/^\/+|\/+$/g, '')
@@ -20,7 +20,8 @@ export const currentLanguageMiddleware = (req: Request, res: Response, next: Nex
   let defaultLanguage = languages.find(_lang => _lang.default)
 
   if (!defaultLanguage) {
-    RaygunClient.send(new Error('No default language found'))
+    raven.captureException(new Error('No default language found'))
+
     defaultLanguage = languages[0]
   }
 
@@ -33,14 +34,16 @@ export const currentLanguageMiddleware = (req: Request, res: Response, next: Nex
     // The URL has a language code that matches the languages stored in the database
     if (inDb) {
       req.app.locals[RequestKeys.CurrentLanguage] = inDb.code
-      return void next()
+
+      return next()
+
     } else {
       // No matching language code found, assign the default language to it
       req.url = ('/' + defaultLanguage.code + req.url).replace(/\/+$/g, '')
 
       req.app.locals[RequestKeys.CurrentLanguage] = defaultLanguage.code
 
-      return void next()
+      return next()
     }
 
   } else {

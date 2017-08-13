@@ -14,8 +14,8 @@ export interface ClientAccount {
 export interface IStelliumAssertion {
   [key: string]: {
     type?: string
-    min_length?: number
-    max_length?: number
+    min?: number
+    max?: number
     required?: boolean
     required_true?: boolean
   }
@@ -27,12 +27,12 @@ const errorMessages = [
     message: 'Type of `:member` should be `:schema[type]` but here is `typeof:member`'
   },
   {
-    type: 'min_length',
-    message: ':member has to be at least :schema[min_length] long.'
+    type: 'min',
+    message: ':member has to be at least :schema[min] long.'
   },
   {
-    type: 'max_length',
-    message: ':member must not exceed :schema[min_length] characters in length.'
+    type: 'max',
+    message: ':member must not exceed :schema[min] characters in length.'
   },
   {
     type: 'required',
@@ -51,7 +51,7 @@ const schema = {
   },
   password: {
     type: 'string',
-    min_length: 8
+    min: 8
   },
   full_name: {
     type: 'string'
@@ -87,15 +87,15 @@ export const StelliumAssertPayload = (target: any, schema: IStelliumAssertion): 
         })
       }
 
-      if (isDefined(schema[member].min_length)) {
+      if (isDefined(schema[member].min)) {
         assertionError = assertError('Min Length Assertion', () => {
-          return target[member].length >= schema[member].min_length
+          return target[member].length >= schema[member].min
         })
       }
 
-      if (isDefined(schema[member].max_length)) {
+      if (isDefined(schema[member].max)) {
         assertionError = assertError('Max Length Assertion', () => {
-          return target[member].length <= schema[member].max_length
+          return target[member].length <= schema[member].max
         })
       }
 

@@ -5,23 +5,25 @@ import { stringToCacheKey } from '../../helpers/url_cache'
 import { SystemLanguageModel } from '../../models/models/system_language'
 import { RequestKeys } from '../../helpers/request_keys'
 import { errorPageRenderer } from '../../renderer/error_handler'
-import { WriteStub } from '../../utils/write_stub'
 import { Globals } from '../../globals'
-import { RaygunClient } from '../../utils/raygun'
+import * as raven from 'raven'
+import { extractStelliumDomain } from '../../utils/extract_stellium_domain'
 
-const redisLanguageClient = createClient({db: RedisTable.SystemLanguage})
+const redisClient = createClient()
 
 export const multiLanguageMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  const hostname = extractStelliumDomain(req)
 
-  const cacheKey = stringToCacheKey(req.hostname)
+  const cacheKey = stringToCacheKey(RedisTable.SystemLanguages, hostname)
 
-  redisLanguageClient.get(cacheKey, (err, langs) => {
+  redisClient.get(cacheKey, (err, langs) => {
     if (err) {
-      RaygunClient.send(err)
+      raven.captureException(err)
     }
 
     if (langs) {
       req.app.locals[RequestKeys.DBLanguages] = JSON.parse(langs)
+
       return void next()
     }
 
@@ -33,23 +35,25 @@ export const multiLanguageMiddleware = (req: Request, res: Response, next: NextF
       .lean()
       .exec((err, _languages) => {
         if (err) {
-          RaygunClient.send(err)
+          raven.captureException(err)
+
           return void errorPageRenderer(req, res)
         }
 
         if (!_languages || !(_languages as any[]).length) {
           if (Globals.Production) {
-            RaygunClient.send(new Error('No system languages found'))
-            return void res.sendStatus(500)
+            return next(new Error('No system languages found'))
           }
 
           delete require.cache[Globals.SeederPath + '/system_languages.json']
+
           _languages = require(Globals.SeederPath + '/system_languages.json')
         }
 
-        WriteStub(_languages, 'system_languages')
-        redisLanguageClient.set(cacheKey, JSON.stringify(_languages))
+        redisClient.set(cacheKey, JSON.stringify(_languages))
+
         req.app.locals[RequestKeys.DBLanguages] = _languages
+
         next()
       })
   })

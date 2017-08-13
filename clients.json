@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "contact": {
+            "first_name": "Boris",
+            "last_name": "Lemke",
+            "email": "boris@fleava.com"
+        },
+        "expiry": null,
+        "stellium_path": "growbali.stellium.com",
+        "alias": [
+            "stellium.dev",
+            "stellium2.dev",
+            "www.stellium.dev"
+        ],
+        "active_template": "interstellar"
+    },
+    {
+        "id": 2,
+        "contact": {
+            "first_name": "Boris",
+            "last_name": "Lemke",
+            "email": "boris@fleava.com"
+        },
+        "expiry": null,
+        "stellium_path": "growbali.stellium.com",
+        "alias": [
+            "growbali.com"
+        ],
+        "active_template": "interstellar"
+    }
+]

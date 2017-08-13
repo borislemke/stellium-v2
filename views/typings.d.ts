@@ -24,7 +24,11 @@ declare const PageObject: {
   }
 }
 
-declare const getSettingsByKey: (key: string) => string
+declare interface SettingsKeys {
+  [key: string]: string
+}
+
+declare const getSettingsByKey: (key: string | SettingsKeys) => string
 
 declare const RequestKeys: any
 

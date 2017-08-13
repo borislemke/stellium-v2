@@ -4,11 +4,13 @@ import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
 import { RequestKeys } from '../../helpers/request_keys'
 import { Globals } from '../../globals'
-import { RaygunClient } from '../../utils/raygun'
+import * as raven from 'raven'
+import { extractStelliumDomain } from '../../utils/extract_stellium_domain'
 
-const redisDefaultPageClient = createClient({db: RedisTable.DefaultPage})
+const redisClient = createClient()
 
 export const defaultPageMiddleware = (req, res, next): void => {
+  const hostname = extractStelliumDomain(req)
 
   // /en => en, /en/home => en/home
   const strippedUrl = req.url.replace(/^\/+|\/+$/g, '')
@@ -20,14 +22,16 @@ export const defaultPageMiddleware = (req, res, next): void => {
 
     const currentLanguage = req.app.locals[RequestKeys.CurrentLanguage]
 
-    const cacheKey = stringToCacheKey(req.hostname, currentLanguage)
+    const cacheKey = stringToCacheKey(RedisTable.DefaultPage, hostname)
 
-    redisDefaultPageClient.get(cacheKey, (err, cachedDefaultPage) => {
+    redisClient.get(cacheKey, (err, cachedDefaultPage) => {
       if (err) {
-        RaygunClient.send(err)
+        raven.captureException(err)
       }
+
       if (cachedDefaultPage) {
         req.url = (JSON.parse(cachedDefaultPage)).url[currentLanguage]
+
         return void next()
       }
 
@@ -38,19 +42,23 @@ export const defaultPageMiddleware = (req, res, next): void => {
         .lean()
         .exec((err, page: any) => {
           if (err) {
-            // TODO(error): Error handling, no default page found
-            RaygunClient.send(err)
-            return void res.sendStatus(404)
+            return next(err)
           }
+
           if (!page) {
             if (Globals.Production) {
+              raven.captureException(new Error('no default page found'))
+
               return void res.sendStatus(404)
             } else {
               page = require(Globals.ViewsPath + '/test.json')
             }
           }
-          redisDefaultPageClient.set(cacheKey, JSON.stringify(page))
+
+          redisClient.set(cacheKey, JSON.stringify(page))
+
           req.url = page.url[currentLanguage]
+
           next()
         })
     })
