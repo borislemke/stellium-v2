@@ -2,8 +2,8 @@ import * as mongoose from 'mongoose'
 import { EcommerceProductSchema } from '../schemas'
 
 export interface MongooseEcommerceProductSchema extends EcommerceProductSchema, mongoose.Document {
-  _id: any;
-  random: (err: any, product: EcommerceProductSchema) => void;
+  _id: any
+  random: (err: any, product: EcommerceProductSchema) => void
 }
 
 const Schema = new mongoose.Schema({
@@ -100,7 +100,7 @@ Schema.statics.random = function (callback) {
     if (err) {
       return callback(err)
     }
-    let rand = Math.floor(Math.random() * count)
+    const rand = Math.floor(Math.random() * count)
     this.findOne().skip(rand).exec(callback)
   }.bind(this))
 }

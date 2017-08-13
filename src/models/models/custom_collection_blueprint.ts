@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose'
 import { CustomCollectionBlueprintSchema } from '../schemas'
 
 export interface MongooseCustomCollectionBlueprintSchema extends CustomCollectionBlueprintSchema, mongoose.Document {
-  _id: any;
+  _id: any
 }
 
 const Schema = new mongoose.Schema({

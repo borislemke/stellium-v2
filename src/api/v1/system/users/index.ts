@@ -1,13 +1,16 @@
 import { SystemUserModel } from '../../../../models/models/system_user'
 import { Router } from 'express'
-import { AsyncWrapper } from '../../../../utils/async_wrap'
 import { getUserById } from './show'
 
 export const SystemUserRouter: Router = Router()
 
-SystemUserRouter.get('/', AsyncWrapper(async (req, res, next) => {
-  const users = await SystemUserModel.find()
-  res.send(users)
-}))
+SystemUserRouter.get('/', async (req, res, next) => {
+  try {
+    const users = await SystemUserModel.find()
+    res.send(users)
+  } catch (err) {
+    next(err)
+  }
+})
 
-SystemUserRouter.get('/:userId', AsyncWrapper(getUserById))
+SystemUserRouter.get('/:userId', getUserById)

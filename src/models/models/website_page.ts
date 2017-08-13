@@ -3,7 +3,7 @@ import { WebsitePageSchema } from '../schemas'
 import './system_user'
 
 export interface MongooseWebsitePageSchema extends WebsitePageSchema, mongoose.Document {
-  _id: any;
+  _id: any
 }
 
 const Schema = new mongoose.Schema({

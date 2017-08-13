@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose'
 import { LanguageSchema } from '../schemas'
 
 export interface MongooseLanguageSchema extends mongoose.Document, LanguageSchema {
-  _id: any;
+  _id: any
 }
 
 const Schema = new mongoose.Schema({
@@ -43,4 +43,3 @@ Schema.virtual('user', {
 })
 
 export const SystemLanguageModel = mongoose.model<MongooseLanguageSchema>('SystemLanguages', Schema, 'system_languages')
-

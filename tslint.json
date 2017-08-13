@@ -3,13 +3,6 @@
     "rules": {
         "arrow-return-shorthand": true,
         "callable-types": true,
-        "class-name": true,
-        "comment-format": [
-            true,
-            "check-space"
-        ],
-        "curly": true,
-        "eofline": true,
         "forin": true,
         "import-blacklist": [
             true,
@@ -21,24 +14,10 @@
             "spaces"
         ],
         "interface-over-type-literal": true,
-        "label-position": true,
         "max-line-length": [
             true,
             140
         ],
-        "member-access": false,
-        "member-ordering": [
-            true,
-            {
-                "order": [
-                    "static-field",
-                    "instance-field",
-                    "static-method",
-                    "instance-method"
-                ]
-            }
-        ],
-        "no-arg": true,
         "no-console": [
             true,
             "debug",
@@ -47,10 +26,10 @@
             "timeEnd",
             "trace"
         ],
+        "no-unused-variable": false,
         "no-construct": true,
         "no-debugger": true,
         "no-duplicate-super": true,
-        "no-empty": false,
         "no-empty-interface": true,
         "no-eval": true,
         "no-inferrable-types": [
@@ -81,10 +60,6 @@
             "single"
         ],
         "radix": true,
-        "semicolon": [
-            true,
-            "never"
-        ],
         "triple-equals": [
             true,
             "allow-null-check"
@@ -109,30 +84,6 @@
             "check-operator",
             "check-separator",
             "check-type"
-        ],
-        "directive-selector": [
-            true,
-            "attribute",
-            "app",
-            "camelCase"
-        ],
-        "component-selector": [
-            true,
-            "element",
-            "app",
-            "kebab-case"
-        ],
-        "use-input-property-decorator": true,
-        "use-output-property-decorator": true,
-        "use-host-property-decorator": true,
-        "no-input-rename": true,
-        "no-output-rename": true,
-        "use-life-cycle-interface": true,
-        "use-pipe-transform-interface": true,
-        "component-class-suffix": true,
-        "directive-class-suffix": true,
-        "no-access-missing-member": true,
-        "templates-use-public": true,
-        "invoke-injectable": true
+        ]
     }
 }

@@ -57,56 +57,60 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
           return void reject(err)
         }
 
-        const TemplateContent = resolvedSections.map(_section => _section.template).join('\n')
+        if (resolvedSections) {
+          const TemplateContent = resolvedSections.map(_section => _section.template).join('\n')
 
-        let SectionStyles = ''
+          let SectionStyles = ''
 
-        let SectionScripts = ''
+          let SectionScripts = ''
 
-        const unifySections = []
+          const unifySections = []
 
-        resolvedSections.forEach(_section => {
-          if (!unifySections.includes(_section.templateName)) {
-            // Concatenate section styles
-            SectionStyles += _section.styles + '\n'
+          resolvedSections.forEach(_section => {
+            if (!unifySections.includes(_section.templateName)) {
+              // Concatenate section styles
+              SectionStyles += _section.styles + '\n'
 
-            // Concatenate section scripts
-            SectionScripts += _section.scripts + '\n'
+              // Concatenate section scripts
+              SectionScripts += _section.scripts + '\n'
 
-            unifySections.push(_section.templateName)
-          }
-        })
-
-        ComponentsStylesCompiler(req.app.locals[RequestKeys.CurrentTemplatePath], (err, ComponentsStyle) => {
-          if (err) {
-            Raven.captureException(err)
-            // Gracefully ignore scss compilation error but notify user about the issue
-            ComponentsStyle = ''
-          }
-
-          autoPrefixCss(ComponentsStyle + '\n' + SectionStyles, (ignorableError, CompiledStyles) => {
-            renderFile(
-              pathResolve(req.app.locals[RequestKeys.CurrentTemplatePath], 'index.ejs'),
-              {
-                ...renderData,
-                TemplateContent,
-                CompiledStyles,
-                SectionScripts
-              },
-              (err, html) => {
-                if (err) {
-                  Raven.captureException(err)
-                  return reject(err)
-                }
-                resolve(html)
-              }
-            )
+              unifySections.push(_section.templateName)
+            }
           })
-        })
+
+          ComponentsStylesCompiler(req.app.locals[RequestKeys.CurrentTemplatePath], (err, ComponentsStyle) => {
+            if (err) {
+              Raven.captureException(err)
+              // Gracefully ignore scss compilation error but notify user about the issue
+              ComponentsStyle = ''
+            }
+
+            autoPrefixCss(ComponentsStyle + '\n' + SectionStyles, (ignorableError, CompiledStyles) => {
+              renderFile(
+                pathResolve(req.app.locals[RequestKeys.CurrentTemplatePath], 'index.ejs'),
+                {
+                  ...renderData,
+                  TemplateContent,
+                  CompiledStyles,
+                  SectionScripts
+                },
+                (err, html) => {
+                  if (err) {
+                    Raven.captureException(err)
+                    return reject(err)
+                  }
+                  resolve(html)
+                }
+              )
+            })
+          })
+        } else {
+          Raven.captureException(new Error('resolved section template is empty'))
+
+          resolve('')
+        }
       })
-
     } else {
-
       reject(new Error('file not found'))
     }
   })

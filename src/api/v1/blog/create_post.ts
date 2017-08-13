@@ -1,5 +1,12 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
+import { Delicate } from '../../../utils/assertion/index'
 
-export const CreateBlogPost = (req: Request, res: Response) => {
+const blogFilter = {
+  title: {
+    type: 'string'
+  }
+}
 
+export const createBlogPost = (req: Request, res: Response, next: NextFunction) => {
+  const {err, asserted: blogData} = Delicate(req.body, blogFilter)
 }

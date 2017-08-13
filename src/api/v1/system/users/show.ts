@@ -9,7 +9,11 @@ export const getUserById = async (req, res, next) => {
     return void res.status(HTTPStatusCode.BAD_REQUEST).send('invalid user id')
   }
 
-  const user = await SystemUserModel.findById(userId)
+  try {
+    const user = await SystemUserModel.findById(userId)
 
-  this.response.send(user)
+    res.send(user)
+  } catch (err) {
+    next(err)
+  }
 }

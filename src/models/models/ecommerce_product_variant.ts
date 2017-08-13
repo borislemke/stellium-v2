@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose'
 import { EcommerceProductVariantSchema } from '../schemas'
 
-export interface MongooseEcommerceProductVariantSchema extends EcommerceProductVariantSchema, mongoose.Document {
-  _id: any;
+export interface IEcommerceProductVariantSchema extends EcommerceProductVariantSchema, mongoose.Document {
+  _id: any
 }
 
 const Schema = new mongoose.Schema({
@@ -75,4 +75,5 @@ Schema.virtual('thumbnail', {
   justOne: true
 })
 
-export const EcommerceProductVariantModel = mongoose.model<MongooseEcommerceProductVariantSchema>('EcommerceProductVariant', Schema, 'ecommerce_variants')
+export const EcommerceProductVariantModel
+  = mongoose.model<IEcommerceProductVariantSchema>('EcommerceProductVariant', Schema, 'ecommerce_variants')

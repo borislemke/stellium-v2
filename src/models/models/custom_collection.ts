@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose'
 import { CustomCollectionSchema } from '../schemas'
 
 export interface MongooseCustomCollectionSchema extends CustomCollectionSchema, mongoose.Document {
-  _id: any;
+  _id: any
 }
 
 const Schema = new mongoose.Schema({

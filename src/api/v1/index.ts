@@ -3,8 +3,11 @@ import { V1ClientsRouter } from './clients/index'
 import { APICustardRouter } from './custard/index'
 import { HTTPStatusCode } from '../../utils/response_code'
 import { V1SystemRouter } from './system/index'
+import { V1AuthRouter } from './auth/index'
 
 export const V1Router: Router = Router()
+
+V1Router.use(V1AuthRouter)
 
 V1Router.use(
   '/customers',
@@ -24,12 +27,12 @@ V1Router.use((req, res, next) => {
     return
   }
 
-  if (!authorization.match(/^Bearer /)) {
+  if (!authorization.match(/^bearer /i)) {
     res.status(HTTPStatusCode.BAD_REQUEST).send('token malformed')
     return
   }
 
-  req.app.locals.user = authorization.replace('Bearer ', '')
+  req.app.locals.user = authorization.replace(/^bearer /i, '')
 
   next()
 })

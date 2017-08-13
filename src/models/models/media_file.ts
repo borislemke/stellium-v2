@@ -5,7 +5,7 @@ import { MediaFileSchema } from '../schemas'
 export interface MongooseMediaFileSchema extends Document, MediaFileSchema {
   _id: any
 
-  random(cb: (err: any, file?: MediaFileSchema) => void): MediaFileSchema;
+  random (cb: (err: any, file?: MediaFileSchema) => void): MediaFileSchema
 }
 
 const Schema = new mongoose.Schema({
@@ -61,7 +61,7 @@ Schema.statics.random = function (callback) {
     if (err) {
       return callback(err)
     }
-    let rand = Math.floor(Math.random() * count)
+    const rand = Math.floor(Math.random() * count)
     this.findOne().skip(rand).exec(callback)
   }.bind(this))
 }

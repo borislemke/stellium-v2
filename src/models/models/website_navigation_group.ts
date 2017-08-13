@@ -3,7 +3,7 @@ import './website_navigation'
 import { WebsiteNavigationGroupSchema } from '../schemas'
 
 export interface MongooseWebsiteNavigationGroupSchema extends WebsiteNavigationGroupSchema, mongoose.Document {
-  _id: any;
+  _id: any
 }
 
 const Schema = new mongoose.Schema({

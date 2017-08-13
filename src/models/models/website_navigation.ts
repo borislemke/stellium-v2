@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose'
 import { WebsiteNavigationSchema } from '../schemas'
 
 export interface MongooseWebsiteNavigationSchema extends WebsiteNavigationSchema, mongoose.Document {
-  _id: any;
+  _id: any
 }
 
 const Schema = new mongoose.Schema({

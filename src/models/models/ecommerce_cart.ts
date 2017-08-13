@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose'
 import { EcommerceCartSchema } from '../schemas'
 
 export interface MongooseEcommerceCartSchema extends EcommerceCartSchema, mongoose.Document {
-  _id: any;
+  _id: any
 }
 
 const Schema = new mongoose.Schema({

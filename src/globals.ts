@@ -13,5 +13,5 @@ export const Globals = {
   ViewsPath: viewsPath,
   TemplatesPath: templatesPath,
   SeederPath: seederPath,
-  SkipCache: false
+  SkipCache: process.env.SKIP_CACHE || !dev
 }

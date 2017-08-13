@@ -2,10 +2,10 @@ import * as mongoose from 'mongoose'
 import { EcommerceOrderSchema } from '../schemas'
 
 export interface MongooseEcommerceOrderSchema extends EcommerceOrderSchema, mongoose.Document {
-  _id: any;
+  _id: any
 }
 
-let AddressInfo = {
+const AddressInfo = {
   first_name: String,
   last_name: String,
   email: String,

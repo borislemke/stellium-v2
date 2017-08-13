@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose'
 import { SystemUserGroupSchema } from '../schemas'
 
 export interface MongooseSystemUserGroupSchema extends SystemUserGroupSchema, mongoose.Document {
-  _id: any;
+  _id: any
 }
 
 const Schema = new mongoose.Schema({

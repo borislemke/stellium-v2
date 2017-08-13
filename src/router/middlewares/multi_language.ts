@@ -16,14 +16,13 @@ export const multiLanguageMiddleware = (req: Request, res: Response, next: NextF
 
   const cacheKey = stringToCacheKey(RedisTable.SystemLanguages, hostname)
 
-  redisClient.get(cacheKey, (err, langs) => {
+  redisClient.get(cacheKey, (err, languages) => {
     if (err) {
       raven.captureException(err)
     }
 
-    if (langs) {
-      req.app.locals[RequestKeys.DBLanguages] = JSON.parse(langs)
-
+    if (languages) {
+      req.app.locals[RequestKeys.DBLanguages] = JSON.parse(languages)
       return void next()
     }
 
@@ -42,12 +41,14 @@ export const multiLanguageMiddleware = (req: Request, res: Response, next: NextF
 
         if (!_languages || !(_languages as any[]).length) {
           if (Globals.Production) {
-            return next(new Error('No system languages found'))
+            return next(new Error('no system languages found'))
           }
 
-          delete require.cache[Globals.SeederPath + '/system_languages.json']
+          const langPath = Globals.SeederPath + '/system_languages.json'
 
-          _languages = require(Globals.SeederPath + '/system_languages.json')
+          delete require.cache[langPath]
+
+          _languages = require(langPath)
         }
 
         redisClient.set(cacheKey, JSON.stringify(_languages))

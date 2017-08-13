@@ -7,11 +7,11 @@ import { Globals } from '../globals'
  */
 export class Argus {
 
-  private _raven: Raven.Client
-
   requestHandler
 
   errorHandler
+
+  private _raven: Raven.Client
 
   constructor () {
     this._raven = Raven.config('https://77b9163cd3c84bfe840274e7e97c90c4:92ffee9b5c3646d4988640c2e17b6f67@sentry.io/202892').install()
