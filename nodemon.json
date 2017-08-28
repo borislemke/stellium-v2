@@ -2,11 +2,12 @@
     "restartable": "rs",
     "ignore": [
         ".git",
+        "dist/api/*",
         "node_modules/**/node_modules"
     ],
     "verbose": true,
     "execMap": {
-        "js": "node --harmony"
+        "js": "node"
     },
     "watch": [
         "dist/",

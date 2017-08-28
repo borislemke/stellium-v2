@@ -1,4 +1,4 @@
-export enum HTTPStatusCode {
+export enum STATUS {
   ACCEPTED = 202,
   BAD_GATEWAY = 502,
   BAD_REQUEST = 400,

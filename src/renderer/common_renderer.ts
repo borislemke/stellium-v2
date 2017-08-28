@@ -1,15 +1,14 @@
 import * as async from 'async'
 import { renderFile } from 'ejs'
 import { resolve as pathResolve } from 'path'
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import { createClient } from 'redis'
 import { Globals } from '../globals'
-import { RequestKeys } from '../helpers/request_keys'
+import { ReqKeys } from '../helpers/request_keys'
 import { SectionRenderer } from './section_renderer/index'
 import { stringToCacheKey } from '../helpers/url_cache'
 import { RedisTable } from '../helpers/redis_table'
 import { minifyTemplate } from './utils/minify_html'
-import { errorPageRenderer } from './error_handler'
 import { TemplateFunctions } from './section_renderer/template_functions'
 import { ComponentsStylesCompiler } from './component_renderer/styles_compiler'
 import { autoPrefixCss } from './utils/autoprefix'
@@ -28,21 +27,21 @@ const getSettingsByKey = (collection: any[]) => (key: string): any => {
 function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string> {
   const appLocals = req.app.locals
 
-  const PageObject = appLocals[RequestKeys.CurrentPageObject]
+  const PageObject = appLocals[ReqKeys.CurrentPageObject]
 
   const renderData = {
     CurrentURL: `${req.protocol}://${req.headers['host']}${req.originalUrl}`,
     BaseDomain: `${req.protocol}://${req.headers['host']}/`,
     SettingsKeys,
-    getSettingsByKey: getSettingsByKey(appLocals[RequestKeys.DBSettings]),
-    RequestKeys,
-    CurrentLanguage: appLocals[RequestKeys.CurrentLanguage],
+    getSettingsByKey: getSettingsByKey(appLocals[ReqKeys.DBSettings]),
+    RequestKeys: ReqKeys,
+    CurrentLanguage: appLocals[ReqKeys.CurrentLanguage],
     DbCollection: {
-      Settings: appLocals[RequestKeys.DBSettings],
-      Posts: appLocals[RequestKeys.DBPosts],
-      Languages: appLocals[RequestKeys.DBLanguages],
-      Pages: appLocals[RequestKeys.DBPages],
-      Media: appLocals[RequestKeys.DBMediaFiles]
+      Settings: appLocals[ReqKeys.DBSettings],
+      Posts: appLocals[ReqKeys.DBPosts],
+      Languages: appLocals[ReqKeys.DBLanguages],
+      Pages: appLocals[ReqKeys.DBPages],
+      Media: appLocals[ReqKeys.DBMediaFiles]
     },
     PageObject,
     TemplateFunctions: new TemplateFunctions(req)
@@ -78,7 +77,7 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
             }
           })
 
-          ComponentsStylesCompiler(req.app.locals[RequestKeys.CurrentTemplatePath], (err, ComponentsStyle) => {
+          ComponentsStylesCompiler(req.app.locals[ReqKeys.CurrentTemplatePath], (err, ComponentsStyle) => {
             if (err) {
               Raven.captureException(err)
               // Gracefully ignore scss compilation error but notify user about the issue
@@ -87,7 +86,7 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
 
             autoPrefixCss(ComponentsStyle + '\n' + SectionStyles, (ignorableError, CompiledStyles) => {
               renderFile(
-                pathResolve(req.app.locals[RequestKeys.CurrentTemplatePath], 'index.ejs'),
+                pathResolve(req.app.locals[ReqKeys.CurrentTemplatePath], 'index.ejs'),
                 {
                   ...renderData,
                   TemplateContent,
@@ -116,19 +115,19 @@ function fakeTemplateRenderer (req: Request, ok: boolean = true): Promise<string
   })
 }
 
-export async function commonRenderer (req: Request, res: Response) {
+export async function commonRenderer (req: Request, res: Response, next: NextFunction) {
   let renderedTemplate
 
   try {
     renderedTemplate = await fakeTemplateRenderer(req)
-
+    /**
+     * TODO(prod): Temporary cheerio fix
+     * @date - 27-08-2017
+     * @time - 12:52
+     */
+    renderedTemplate = renderedTemplate.replace(/=""/g, '')
   } catch (err) {
-    Raven.captureException(err)
-
-    return void errorPageRenderer(req, res, {
-      title: 'Internal Server Error',
-      statusCode: 500
-    })
+    return next(err)
   }
 
   const hostname = extractStelliumDomain(req)
@@ -141,7 +140,7 @@ export async function commonRenderer (req: Request, res: Response) {
     const minified = minifyTemplate(renderedTemplate, true)
 
     // Do not rely on the cache write to serve the rendered content
-    redisClient.set(urlHash, minified, err => {
+    redisClient.set(urlHash, minified.replace(/=""/g, ''), err => {
       if (err) {
         Raven.captureException(err)
       }

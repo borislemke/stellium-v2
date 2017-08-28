@@ -23,29 +23,36 @@ time, mark, audio, video {
     font: inherit;
     vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 ol, ul {
     list-style: none;
 }
+
 blockquote, q {
     quotes: none;
 }
+
 a {
     text-decoration: none;
     color: inherit;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -56,15 +63,14 @@ html, body {
     padding: 0;
     font-size: 16px;
     color: rgba(10, 20, 30, .86);
-    font-family: 'Open Sans', sans-serif;
-    /*background-color: #f6f9fc;*/
+    font-family: 'Open Sans', 'Segoe UI', sans-serif;
 }
 
 p {
-    color: #6b7c93;
     font-size: 1rem;
     font-weight: 400;
     line-height: 26px;
+    color: rgba(10, 20, 30, 0.72);
 }
 
 .mt-16 {
@@ -87,6 +93,12 @@ p {
     width: 100%;
     margin: auto;
     max-width: 1080px;
+}
+
+.row-small {
+    width: 100%;
+    margin: auto;
+    max-width: 840px;
 }
 
 .flex {

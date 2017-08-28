@@ -2,7 +2,7 @@ import { WebsitePageModel } from '../../models/models/website_page'
 import { createClient } from 'redis'
 import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
-import { RequestKeys } from '../../helpers/request_keys'
+import { ReqKeys } from '../../helpers/request_keys'
 import { Globals } from '../../globals'
 import * as raven from 'raven'
 import { extractStelliumDomain } from '../../utils/extract_stellium_domain'
@@ -20,7 +20,7 @@ export const defaultPageMiddleware = (req, res, next): void => {
     next()
   } else {
 
-    const currentLanguage = req.app.locals[RequestKeys.CurrentLanguage]
+    const currentLanguage = req.app.locals[ReqKeys.CurrentLanguage]
 
     const cacheKey = stringToCacheKey(RedisTable.DefaultPage, hostname)
 

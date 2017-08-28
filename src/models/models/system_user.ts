@@ -3,21 +3,12 @@ import { Document, Model } from 'mongoose'
 import { SystemUserSchema } from '../schemas'
 import * as passportLocalMongoose from 'passport-local-mongoose'
 
-export interface MongooseSystemUserDocument extends Document, SystemUserSchema {
-  _id: any
+export interface SystemUserDocument extends Document, SystemUserSchema {
+  // _id: any
   _doc: SystemUserSchema
   password: string
-  register: (user: MongooseSystemUserDocument, password: string, callback) => void
-  authenticate: (password?: string, cb?: (err: any, user?: MongooseSystemUserDocument) => void) => void
-  setPassword: (newPassword: string, cb: (err: any) => void) => void
-}
-
-export interface MongooseSystemUserSchema extends Model<MongooseSystemUserDocument> {
-  _id: any
-  serializeUser: () => void
-  deserializeUser: () => void
-  register: (user: MongooseSystemUserDocument, password: string, callback) => void
-  authenticate: (password?: string, cb?: (err: any, user?: MongooseSystemUserDocument) => void) => void
+  register: (user: SystemUserDocument, password: string, callback) => void
+  authenticate: (password?: string, cb?: (err: any, user?: SystemUserDocument) => void) => void
   setPassword: (newPassword: string, cb: (err: any) => void) => void
 }
 
@@ -34,31 +25,29 @@ const Schema = new mongoose.Schema({
     type: String,
     'default': null
   },
-  username: {
-    unique: [true, 'A user with that username address exists. The username must be unique.'],
-    type: String,
-    lowercase: true,
-    required: [true, 'A user must have a username to log in']
-  },
   email: {
     unique: [true, 'A user with that email address exists. The email must be unique.'],
     type: String,
     lowercase: true,
     required: [true, 'A user must have an email address']
   },
-  role_id: {
-    // User roles: super admin, admin, manager, analyst
-    type: Number,
-    // 0 is the master developer, normal users would be assigned
-    // a role id between 1 and 5
-    min: 0,
-    max: 5
-  },
-  status: {
-    type: Boolean,
-    'default': true
-  },
   last_login: {
+    type: Date,
+    'default': null
+  },
+  salt: {
+    type: String,
+    required: true
+  },
+  hash: {
+    type: String,
+    required: true
+  },
+  reset_password_token: {
+    type: String,
+    'default': null
+  },
+  reset_password_expiry: {
     type: Date,
     'default': null
   },
@@ -76,9 +65,7 @@ const Schema = new mongoose.Schema({
   }
 })
 
-Schema.plugin(passportLocalMongoose, {
-  usernameField: 'email',
-  usernameLowerCase: true
+Schema.virtual('domains', function () {
 })
 
-export const SystemUserModel = (mongoose.model as any)('SystemUser', Schema, 'system_users') as MongooseSystemUserSchema
+export const SystemUserModel = mongoose.model<SystemUserDocument>('SystemUser', Schema, 'system_users')

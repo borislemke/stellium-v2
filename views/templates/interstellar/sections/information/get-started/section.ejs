@@ -1,14 +1,21 @@
 <div class="content-wrapper row">
 
     <div class="flex">
-        <h4>Ready to get started?</h4>
-        <p class="mt-16">Don't have a domain? Don't worry, create your website now and add a domain later.</p>
+        <p><strong>Ready to get started?</strong> Create an account now and start building.</p>
     </div>
 
     <%- ComponentRenderer('button', {
         'class': 'blue',
         data: {
-            text: 'Create Account'
+            text: 'Get Started',
+            link: '/get-started'
+        }
+    }) %>
+
+    <%- ComponentRenderer('button', {
+        'class': 'white',
+        data: {
+            text: 'Contact Sales'
         }
     }) %>
 </div>

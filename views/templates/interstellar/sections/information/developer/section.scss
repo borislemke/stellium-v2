@@ -14,6 +14,7 @@ $break-large: 1024px;
 }
 
 :host {
+  display: none;
 
   h2 {
     font-size: 1.6rem;
@@ -39,19 +40,28 @@ $break-large: 1024px;
       }
 
       .feature-item {
-        padding: 2rem;
+        text-align: center;
         background-color: white;
         border: 1px solid rgba(10, 20, 30, .05);
         box-shadow: 0 15px 35px rgba(50, 50, 93, .1), 0 5px 15px rgba(0, 0, 0, .07);
 
-        .feature-title {
-          font-size: 1.2rem;
-          margin-bottom: 1rem;
+        .feature-image {
+          height: 192px;
+          background-color: rgba(219, 83, 232, 1);
         }
 
-        .feature-info {
-          font-weight: 300;
-          font-size: .86rem;
+        .content {
+          padding: 2rem;
+
+          .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+          }
+
+          .feature-info {
+            font-weight: 300;
+            font-size: .86rem;
+          }
         }
       }
     }

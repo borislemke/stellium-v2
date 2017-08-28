@@ -1,6 +1,5 @@
 export { websiteCacheMiddleware } from './page_cache'
 export { defaultPageMiddleware } from './default_page'
-export { multiLanguageMiddleware } from './multi_language'
 export { systemSettingsMiddleware } from './system_settings'
 export { currentLanguageMiddleware } from './current_language'
 export { currentTemplateMiddleware } from './current_template'

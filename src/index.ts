@@ -4,12 +4,11 @@ import './dev'
 import * as Raven from 'raven'
 import * as express from 'express'
 import { Application } from 'express'
-import { ApiRouter } from './api/index'
 import { WebRouter } from './router/index'
 import { RegistryMiddleware } from './registry/index'
 import { StaticFilesHandler } from './helpers/static_files'
 import { errorHandler } from './error_handler'
-import { Bootstrap } from './bootstrap'
+import { Bootstrap } from './api/bootstrap'
 
 Raven.config(process.env.SENTRY_DNS).install()
 
@@ -19,19 +18,21 @@ export const RootApp: Application = express()
 RootApp.use(Raven.requestHandler())
 
 /**
- * Registry Middleware for checking whether the domain is a registered domain
- * with Stellium.
- */
-/**
  * TODO(production): Move to Kong / Go
  * @date - 13-08-2017
  * @time - 14:33
  */
+/**
+ * Registry Middleware for checking whether the domain is a registered domain
+ * with Stellium.
+ */
 RootApp.use(RegistryMiddleware)
 
-// API Router
-RootApp.use('/api', ApiRouter)
-
+/**
+ * TODO(prod): Move to 3rd party storage provider
+ * @date - 27-08-2017
+ * @time - 00:14
+ */
 RootApp.get('/theme-static/:themeName/*', StaticFilesHandler)
 
 /**

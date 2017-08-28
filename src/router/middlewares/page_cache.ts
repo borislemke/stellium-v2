@@ -1,10 +1,11 @@
+import * as url from 'url'
 import { createClient } from 'redis'
 import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
 import { NextFunction, Request, Response } from 'express'
 import { Globals } from '../../globals'
-import * as raven from 'raven'
 import { extractStelliumDomain } from '../../utils/extract_stellium_domain'
+import { ArgusClient } from '../../utils/argus'
 
 const redisPageCacheClient = createClient()
 
@@ -15,11 +16,11 @@ export const websiteCacheMiddleware = (req: Request, res: Response, next: NextFu
     return next()
   }
 
-  const urlHash = stringToCacheKey(RedisTable.PageCache, hostname, req.url)
+  const urlHash = stringToCacheKey(RedisTable.PageCache, hostname, url.parse(req.url).pathname)
 
   redisPageCacheClient.get(urlHash, (err, cachedPage) => {
     if (err) {
-      raven.captureException(err)
+      ArgusClient.send(err)
     }
 
     if (cachedPage) {

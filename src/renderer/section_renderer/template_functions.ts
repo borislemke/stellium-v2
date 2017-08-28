@@ -1,6 +1,6 @@
 import { Request } from 'express'
 import { MediaFileSchema } from '../../models/schemas/media_file'
-import { RequestKeys } from '../../helpers/request_keys'
+import { ReqKeys } from '../../helpers/request_keys'
 import { Translatable } from '../../models/schemas/_common'
 
 export interface MediaObject {
@@ -21,9 +21,9 @@ export class TemplateFunctions {
 
   constructor (private req: Request) {
 
-    this.CurrentLanguages = req.app.locals[RequestKeys.CurrentLanguage]
+    this.CurrentLanguages = req.app.locals[ReqKeys.CurrentLanguage]
 
-    this.MediaFiles = req.app.locals[RequestKeys.DBMediaFiles]
+    this.MediaFiles = req.app.locals[ReqKeys.DBMediaFiles]
   }
 
   translate (translatabe: Translatable) {

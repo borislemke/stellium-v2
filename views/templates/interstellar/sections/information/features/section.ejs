@@ -1,12 +1,58 @@
+<% const items = [
+    {
+        type: 'security',
+        html: `
+        <span class="layer top"></span>
+        <span class="layer middle"></span>
+        <span class="layer bottom"></span>
+        `
+    },
+    {
+        type: 'chat',
+        html: `
+        <div class="phone">
+            <div class="screen">
+                <div class="bubble left">
+                    <p>Is "Weston's" size 47 in stock?</p>
+                </div>
+                <div class="bubble right">
+                    <p>Let me check real quick</p>
+                </div>
+            </div>
+        </div>
+        <div class="dots"><span></span></div>
+        <div class="phone phone-2">
+            <div class="screen">
+                <div class="bubble right">
+                    <p>Is "Weston's" size 47 in stock?</p>
+                </div>
+                <div class="bubble left">
+                    <p>Let me check real quick</p>
+                </div>
+            </div>
+        </div>
+        `
+    }
+];
+
+const getIconHtmlByName = (iconName) => {
+    const match = items.find(i => i.type === iconName)
+    return match && match.html || ''
+}
+%>
+
 <div class="features-wrapper row">
-
-    <% for (let i = 0; i < locals.section.data.length; i++) { %>
-    <% const feature = locals.section.data[i] %>
+    <%- locals.section.data.map(feature => `
     <div class="feature-item">
-        <p class="feature-subtitle"><%= feature.title %></p>
-        <h4 class="feature-title"><%= feature.subtitle %></h4>
-        <p class="feature-description"><%= feature.text %></p>
+        <div class="icon-wrapper ${feature.type}">
+            ${getIconHtmlByName(feature.type)}
+        </div>
+        <div class="content">
+            <!--<i class="icon icon-${feature.icon}"><span></span></i>-->
+            <!--<p class="feature-subtitle">${feature.title}</p>-->
+            <h4 class="feature-title">${feature.title}</h4>
+            <p class="feature-description">${feature.text}</p>
+        </div>
     </div>
-    <% } %>
-
+    `).join('') %>
 </div>

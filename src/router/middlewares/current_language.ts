@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { RequestKeys } from '../../helpers/request_keys'
+import { ReqKeys } from '../../helpers/request_keys'
 import * as raven from 'raven'
 
 const hasLanguageCode = (url: string): [boolean, string] => {
@@ -15,7 +15,7 @@ const hasLanguageCode = (url: string): [boolean, string] => {
 
 export const currentLanguageMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
-  const languages = req.app.locals[RequestKeys.DBLanguages]
+  const languages = req.app.locals[ReqKeys.DBLanguages]
 
   let defaultLanguage = languages.find(_lang => _lang.default)
 
@@ -33,7 +33,7 @@ export const currentLanguageMiddleware = (req: Request, res: Response, next: Nex
 
     // The URL has a language code that matches the languages stored in the database
     if (inDb) {
-      req.app.locals[RequestKeys.CurrentLanguage] = inDb.code
+      req.app.locals[ReqKeys.CurrentLanguage] = inDb.code
 
       return next()
 
@@ -41,14 +41,14 @@ export const currentLanguageMiddleware = (req: Request, res: Response, next: Nex
       // No matching language code found, assign the default language to it
       req.url = ('/' + defaultLanguage.code + req.url).replace(/\/+$/g, '')
 
-      req.app.locals[RequestKeys.CurrentLanguage] = defaultLanguage.code
+      req.app.locals[ReqKeys.CurrentLanguage] = defaultLanguage.code
 
       return next()
     }
 
   } else {
 
-    req.app.locals[RequestKeys.CurrentLanguage] = defaultLanguage.code
+    req.app.locals[ReqKeys.CurrentLanguage] = defaultLanguage.code
 
     req.url = ('/' + defaultLanguage.code + req.url).replace(/\/+$/g, '')
 

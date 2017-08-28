@@ -5,7 +5,6 @@ import {
   currentTemplateMiddleware,
   defaultPageMiddleware,
   filterGetOnlyMethods,
-  multiLanguageMiddleware,
   systemSettingsMiddleware,
   websiteCacheMiddleware
 } from './middlewares'
@@ -17,9 +16,6 @@ export const WebRouter: Router = express.Router()
 WebRouter.use(filterGetOnlyMethods)
 
 WebRouter.use(systemSettingsMiddleware)
-
-// Determine current language flag / => /en
-WebRouter.use(multiLanguageMiddleware)
 
 // Defines the language for the current request
 WebRouter.use(currentLanguageMiddleware)

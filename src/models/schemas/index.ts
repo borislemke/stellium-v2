@@ -16,7 +16,7 @@ export {
 } from './media_file'
 export { MessagingContactSchema } from './messaging_contact'
 export { MessagingMessageSchema } from './messaging_message'
-export { LanguageSchema } from './system_language'
+export { ISystemLanguage } from './system_language'
 export { ISystemSettingsSchema } from './system_settings'
 export { SystemUserSchema } from './system_user'
 export { SystemUserGroupSchema } from './system_user_group'

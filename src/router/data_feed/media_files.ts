@@ -2,7 +2,7 @@ import * as raven from 'raven'
 import { NextFunction, Request, Response } from 'express'
 import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
-import { RequestKeys } from '../../helpers/request_keys'
+import { ReqKeys } from '../../helpers/request_keys'
 import { MediaFileModel } from '../../models/models/media_file'
 import { extractStelliumDomain } from '../../utils/extract_stellium_domain'
 import { RedisPromiseGet, RedisPromiseSet } from '../../utils/redis_promise'
@@ -16,7 +16,7 @@ export const mediaFilesFeedMiddleware = async (req: Request, res: Response, next
     const cachedMedia = await RedisPromiseGet(cacheKey)
 
     if (cachedMedia) {
-      req.app.locals[RequestKeys.DBMediaFiles] = JSON.parse(cachedMedia)
+      req.app.locals[ReqKeys.DBMediaFiles] = JSON.parse(cachedMedia)
       return void next()
     }
   } catch (err) {
@@ -29,7 +29,7 @@ export const mediaFilesFeedMiddleware = async (req: Request, res: Response, next
       .select('title url meta')
       .lean()
 
-    req.app.locals[RequestKeys.DBMediaFiles] = media
+    req.app.locals[ReqKeys.DBMediaFiles] = media
 
     next()
 

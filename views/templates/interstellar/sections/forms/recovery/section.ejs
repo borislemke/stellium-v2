@@ -1,0 +1,24 @@
+<form id="reset-password">
+
+    <%- ComponentRenderer('input', {
+        data: {
+            label: 'New Password',
+            name: 'new_password'
+        }
+    }) %>
+
+    <%- ComponentRenderer('input', {
+        data: {
+            label: 'Confirm New Password',
+            name: 'confirm_password'
+        }
+    }) %>
+
+    <%- ComponentRenderer('button', {
+        button: true,
+        'class': 'blue',
+        data: {
+            text: 'Reset Password'
+        }
+    }) %>
+</form>

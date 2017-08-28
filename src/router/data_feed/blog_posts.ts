@@ -3,7 +3,7 @@ import { createClient } from 'redis'
 import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
 import { BlogPostModel } from '../../models/models/blog_post'
-import { RequestKeys } from '../../helpers/request_keys'
+import { ReqKeys } from '../../helpers/request_keys'
 import * as raven from 'raven'
 import { extractStelliumDomain } from '../../utils/extract_stellium_domain'
 
@@ -26,7 +26,7 @@ export const blogPostsFeedMiddleware = (req: Request, res: Response, next: NextF
     }
 
     if (posts) {
-      req.app.locals[RequestKeys.DBPosts] = JSON.parse(posts)
+      req.app.locals[ReqKeys.DBPosts] = JSON.parse(posts)
 
       return void next()
     }
@@ -43,7 +43,7 @@ export const blogPostsFeedMiddleware = (req: Request, res: Response, next: NextF
           return next(err)
         }
 
-        req.app.locals[RequestKeys.DBPosts] = posts
+        req.app.locals[ReqKeys.DBPosts] = posts
 
         next()
       })

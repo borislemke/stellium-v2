@@ -3,7 +3,7 @@ import { createClient } from 'redis'
 import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
 import { SystemSettingsModel } from '../../models/models/system_settings'
-import { RequestKeys } from '../../helpers/request_keys'
+import { ReqKeys } from '../../helpers/request_keys'
 import { Globals } from '../../globals'
 import * as raven from 'raven'
 import { extractStelliumDomain } from '../../utils/extract_stellium_domain'
@@ -21,7 +21,7 @@ export const systemSettingsMiddleware = (req: Request, res: Response, next: Next
     }
 
     if (settings) {
-      req.app.locals[RequestKeys.DBSettings] = JSON.parse(settings)
+      req.app.locals[ReqKeys.DBSettings] = JSON.parse(settings)
 
       return next()
     }
@@ -48,7 +48,7 @@ export const systemSettingsMiddleware = (req: Request, res: Response, next: Next
 
         redisClient.set(cacheKey, JSON.stringify(_settings))
 
-        req.app.locals[RequestKeys.DBSettings] = _settings
+        req.app.locals[ReqKeys.DBSettings] = _settings
 
         next()
       })

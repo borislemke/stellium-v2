@@ -2,9 +2,15 @@
 
     <%- ComponentRenderer('input', {
         data: {
-            label: 'Full Name',
-            placeholder: 'Boris Lemke',
-            name: 'full_name'
+            label: 'First Name',
+            name: 'first_name'
+        }
+    }) %>
+
+    <%- ComponentRenderer('input', {
+        data: {
+            label: 'Last Name',
+            name: 'last_name'
         }
     }) %>
 
@@ -12,15 +18,21 @@
         data: {
             label: 'Email',
             type: 'email',
-            name: 'email',
-            placeholder: 'dimaslemke@gmail.com'
+            name: 'email'
+        }
+    }) %>
+
+    <%- ComponentRenderer('input', {
+        data: {
+            label: 'Confirm Email',
+            type: 'email',
+            name: 'confirm_email'
         }
     }) %>
 
     <%- ComponentRenderer('input', {
         data: {
             label: 'Password',
-            placeholder: 'dimaslemke@gmail.com',
             type: 'password',
             name: 'password'
         }
@@ -28,7 +40,7 @@
 
     <label for="eula" style="font-size: .64rem;">
         <input type="checkbox" id="eula" name="eula"/>
-        I agree to the <a href="">Terms of Service</a> & <a href="">Privacy Policy</a>
+        I agree to the <a href="/terms-of-service" target="_blank">Terms of Service</a> & <a href="/privacy-policy" target="_blank">Privacy Policy</a>
     </label>
 
     <%- ComponentRenderer('button', {
@@ -36,6 +48,54 @@
         'class': 'blue',
         data: {
             text: 'Continue'
+        }
+    }) %>
+
+    <p>Already have an account? <a href="/login">Login</a></p>
+</form>
+
+<form id="login">
+    <%- ComponentRenderer('input', {
+        id: 'login-email',
+        data: {
+            label: 'Email',
+            type: 'email',
+            name: 'email'
+        }
+    }) %>
+    <%- ComponentRenderer('input', {
+        id: 'login-password',
+        data: {
+            label: 'Password',
+            type: 'password',
+            name: 'password'
+        }
+    }) %>
+
+    <%- ComponentRenderer('button', {
+        button: true,
+        'class': 'blue',
+        data: {
+            text: 'Login'
+        }
+    }) %>
+</form>
+
+<form id="recovery">
+    <%- ComponentRenderer('input', {
+        id: 'recovery-email',
+        data: {
+            label: 'Email',
+            type: 'email',
+            name: 'email'
+        }
+    }) %>
+
+    <%- ComponentRenderer('button', {
+        button: true,
+        'class': 'blue',
+        data: {
+            text: 'Send recovery email'
         }
     }) %>
 </form>

@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose'
-import { LanguageSchema } from '../schemas'
+import { ISystemLanguage } from '../schemas'
+import { model, Model } from 'mongoose'
 
-export interface MongooseLanguageSchema extends mongoose.Document, LanguageSchema {
-  _id: any
+export interface ISystemLanguageSchema extends mongoose.Document, ISystemLanguage {
 }
 
 const Schema = new mongoose.Schema({
@@ -42,4 +42,4 @@ Schema.virtual('user', {
   foreignField: '_id'
 })
 
-export const SystemLanguageModel = mongoose.model<MongooseLanguageSchema>('SystemLanguages', Schema, 'system_languages')
+export const SystemLanguageModel: Model<ISystemLanguageSchema> = model('SystemLanguages', Schema, 'system_languages')

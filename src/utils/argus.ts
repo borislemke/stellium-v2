@@ -33,9 +33,10 @@ export class Argus {
     if (Globals.Development) {
       console.log(
         colors.bgRed('Error caught by Argus'), '\n',
-        message, '\n',
+        message, error, '\n',
         colors.bgRed('Error caught by Argus')
       )
+      return
     }
 
     this._raven.captureException(error)

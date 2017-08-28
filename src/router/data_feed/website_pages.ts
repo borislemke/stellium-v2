@@ -3,7 +3,7 @@ import { WebsitePageModel } from '../../models/models/website_page'
 import { createClient } from 'redis'
 import { RedisTable } from '../../helpers/redis_table'
 import { stringToCacheKey } from '../../helpers/url_cache'
-import { RequestKeys } from '../../helpers/request_keys'
+import { ReqKeys } from '../../helpers/request_keys'
 import { WriteStub } from '../../utils/write_stub'
 import { ArgusClient } from '../../utils/argus'
 import { extractStelliumDomain } from '../../utils/extract_stellium_domain'
@@ -28,7 +28,7 @@ export const websitePagesFeedMiddleware = (req: Request, res: Response, next: Ne
 
     if (pages) {
 
-      req.app.locals[RequestKeys.DBPages] = JSON.parse(pages)
+      req.app.locals[ReqKeys.DBPages] = JSON.parse(pages)
 
       return void next()
     }
@@ -50,7 +50,7 @@ export const websitePagesFeedMiddleware = (req: Request, res: Response, next: Ne
 
         WriteStub(pages, 'website_pages')
 
-        req.app.locals[RequestKeys.DBPages] = pages
+        req.app.locals[ReqKeys.DBPages] = pages
 
         next()
       })

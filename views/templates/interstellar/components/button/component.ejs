@@ -1,9 +1,11 @@
 <% if (Component.button) { %>
-<button class="<%= Component.class %>">
+<button class="<%= Component.class %>"
+        id="<%= Component.data.link %>">
     <span><%= Component.data.text %></span>
 </button>
 <% } else { %>
 <a href="<%= Component.data.link %>"
+   id="<%= Component.data.link %>"
    class="<%= Component.class %>">
     <span><%= Component.data.text %></span>
 </a>

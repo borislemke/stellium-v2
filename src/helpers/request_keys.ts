@@ -1,4 +1,4 @@
-export enum RequestKeys {
+export enum ReqKeys {
   CurrentLanguage = 'current_language',
   CurrentPageObject = 'current_page_object',
   DBLanguages = 'db_languages',

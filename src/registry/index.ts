@@ -1,25 +1,20 @@
-import { NextFunction, Request, Response } from 'express'
-import { RequestKeys } from '../helpers/request_keys'
+import * as raven from 'raven'
 import { createClient } from 'redis'
+import { NextFunction, Request, Response } from 'express'
+import { ReqKeys } from '../helpers/request_keys'
 import { RedisTable } from '../helpers/redis_table'
-import { ArgusClient } from '../utils/argus'
-import { HeaderKeys } from '../utils/header_keys'
 import { stringToCacheKey } from '../helpers/url_cache'
 import { extractStelliumDomain } from '../utils/extract_stellium_domain'
-
-const clientsRegistry = require('../../clients.json')
+import { DomainModel } from '../models/models/stellium_domain'
+import { STATUS } from '../utils/response_code'
 
 const redisClient = createClient()
 
-// Fake clients registry model
-const ClientRegistryModel = {
-  findMatch: (hostname: string, cb: (err: any, match: any) => void) => {
-    const _match = clientsRegistry.find(_reg => _reg.alias.includes(hostname) || _reg.stellium_path === hostname)
-
-    cb(null, _match)
-  }
-}
-
+/**
+ * TODO(opt): Optimise flow
+ * @date - 17-08-2017
+ * @time - 23:03
+ */
 export const RegistryMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const hostname = extractStelliumDomain(req)
 
@@ -27,37 +22,66 @@ export const RegistryMiddleware = (req: Request, res: Response, next: NextFuncti
 
   redisClient.get(hashUrl, (err, cachedRegistry) => {
     if (err) {
-      ArgusClient.send(err)
+      raven.captureException(err)
     }
 
     if (cachedRegistry) {
-      req.app.locals[RequestKeys.RegistryObject] = JSON.parse(cachedRegistry)
+      const cachedRegistryObject = JSON.parse(cachedRegistry)
+
+      req.app.locals[ReqKeys.RegistryObject] = cachedRegistryObject
+
+      req.app.locals[ReqKeys.DBLanguages] = cachedRegistryObject.languages
 
       return void next()
     }
 
-    ClientRegistryModel.findMatch(hostname, (err, match) => {
+    DomainModel.findOne({alias: {$in: [hostname]}}, (err, match) => {
       if (err) {
-        ArgusClient.send(err)
+        raven.captureException(err)
 
         return void res.status(500).send('internal server error')
       }
 
       if (!match) {
-        return void res.status(404).send('no matching client domain found')
+        const hostPrefix = hostname.replace(/.stellium.dev$/, '')
+
+        DomainModel.findOne({permanent_address: hostPrefix}, (err, match) => {
+          if (err) {
+            raven.captureException(err)
+
+            return void res.sendStatus(STATUS.INTERNAL_SERVER_ERROR)
+          }
+
+          if (!match) {
+            /**
+             * TODO(production): Stellium 404 Page
+             * @date - 17-08-2017
+             * @time - 22:12
+             */
+            return void res.sendStatus(STATUS.NOT_FOUND)
+          }
+
+          req.app.locals[ReqKeys.RegistryObject] = match
+
+          req.app.locals[ReqKeys.DBLanguages] = match.languages
+
+          next()
+        })
+
+      } else {
+
+        redisClient.set(hashUrl, JSON.stringify(match), 'EX', 3600, err => {
+          if (err) {
+            raven.captureException(err)
+          }
+
+          req.app.locals[ReqKeys.RegistryObject] = match
+
+          req.app.locals[ReqKeys.DBLanguages] = match.languages
+
+          next()
+        })
       }
-
-      redisClient.set(hashUrl, JSON.stringify(match), 'EX', 3600, err => {
-        if (err) {
-          ArgusClient.send(err)
-
-          console.log('Error writing to redis')
-        }
-
-        req.app.locals[RequestKeys.RegistryObject] = match
-
-        next()
-      })
     })
   })
 }

@@ -9,10 +9,21 @@ export interface IStelliumCustomerModel extends Document, IStelliumCustomer {
 }
 
 const schema = new Schema({
-  full_name: {
+  first_name: {
+    type: String
+  },
+  last_name: {
     type: String
   },
   email: {
+    type: String,
+    required: true
+  },
+  hash: {
+    type: String,
+    required: true
+  },
+  salt: {
     type: String,
     required: true
   }

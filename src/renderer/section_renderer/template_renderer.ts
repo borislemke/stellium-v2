@@ -6,7 +6,7 @@ import { RemoveSystemPath } from '../../utils/remove_system_path'
 import { Globals } from '../../globals'
 import { Request } from 'express'
 import { TemplateFunctions } from './template_functions'
-import { RequestKeys } from '../../helpers/request_keys'
+import { ReqKeys } from '../../helpers/request_keys'
 import { ComponentRenderer } from '../component_renderer/index'
 import { assignHoistId, HoistType } from '../utils/hoist_id'
 
@@ -16,12 +16,12 @@ import { assignHoistId, HoistType } from '../utils/hoist_id'
  * @param sectionData
  * @param req
  */
-export const templateRenderer = (renderData: any, sectionData: any, req: Request) => (cb: (err: any, rendererSectionTemplate: any) => void): void => {
+export const templateRenderer = (renderData: any, sectionData: any, req: Request) => (cb: (err: any, template: any) => void): void => {
 
   const sectionBasePath = resolve(sectionData.template, 'section.')
 
   const scopedRenderData = {
-    ComponentRenderer: ComponentRenderer(req.app.locals[RequestKeys.CurrentTemplatePath], renderData),
+    ComponentRenderer: ComponentRenderer(req.app.locals[ReqKeys.CurrentTemplatePath], renderData),
     TemplateFunctions: new TemplateFunctions(req),
     ...renderData,
     section: sectionData
@@ -68,12 +68,15 @@ data-mt-error="Section data malformed" style="padding: 1.5rem;">
         }).join('\n')
       }
 
+      const errorStyle = 'font-family: \'Fira Code\', monospace; line-height:1.4;overflow: scroll; margin: 0;' +
+        'background-color: rgba(10, 20, 30, 0.1); padding: 1rem; color: rgba(10, 20, 30, 0.64);'
+
       const errorTemplate = `
     <div style="width: 80vw; margin: auto; max-width: 720px; padding: 1.5rem; border: 1px solid rgba(10, 20, 30, .1)">
         <h1 style="color: #EF5350; margin: 0; margin-bottom: 1rem; font-weight: 400; font-size: 1.2rem;">
             Section Data Malformed: ${sectionData.templateName}
         </h1>
-        <pre style="font-family: 'Fira Code', monospace; line-height:1.4;overflow: scroll; margin: 0; background-color: rgba(10, 20, 30, 0.1); padding: 1rem; color: rgba(10, 20, 30, 0.64);">${replaceErrorArrow(EscapeHTML(RemoveSystemPath(malformed.error.message)))}</pre>
+        <pre style="${errorStyle}">${replaceErrorArrow(EscapeHTML(RemoveSystemPath(malformed.error.message)))}</pre>
     </div>
 `
       const errorEnd = `</section>`
@@ -81,7 +84,7 @@ data-mt-error="Section data malformed" style="padding: 1.5rem;">
       return void cb(null, errorStart + (Globals.Development ? errorTemplate : '') + errorEnd)
     }
 
-    const $ = load(html, {xmlMode: true} as any)
+    const $ = load(html, {xmlMode: true, decodeEntities: false} as any)
 
     $('*').attr(assignHoistId(HoistType.Content, sectionData.sectionId, false), '')
 

@@ -1,29 +1,19 @@
 :host {
-    height: 38px;
     padding: 0 2rem;
-    font-size: .86rem;
-    line-height: 38px;
-    margin-right: .5rem;
-    border-radius: 19px;
-    letter-spacing: .5px;
-    display: inline-block;
-    border: 1px solid white;
-    transition: all 330ms ease;
+    font-size: 10px;
+    line-height: 48px;
+    letter-spacing: 1.2px;
+    border: 1px solid #2196F3;
+    text-transform: uppercase;
+    background-color: #2196F3;
+    color: rgba(255, 255, 255, 0.86);
+    transition: transform 110ms ease;
 
-    &.blue {
-        color: white;
-        font-weight: 400;
-        border-color: #2196F3;
-        background-color: #2196F3;
-        &:hover {
-            background-color: #64B5F6;
-        }
-    }
-
-    &.green {
-        color: #3ecf8e;
-        font-weight: 400;
-        border-color: #3ecf8e;
+    &.white {
+        color: #2196F3;
+        box-sizing: border-box;
+        background-color: white;
+        border: 1px solid #2196F3;
     }
 
     &:hover {

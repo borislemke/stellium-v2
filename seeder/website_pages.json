@@ -29,17 +29,9 @@
         "created_at": "2017-06-07T10:47:39.540Z",
         "sections": [
             {
-                "data": null,
-                "config": null,
-                "status": true,
-                "global": false,
                 "template": "navigation/main"
             },
             {
-                "data": null,
-                "config": null,
-                "status": true,
-                "global": false,
                 "template": "heroes/simple"
             },
             {
@@ -58,51 +50,63 @@
                         "order": 1
                     }
                 ],
-                "config": null,
-                "status": true,
-                "global": false,
                 "template": "sliders/image"
             },
             {
-                "data": null,
-                "config": null,
-                "status": true,
-                "global": false,
                 "template": "information/developer"
+            },
+            {
+                "template": "information/marketing-tools"
             },
             {
                 "template": "information/features",
                 "data": [
                     {
-                        "title": "Security",
-                        "subtitle": "SSL Certificate Included",
-                        "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                        "type": "analytics",
+                        "title": "Google Analytics",
+                        "text": "Google Analytics is baked right into Stellium. Use our real-time data to get live insight into your website's activities.",
+                        "icon": "basic-share"
                     },
                     {
-                        "title": "Bookings",
-                        "subtitle": "Feature-Rich Booking System",
-                        "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                        "type": "language",
+                        "title": "Multilingual",
+                        "text": "Add or remove any languages you want to display on your website. Translate content manually or use Google Translate's API.",
+                        "icon": "basic-world"
                     },
                     {
+                        "type": "time-machine",
+                        "title": "Time Machine",
+                        "text": "Go back in time to restore your content from any of your previous states. You can now be more confident when making changes.",
+                        "icon": "basic-anticlockwise"
+                    },
+                    {
+                        "type": "chat",
+                        "title": "Live Chat",
+                        "text": "Engage with your customers with our built-in live chat feature. Take your conversations on the go with our mobile app for Androind and iOS.",
+                        "icon": "basic-message-multiple"
+                    },
+                    {
+                        "type": "social-media",
                         "title": "Social Media",
-                        "subtitle": "All-in-One Social Media Integration",
-                        "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                        "text": "Integrate with your favorite social media platforms and automatically push to all of your accounts whenever you write on Stellium.",
+                        "icon": "basic-todolist-pen"
                     },
                     {
+                        "type": "security",
                         "title": "Security",
                         "subtitle": "SSL Certificate Included",
-                        "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically. SSL secures visitors’ connections to your site and improves your ranking in Google search results."
+                        "text": "All Stellium websites come with free 2048-bit SSL certificates, which we create and renew for you automatically.",
+                        "icon": "basic-lock"
                     }
                 ]
+            },
+            {
+                "template": "heroes/mobile"
             },
             {
                 "template": "information/get-started"
             },
             {
-                "data": null,
-                "config": null,
-                "status": true,
-                "global": false,
                 "template": "footer/main"
             }
         ],
@@ -219,6 +223,61 @@
                 "status": true,
                 "global": false,
                 "template": "forms/register"
+            }
+        ],
+        "user": {
+            "_id": "59392b4ab2f64b14e95cee79",
+            "first_name": "Boris",
+            "email": "boris@fleava.com",
+            "username": "borislemke",
+            "role_id": 1,
+            "deleted_at": null,
+            "updated_at": "2017-06-08T10:47:38.167Z",
+            "created_at": "2017-06-08T10:47:38.167Z",
+            "last_login": null,
+            "status": true,
+            "image": "avatar.jpg",
+            "last_name": "Lemke",
+            "social_accounts": {
+                "twitter": "borislemke"
+            }
+        }
+    },
+    {
+        "_id": "59392b4bb2f64b14e95cef1d",
+        "title": {
+            "id": "Atur Ulang Password",
+            "en": "Reset Password"
+        },
+        "meta": {
+            "id": "Atur Ulang Password",
+            "en": "Reset Password"
+        },
+        "url": {
+            "id": "reset-password",
+            "en": "reset-password"
+        },
+        "default": true,
+        "cache": true,
+        "status": true,
+        "template": "main",
+        "theme_variables": {
+            "dark_nav": true
+        },
+        "header_script": "<script type=\"text/javascript\" src=\"theme-static/interstellar/axios.js\"></script>",
+        "footer_script": "<script>console.log('Footer: You are in', window.location)</script>",
+        "navigation_group_id": "59392b4bb2f64b14e95cef1c",
+        "user_id": "59392b4ab2f64b14e95cee79",
+        "deleted_at": null,
+        "updated_at": "2017-06-07T10:47:39.542Z",
+        "created_at": "2017-06-07T10:47:39.540Z",
+        "sections": [
+            {
+                "data": null,
+                "config": null,
+                "status": true,
+                "global": false,
+                "template": "forms/recovery"
             }
         ],
         "user": {

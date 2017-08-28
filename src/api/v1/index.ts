@@ -1,48 +1,29 @@
 import { Router } from 'express'
 import { V1ClientsRouter } from './clients/index'
-import { APICustardRouter } from './custard/index'
-import { HTTPStatusCode } from '../../utils/response_code'
+import { APICustardRouter } from './customers/index'
 import { V1SystemRouter } from './system/index'
-import { V1AuthRouter } from './auth/index'
+import { AuthMiddleware } from './auth_middleware'
+import { V1DomainsRouter } from './domains/index'
+import { SystemUserRouter } from './users/index'
+import { V1PagesRouter } from './pages/index'
+import { V1MediaRouter } from './media/index'
 
 export const V1Router: Router = Router()
 
-V1Router.use(V1AuthRouter)
+V1Router.use('/customers', APICustardRouter)
 
-V1Router.use(
-  '/customers',
-  APICustardRouter
-)
+V1Router.use(AuthMiddleware)
 
-/**
- * TODO(production): Implement token authorization
- * @date - 11-08-2017
- * @time - 21:23
- */
-V1Router.use((req, res, next) => {
-  const authorization = req.headers['authorization'] as string
+V1Router.use('/domains', V1DomainsRouter)
 
-  if (!authorization) {
-    res.status(HTTPStatusCode.UNAUTHORIZED).send('missing authorization token')
-    return
-  }
+V1Router.use('/pages', V1PagesRouter)
 
-  if (!authorization.match(/^bearer /i)) {
-    res.status(HTTPStatusCode.BAD_REQUEST).send('token malformed')
-    return
-  }
+V1Router.use('/clients', V1ClientsRouter)
 
-  req.app.locals.user = authorization.replace(/^bearer /i, '')
+V1Router.use('/media/media', V1MediaRouter)
 
-  next()
-})
+V1Router.use('/settings', V1MediaRouter)
 
-V1Router.use(
-  '/clients',
-  V1ClientsRouter
-)
+V1Router.use('/system', V1SystemRouter)
 
-V1Router.use(
-  '/system',
-  V1SystemRouter
-)
+V1Router.use('/users', SystemUserRouter)

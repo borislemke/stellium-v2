@@ -1,31 +1,44 @@
-<div class="skewed-background">
-    <!--
-    <div class="skewed-block bottom-left"><span></span></div>
-    <div class="skewed-block top-right"><span></span></div>
-    -->
-    <span></span>
+<div class="stripes">
+    <div class="stripe stripe-1"><span></span></div>
+    <div class="stripe stripe-2 mt-active"><span></span></div>
+    <div class="stripe stripe-3"><span></span></div>
+    <div class="stripe stripe-4 mt-active"><span></span></div>
+    <div class="stripe stripe-5 mt-active"><span></span></div>
+    <div class="stripe stripe-6"><span></span></div>
+    <div class="stripe stripe-7 mt-active"><span></span></div>
+    <div class="stripe stripe-8"><span></span></div>
+    <div class="stripe stripe-9 mt-active"><span></span></div>
+    <div class="stripe stripe-10"><span></span></div>
+    <div class="stripe stripe-11"><span></span></div>
 </div>
-<div class="header-wrapper">
 
-    <h2>
-        Get up and running in seconds
-    </h2>
+<div class="row-small header-content">
 
-    <p>The most advanced CMS for Developers and Digital Agencies.</p>
+    <div class="header-wrapper">
 
-    <div class="action">
-        <%- ComponentRenderer('button', {
-            'class': 'blue',
-            data: {
-                text: 'Get Started'
-            }
-        }) %>
+        <h2>A cms for<br/>Designers &amp; Developers</h2>
 
         <p class="hint">Free trial. No credit card required.</p>
-    </div>
-</div>
 
-<div class="macbook-wrapper">
-    <img src="http://www.pngmart.com/files/4/Macbook-PNG-Photos.png"
-         alt="Stellium Preview">
+        <div class="action">
+            <%- ComponentRenderer('button', {
+                'class': 'blue',
+                data: {
+                    text: 'Get Started',
+                    link: '/get-started'
+                }
+            }) %>
+        </div>
+    </div>
+
+    <div class="mobile-device phone-small">
+        <img src="theme-static/interstellar/images/handy.svg"
+             alt="Connect with Lyft">
+    </div>
+
+    <!--
+    <div class="stellium-shot">
+        <img src="https://fleava.com/media/generic/technology2.png" alt="stellium desktop">
+    </div>
+    -->
 </div>

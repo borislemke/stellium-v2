@@ -3,7 +3,7 @@ import * as async from 'async'
 import { Request } from 'express'
 import { templateRenderer } from './template_renderer'
 import { stylesheetCompiler } from './stylesheet_compiler'
-import { RequestKeys } from '../../helpers/request_keys'
+import { ReqKeys } from '../../helpers/request_keys'
 import { scriptsCompiler } from './scripts_compiler'
 import { ArgusClient } from '../../utils/argus'
 
@@ -25,7 +25,7 @@ export const SectionRenderer = (renderData: any, req: Request) => (sectionData: 
 
   sectionData.templateName = sectionData.template
 
-  sectionData.template = resolve(req.app.locals[RequestKeys.CurrentTemplatePath], 'sections', sectionData.template)
+  sectionData.template = resolve(req.app.locals[ReqKeys.CurrentTemplatePath], 'sections', sectionData.template)
 
   sectionData.sectionId = getSectionId(sectionData.templateName)
 
